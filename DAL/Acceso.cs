@@ -48,21 +48,19 @@ namespace DAL
         }
 
 
-        public string Escribir(string Consulta, Hashtable Parametros)
+        public int Escribir(string Consulta, Hashtable Parametros)
         {
             ComandoSQL = new SqlCommand();
             ComandoSQL.Connection = AbrirConexion();
 
-            string Id = ""; // Valor que se capturará en el caso de insersiones
+            int Afectadas;
 
             try
             {
-
                 Transaccion = Conexion.BeginTransaction();
                 ComandoSQL.CommandText = Consulta;
                 ComandoSQL.CommandType = CommandType.StoredProcedure;
                 ComandoSQL.Transaction = Transaccion;
-
 
                 if ((Parametros != null))
                 {
@@ -71,24 +69,22 @@ namespace DAL
                         ComandoSQL.Parameters.AddWithValue(dato, Parametros[dato]);
                     }
                 }
-                ComandoSQL.Parameters.Add("@Id_ins", SqlDbType.Int).Direction = ParameterDirection.Output; // Para inserción
-
-                int respuesta = ComandoSQL.ExecuteNonQuery();
-                Transaccion.Commit();
-                Id = ComandoSQL.Parameters["@Id_ins"].Value.ToString().Trim();
+               
+                Afectadas = ComandoSQL.ExecuteNonQuery();
+                Transaccion.Commit();          
             }
 
-            catch (Exception ex)
-            {
-                string Error = ex.Message;
+            catch 
+            {               
                 Transaccion.Rollback();
+                return -1;
             }
 
             finally
             {
                 Conexion.Close();
             }
-            return Id;
+            return Afectadas;
         }
 
     }
