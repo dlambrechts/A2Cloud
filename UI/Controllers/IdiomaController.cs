@@ -89,12 +89,5 @@ namespace UI.Controllers
             }
         }
 
-        public JsonResult ListaIdiomas()
-        {
-            IdiomaBLL bllIdioma = new IdiomaBLL();
-            var lista = bllIdioma.ObtenerIdiomas();
-    
-            return Json(lista, JsonRequestBehavior.AllowGet);
-        }
     }
 }

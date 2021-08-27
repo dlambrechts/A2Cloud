@@ -22,5 +22,7 @@ namespace BE
             get { return descripcion; }
             set { descripcion = value; }
         }
+
+
     }
 }

@@ -27,6 +27,8 @@ namespace UI.Controllers
         // GET: Usuario/Create
         public ActionResult Create()
         {
+            IdiomaBLL bllIdioma= new IdiomaBLL();
+            ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
             return View();
         }
 
@@ -36,10 +38,19 @@ namespace UI.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-                UsuarioBLL bllU = new UsuarioBLL();
-                bllU.Insertar(usuario);
-                return RedirectToAction("Index");
+               if (ModelState.IsValid)
+              {
+                    UsuarioBLL bllU = new UsuarioBLL();
+                    bllU.Insertar(usuario);
+                    return RedirectToAction("Index");
+            
+             }
+                else {
+                    IdiomaBLL bllIdioma = new IdiomaBLL();
+                    ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
+                    return View("Create", usuario);
+
+                }
             }
             catch
             {

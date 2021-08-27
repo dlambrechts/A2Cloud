@@ -22,7 +22,7 @@ namespace BE
 
         private string nombre;
 
-
+        [Required(ErrorMessage = "El nombre es obligatorio")]
         [DisplayName("Nombre del Usuario")]       
         public string Nombre
         {
