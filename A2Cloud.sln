@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPP", "MPP\MPP.csproj", "{4BCF8E1E-1872-4370-9ACD-5803B041A307}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seguridad", "Seguridad\Seguridad.csproj", "{28F14EBA-2373-42C0-99D2-11D66584E177}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{4BCF8E1E-1872-4370-9ACD-5803B041A307}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BCF8E1E-1872-4370-9ACD-5803B041A307}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BCF8E1E-1872-4370-9ACD-5803B041A307}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28F14EBA-2373-42C0-99D2-11D66584E177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F14EBA-2373-42C0-99D2-11D66584E177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F14EBA-2373-42C0-99D2-11D66584E177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F14EBA-2373-42C0-99D2-11D66584E177}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

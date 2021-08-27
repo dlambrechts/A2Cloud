@@ -14,7 +14,7 @@ namespace BLL
 
         public int Insertar(UsuarioBE usuario) 
         
-        {
+        {           
             return mppUsuario.Insertar(usuario);
         }
 
@@ -22,6 +22,12 @@ namespace BLL
         
         {
             return mppUsuario.ListarUsuarios();
+        }
+
+        public bool ValidarExistencia (CredencialBE cred) 
+        
+        {
+            return mppUsuario.ValidarExistencia(cred);
         }
 
     }

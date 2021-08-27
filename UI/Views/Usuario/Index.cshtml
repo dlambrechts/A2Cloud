@@ -18,6 +18,13 @@
         </div>
     </div>
 
+    @if (ViewBag.Resultado != null && ViewBag.Resultado == "Creado")
+    {
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Correcto:</strong> El Usuario fue Creado
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+    }
 
     <table class="table">
         <thead>

@@ -226,6 +226,10 @@
       <Project>{673cc286-62eb-4ec0-b5ed-b92772a47d61}</Project>
       <Name>BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Seguridad\Seguridad.csproj">
+      <Project>{28f14eba-2373-42c0-99d2-11d66584e177}</Project>
+      <Name>Seguridad</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

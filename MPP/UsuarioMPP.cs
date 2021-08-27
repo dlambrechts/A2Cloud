@@ -62,5 +62,24 @@ namespace MPP
                 return null;
             }
         }
+
+        public bool ValidarExistencia(CredencialBE cred)
+
+        {
+            Hashtable Param = new Hashtable();
+            Param.Add("@Mail", cred.Mail);
+            DataSet DS = new DataSet();
+            DS = AccesoDB.LeerDatos("UsuarioValidarExistencia", Param);
+
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 }

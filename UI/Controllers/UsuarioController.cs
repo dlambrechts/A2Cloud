@@ -5,16 +5,21 @@ using System.Web;
 using System.Web.Mvc;
 using BE;
 using BLL;
+using Seguridad;
 
 namespace UI.Controllers
 {
     public class UsuarioController : Controller
     {
+
+        UsuarioBLL bllU = new UsuarioBLL();
+
         // GET: Usuario
         public ActionResult Index()
         {
             UsuarioBLL bllUsuario = new UsuarioBLL();
             var lista=bllUsuario.ListarTodos();
+            ViewBag.Resultado = TempData["Resultado"] as string;
             return View(lista);
         }
 
@@ -29,6 +34,7 @@ namespace UI.Controllers
         {
             IdiomaBLL bllIdioma= new IdiomaBLL();
             ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
+            ViewBag.Resultado = TempData["Resultado"] as string;
             return View();
         }
 
@@ -38,16 +44,20 @@ namespace UI.Controllers
         {
             try
             {
-               if (ModelState.IsValid)
-              {
-                    UsuarioBLL bllU = new UsuarioBLL();
-                    bllU.Insertar(usuario);
-                    return RedirectToAction("Index");
-            
-             }
+
+               if (ModelState.IsValid && bllU.ValidarExistencia(usuario.Credencial)==false)
+                    {
+                        usuario.Credencial.Contraseña = Encriptado.Hash(usuario.Credencial.Contraseña);
+                        bllU.Insertar(usuario);
+                        TempData["Resultado"] = "Creado";
+                        return RedirectToAction("Index");
+                    }
+
+                        
                 else {
                     IdiomaBLL bllIdioma = new IdiomaBLL();
                     ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
+                    if (bllU.ValidarExistencia(usuario.Credencial) == true) { TempData["Resultado"] = "Existe"; return RedirectToAction("Create"); }
                     return View("Create", usuario);
 
                 }
