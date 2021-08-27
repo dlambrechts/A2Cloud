@@ -1,9 +1,9 @@
 ﻿@model BE.UsuarioBE
+
+
 @{
-    ViewBag.Title = "Nuevo Usuario";
+    ViewBag.Title = "Crear";
 }
-
-
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -13,43 +13,99 @@
         </div>
     </div>
 
-    <form>
-        <div class="form-group">
-            <label for="formGroupExampleInput">Nombre</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ingrese el Nombre">
-        </div>
-        <div class="form-group">
-            <label for="formGroupExampleInput2">Apellido</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Ingrese el Apellido">
-        </div>
-        <div class="form-group">
-            <label for="exampleFormControlInput1">Email</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="nombre@dominio.com">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Contraseña</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Confirmar Contraseña</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Idioma</label>
-            <select class="form-control">
-                <option>Default select</option>
-                <option>Default select</option>
-            </select>
-        </div>
-    </form>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
+            <div class="form-group">
+                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control ", @data_val = "true", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Credencial.Mail, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Credencial.Mail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Credencial.Mail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Credencial.Contraseña, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Credencial.Contraseña, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Credencial.Contraseña, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Idioma, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Idioma.Id, new SelectList(Enumerable.Empty<SelectListItem>()), new { @id = "Idiomas", @class = "form-control" })
+
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 </main>
 
-<script>
+@section scripts {
+    <script>
 
-    window.onload = function () {
-        document.getElementById('account-collapse').className = 'show';
-        document.getElementById('Usuarios').className = 'btn-activo';
-    };
-</script>
+        window.onload = function () {
+            document.getElementById('account-collapse').className = 'show';
+            document.getElementById('Usuarios').className = 'btn-activo';
+        };
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: "/Idioma/ListaIdiomas",
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                datatype: JSON,
+                success: function (result) {
+                    $(result).each(function () {
+                        $("#Idiomas").append($("<option></option>").val(this.Id).html(this.Descripcion));
+                    });
+                },
+                error: function (data) { }
+            });
+        });
+    </script>
+
+}
+ 

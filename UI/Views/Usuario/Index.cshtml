@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<BE.UsuarioBE>
 @{
     ViewBag.Title = "Usuarios";
 }
@@ -8,18 +8,44 @@
         <h1 class="h2">Usuarios</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a>@Html.ActionLink("Nuevo", "Create", "Usuario", null, new { @class = "btn btn-sm btn-outline-secondary", @type="button" })</a>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                <a>@Html.ActionLink("Nuevo", "Create", "Usuario", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
             </div>
             <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <span data-feather="calendar"></span>
+                <span data-feather="Opción"></span>
                 This week
             </button>
         </div>
     </div>
 
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Nombre)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Apellido)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Credencial.Mail)</th>
 
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+
+            {
+                <tr>
+                    <th scope="row">@Html.DisplayFor(model => item.Id)</th>
+                    <td>@Html.DisplayFor(model => item.Nombre)</td>
+                    <td>@Html.DisplayFor(model => item.Apellido)</td>
+                    <td>@Html.DisplayFor(model => item.Credencial.Mail)</td>
+                </tr>
+
+
+
+            }
+
+        </tbody>
+    </table>
 
 </main>
 

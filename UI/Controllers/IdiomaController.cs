@@ -3,42 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using BE;
 using BLL;
+using BE;
 
 namespace UI.Controllers
 {
-    public class UsuarioController : Controller
+    public class IdiomaController : Controller
     {
-        // GET: Usuario
+        // GET: Idioma
         public ActionResult Index()
         {
-            UsuarioBLL bllUsuario = new UsuarioBLL();
-            var lista=bllUsuario.ListarTodos();
-            return View(lista);
+
+            return View();
         }
 
-        // GET: Usuario/Details/5
+        // GET: Idioma/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Usuario/Create
+        // GET: Idioma/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Usuario/Create
+        // POST: Idioma/Create
         [HttpPost]
-        public ActionResult Create(UsuarioBE usuario)
+        public ActionResult Create(FormCollection collection)
         {
             try
             {
                 // TODO: Add insert logic here
-                UsuarioBLL bllU = new UsuarioBLL();
-                bllU.Insertar(usuario);
+
                 return RedirectToAction("Index");
             }
             catch
@@ -47,13 +45,13 @@ namespace UI.Controllers
             }
         }
 
-        // GET: Usuario/Edit/5
+        // GET: Idioma/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Usuario/Edit/5
+        // POST: Idioma/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -69,13 +67,13 @@ namespace UI.Controllers
             }
         }
 
-        // GET: Usuario/Delete/5
+        // GET: Idioma/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Usuario/Delete/5
+        // POST: Idioma/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -89,6 +87,14 @@ namespace UI.Controllers
             {
                 return View();
             }
+        }
+
+        public JsonResult ListaIdiomas()
+        {
+            IdiomaBLL bllIdioma = new IdiomaBLL();
+            var lista = bllIdioma.ObtenerIdiomas();
+    
+            return Json(lista, JsonRequestBehavior.AllowGet);
         }
     }
 }

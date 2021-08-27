@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IdiomaController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -208,6 +209,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Idioma\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -218,6 +220,10 @@
     <ProjectReference Include="..\BE\BE.csproj">
       <Project>{4acc28db-b4c9-44ab-9ff5-74d70c41530e}</Project>
       <Name>BE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{673cc286-62eb-4ec0-b5ed-b92772a47d61}</Project>
+      <Name>BLL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

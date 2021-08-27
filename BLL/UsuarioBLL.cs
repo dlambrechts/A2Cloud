@@ -18,5 +18,11 @@ namespace BLL
             return mppUsuario.Insertar(usuario);
         }
 
+        public List<UsuarioBE> ListarTodos() 
+        
+        {
+            return mppUsuario.ListarUsuarios();
+        }
+
     }
 }

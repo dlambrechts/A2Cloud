@@ -74,7 +74,7 @@ namespace DAL
                 Transaccion.Commit();          
             }
 
-            catch 
+            catch (Exception ex)
             {               
                 Transaccion.Rollback();
                 return -1;

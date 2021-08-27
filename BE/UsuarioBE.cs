@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace BE
 {
@@ -10,7 +13,7 @@ namespace BE
     {
         public UsuarioBE() { }
 
-        public UsuarioBE(string _nombre,string _apellido) 
+        public UsuarioBE(string _nombre,string _apellido,CredencialBE _cred,IdiomaBE _idioma) 
         
         {
             nombre = _nombre;
@@ -18,6 +21,9 @@ namespace BE
         }
 
         private string nombre;
+
+
+        [DisplayName("Nombre del Usuario")]       
         public string Nombre
         {
             get { return nombre; }
@@ -45,6 +51,15 @@ namespace BE
         { 
             get { return credencial; }
             set { credencial = value; }
+        }
+
+        private IdiomaBE idioma;
+
+        public IdiomaBE Idioma 
+        
+        {
+            get { return idioma; }
+            set { idioma = value; }
         }
 
     }
