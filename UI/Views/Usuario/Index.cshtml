@@ -20,8 +20,15 @@
 
     @if (ViewBag.Resultado != null && ViewBag.Resultado == "Creado")
     {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Correcto:</strong> El Usuario fue Creado
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (ViewBag.Resultado != null && ViewBag.Resultado == "Editado")
+    {
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Correcto:</strong> El Usuario fue Creado
+    <strong>Correcto:</strong> El Usuario  @ViewBag.Usuario fue Editado
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
     }
@@ -41,14 +48,14 @@
             @foreach (var item in Model)
 
             {
-            <tr>
-                <th scope="row">@Html.DisplayFor(model => item.Id)</th>
-                <td>@Html.DisplayFor(model => item.Nombre)</td>
-                <td>@Html.DisplayFor(model => item.Apellido)</td>
-                <td>@Html.DisplayFor(model => item.Credencial.Mail)</td>
-                <td><a href="@Url.Action("Edit", "Usuario", new {id=item.Id })">Editar</a></td>
+                <tr>
+                    <th scope="row">@Html.DisplayFor(model => item.Id)</th>
+                    <td>@Html.DisplayFor(model => item.Nombre)</td>
+                    <td>@Html.DisplayFor(model => item.Apellido)</td>
+                    <td>@Html.DisplayFor(model => item.Credencial.Mail)</td>
+                    <td><a href="@Url.Action("Edit", "Usuario", new {id=item.Id })"><i class="fas fa-edit"></i></a><a href="@Url.Action("Delete", "Usuario", new {id=item.Id })">Eliminar</a></td>
 
-            </tr>
+                </tr>
 
 
 

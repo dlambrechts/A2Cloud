@@ -21,6 +21,7 @@ namespace UI.Controllers
             UsuarioBLL bllUsuario = new UsuarioBLL();
             var lista=bllUsuario.ListarTodos();
             ViewBag.Resultado = TempData["Resultado"] as string;
+            ViewBag.Usuario = TempData["IdUsuario"] as string;
             return View(lista);
         }
 
@@ -72,43 +73,71 @@ namespace UI.Controllers
         // GET: Usuario/Edit/5
         public ActionResult Edit(int id)
         {
+
             UsuarioBE us = new UsuarioBE();
             us.Id = id;
             us=bllU.ObtenerUno(us);
+
+            ViewBag.Resultado = TempData["Editado"] as string;
             ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
             return View(us);
         }
 
         // POST: Usuario/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, UsuarioBE usuario)
         {
             try
             {
-                // TODO: Add update logic here
+                ModelState.Remove("Credencial.Contraseña");
+                ModelState.Remove("Credencial.ConfirmarCont");
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+                if (ModelState.IsValid)  // Falta validar que si cambia el mail no exista, excluir el usuario que se esta editando de esa validación
+                    {
+                        bllU.Editar(usuario);
+                        TempData["Resultado"] = "Editado";
+                        TempData["IdUsuario"] = usuario.Id.ToString() ;
+                    return RedirectToAction("Index");
+                    }
+
+
+                    else
+                    {
+                        IdiomaBLL bllIdioma = new IdiomaBLL();
+                        ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
+                        return View("Edit", usuario);
+
+                    }
+                }
+                catch
+                {
+                    return View();
+                }
+
         }
 
         // GET: Usuario/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            UsuarioBE usu = new UsuarioBE();
+            usu.Id = id;
+            usu=bllU.ObtenerUno(usu);
+
+            return View(usu);
+         
+            
         }
 
         // POST: Usuario/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            UsuarioBE delU = new UsuarioBE();
+            delU.Id = id;
             try
             {
                 // TODO: Add delete logic here
-
+                bllU.Eliminar(delU);
                 return RedirectToAction("Index");
             }
             catch

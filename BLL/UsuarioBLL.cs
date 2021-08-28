@@ -14,7 +14,8 @@ namespace BLL
 
         public int Insertar(UsuarioBE usuario) 
         
-        {           
+        {
+            usuario.FechaCreacion = DateTime.Now;
             return mppUsuario.Insertar(usuario);
         }
 
@@ -34,6 +35,21 @@ namespace BLL
         
         {
             return mppUsuario.ValidarExistencia(cred);
+        }
+
+        public void Editar (UsuarioBE usuario) 
+        
+        {
+            usuario.FechaModificacion = DateTime.Now;
+            mppUsuario.Editar(usuario);
+        }
+
+        public void Eliminar(UsuarioBE usuario) 
+        
+        { 
+           usuario.FechaModificacion = DateTime.Now;
+            mppUsuario.Eliminar(usuario);
+
         }
 
     }

@@ -25,7 +25,8 @@ namespace MPP
             Parametros.Add("@Mail", Usuario.Credencial.Mail);
             Parametros.Add("@Idioma", Usuario.Idioma.Id);
             Parametros.Add("@Contraseña", Usuario.Credencial.Contraseña);
-         
+            Parametros.Add("@FechaCreacion", Usuario.FechaCreacion);
+
             return AccesoDB.Escribir(Consulta, Parametros);
         }
 
@@ -112,6 +113,38 @@ namespace MPP
             }
 
             return oUsuario;
+
+        }
+
+        public void Editar(UsuarioBE Usuario)
+
+        {
+            string Consulta = "UsuarioEditar";
+            Hashtable Parametros = new Hashtable();
+
+            Parametros.Add("@Id", Usuario.Id);
+            Parametros.Add("@Nombre", Usuario.Nombre);
+            Parametros.Add("@Apellido", Usuario.Apellido);
+            Parametros.Add("@Mail", Usuario.Credencial.Mail);
+            Parametros.Add("@Idioma", Usuario.Idioma.Id);
+            Parametros.Add("@FechaModificacion", Usuario.FechaModificacion);
+
+            Acceso nAcceso = new Acceso();
+
+            nAcceso.Escribir(Consulta, Parametros);
+        }
+
+        public void Eliminar(UsuarioBE Usuario) 
+        
+        {
+            string Consulta = "UsuarioEliminar";
+            Hashtable Parametros = new Hashtable();
+
+            Parametros.Add("@Id", Usuario.Id);
+            Parametros.Add("@FechaModificacion", Usuario.FechaModificacion);
+            Acceso nAcceso = new Acceso();
+
+            nAcceso.Escribir(Consulta, Parametros);
 
         }
     }
