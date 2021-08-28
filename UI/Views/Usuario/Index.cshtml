@@ -33,6 +33,7 @@
                 <th scope="col">@Html.DisplayNameFor(model => model.Nombre)</th>
                 <th scope="col">@Html.DisplayNameFor(model => model.Apellido)</th>
                 <th scope="col">@Html.DisplayNameFor(model => model.Credencial.Mail)</th>
+                <th scope="col">Acciones</th>
 
             </tr>
         </thead>
@@ -40,12 +41,14 @@
             @foreach (var item in Model)
 
             {
-                <tr>
-                    <th scope="row">@Html.DisplayFor(model => item.Id)</th>
-                    <td>@Html.DisplayFor(model => item.Nombre)</td>
-                    <td>@Html.DisplayFor(model => item.Apellido)</td>
-                    <td>@Html.DisplayFor(model => item.Credencial.Mail)</td>
-                </tr>
+            <tr>
+                <th scope="row">@Html.DisplayFor(model => item.Id)</th>
+                <td>@Html.DisplayFor(model => item.Nombre)</td>
+                <td>@Html.DisplayFor(model => item.Apellido)</td>
+                <td>@Html.DisplayFor(model => item.Credencial.Mail)</td>
+                <td><a href="@Url.Action("Edit", "Usuario", new {id=item.Id })">Editar</a></td>
+
+            </tr>
 
 
 

@@ -24,6 +24,12 @@ namespace BLL
             return mppUsuario.ListarUsuarios();
         }
 
+        public UsuarioBE ObtenerUno(UsuarioBE usuario) 
+        
+        {
+            return mppUsuario.ObtenerUno(usuario);
+        }
+
         public bool ValidarExistencia (CredencialBE cred) 
         
         {

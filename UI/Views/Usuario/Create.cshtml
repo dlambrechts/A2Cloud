@@ -5,8 +5,6 @@
     ViewBag.Title = "Crear";
 }
 @{
-
-
     IEnumerable<BE.IdiomaBE> idiomas = ViewData["Idiomas"] as IEnumerable<BE.IdiomaBE>;
     BE.UsuarioBE usuario = ViewData["Usuario"] as BE.UsuarioBE;
 }
@@ -78,8 +76,6 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Idioma, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-
-
                     @Html.DropDownListFor(model => model.Idioma.Id, new SelectList((System.Collections.IEnumerable)ViewData["Idiomas"], "Id", "Descripcion"), new { @class = "form-control" })
                 </div>
             </div>

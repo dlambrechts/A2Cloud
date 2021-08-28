@@ -81,5 +81,38 @@ namespace MPP
             }
 
         }
+
+        public UsuarioBE ObtenerUno (UsuarioBE usuario) 
+        
+        {
+            Hashtable Param = new Hashtable();
+            Param.Add("@Id", usuario.Id);
+            DataSet DS = new DataSet();
+            DS = AccesoDB.LeerDatos("UsuarioObtenerUno", Param);
+
+            UsuarioBE oUsuario = new UsuarioBE();
+
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow Item in DS.Tables[0].Rows)
+                {
+                    
+                    CredencialBE oCred = new CredencialBE();
+                    IdiomaBE Idio = new IdiomaBE();
+                    oUsuario.Credencial = oCred;
+                    oUsuario.Idioma = Idio;
+                    oUsuario.Id = Convert.ToInt32(Item["Id"]);
+                    oUsuario.Nombre = Item["Nombre"].ToString().Trim();
+                    oUsuario.Apellido = Item["Apellido"].ToString().Trim();
+                    oUsuario.Credencial.Mail = Item["Mail"].ToString().Trim();
+                    oUsuario.Credencial.Contraseña = Item["Contraseña"].ToString().Trim();
+                    oUsuario.Idioma.Id= Convert.ToInt32(Item["Idioma"]);
+
+                }
+            }
+
+            return oUsuario;
+
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace UI.Controllers
     {
 
         UsuarioBLL bllU = new UsuarioBLL();
+        IdiomaBLL bllIdioma = new IdiomaBLL();
 
         // GET: Usuario
         public ActionResult Index()
@@ -32,7 +33,7 @@ namespace UI.Controllers
         // GET: Usuario/Create
         public ActionResult Create()
         {
-            IdiomaBLL bllIdioma= new IdiomaBLL();
+            
             ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
             ViewBag.Resultado = TempData["Resultado"] as string;
             return View();
@@ -71,7 +72,11 @@ namespace UI.Controllers
         // GET: Usuario/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            UsuarioBE us = new UsuarioBE();
+            us.Id = id;
+            us=bllU.ObtenerUno(us);
+            ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
+            return View(us);
         }
 
         // POST: Usuario/Edit/5
