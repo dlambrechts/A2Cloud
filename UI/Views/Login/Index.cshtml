@@ -1,7 +1,8 @@
-﻿
+﻿@model BE.CredencialBE
 @{
     Layout = null;
 }
+
 
 <!doctype html>
 <html lang="en">
@@ -12,7 +13,7 @@
     <title>A2Cloud - Login</title>
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/login.css" rel="stylesheet">
+
 
     <style>
         .bd-placeholder-img {
@@ -30,9 +31,7 @@
         }
     </style>
 
-
-    <!-- Custom styles for this template -->
-    <link href="signin.css" rel="stylesheet">
+    <link href="~/Content/login.css" rel="stylesheet">
 </head>
 <body class="text-center">
 
@@ -42,12 +41,14 @@
             <h1 class="h3 mb-3 fw-normal">Inicie sesión</h1>
 
             <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Email</label>
+
+                @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control" } })
+
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Contraseña">
-                <label for="floatingPassword">Contraseña</label>
+
+                @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "form-control" } })
+
             </div>
 
             <div class="checkbox mb-3">
