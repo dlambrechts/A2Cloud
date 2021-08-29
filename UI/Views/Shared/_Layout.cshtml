@@ -34,7 +34,7 @@
         <button class="navbar-toggler  d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
+
         <div class="btn-group">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 Diego Lambrechts
@@ -123,7 +123,7 @@
                             </button>
                             <div class="collapse" id="account-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li>@Html.ActionLink("Usuarios", "Index", "Usuario",null, new { @class = "link-dark rounded", @id = "Usuarios" })</li>
+                                    <li>@Html.ActionLink("Usuarios", "Index", "Usuario", null, new { @class = "link-dark rounded", @id = "Usuarios" })</li>
                                     <li><a href="~/Usuario" class="link-dark rounded">Perfiles</a></li>
                                 </ul>
                             </div>
@@ -163,7 +163,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-  
+
 </body>
 </html>
 

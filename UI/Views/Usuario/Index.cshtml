@@ -27,8 +27,16 @@
     }
     @if (ViewBag.Resultado != null && ViewBag.Resultado == "Editado")
     {
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Correcto:</strong> El Usuario  @ViewBag.Usuario fue Editado
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Correcto:</strong> El Usuario  @ViewBag.Usuario fue Editado
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (ViewBag.Resultado != null && ViewBag.Resultado == "Eliminado")
+    {
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Correcto:</strong> El Usuario  @ViewBag.Mail (@ViewBag.Usuario) fue Eliminado
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
     }
@@ -53,7 +61,7 @@
                     <td>@Html.DisplayFor(model => item.Nombre)</td>
                     <td>@Html.DisplayFor(model => item.Apellido)</td>
                     <td>@Html.DisplayFor(model => item.Credencial.Mail)</td>
-                    <td><a href="@Url.Action("Edit", "Usuario", new {id=item.Id })"><i class="fas fa-edit"></i></a><a href="@Url.Action("Delete", "Usuario", new {id=item.Id })">Eliminar</a></td>
+                    <td><a href="@Url.Action("Edit", "Usuario", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;<a href="@Url.Action("Delete", "Usuario", new {id=item.Id })"><i class="fa fa-trash"></i></a></td>
 
                 </tr>
 

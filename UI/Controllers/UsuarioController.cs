@@ -22,6 +22,7 @@ namespace UI.Controllers
             var lista=bllUsuario.ListarTodos();
             ViewBag.Resultado = TempData["Resultado"] as string;
             ViewBag.Usuario = TempData["IdUsuario"] as string;
+            ViewBag.Mail = TempData["Mail"] as string;
             return View(lista);
         }
 
@@ -96,7 +97,7 @@ namespace UI.Controllers
                     {
                         bllU.Editar(usuario);
                         TempData["Resultado"] = "Editado";
-                        TempData["IdUsuario"] = usuario.Id.ToString() ;
+                        TempData["IdUsuario"] = usuario.Id.ToString();
                     return RedirectToAction("Index");
                     }
 
@@ -134,10 +135,14 @@ namespace UI.Controllers
         {
             UsuarioBE delU = new UsuarioBE();
             delU.Id = id;
+            delU = bllU.ObtenerUno(delU);
             try
             {
                 // TODO: Add delete logic here
                 bllU.Eliminar(delU);
+                TempData["Resultado"] = "Eliminado";
+                TempData["IdUsuario"] = delU.Id.ToString();
+                TempData["Mail"] = delU.Credencial.Mail;
                 return RedirectToAction("Index");
             }
             catch
