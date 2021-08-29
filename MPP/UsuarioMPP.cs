@@ -108,6 +108,7 @@ namespace MPP
                     oUsuario.Credencial.Mail = Item["Mail"].ToString().Trim();
                     oUsuario.Credencial.Contraseña = Item["Contraseña"].ToString().Trim();
                     oUsuario.Idioma.Id= Convert.ToInt32(Item["Idioma"]);
+                    oUsuario.Activo = Convert.ToBoolean(Item["Activo"]);
                     if ((Item["FechaCreacion"]) != DBNull.Value) { oUsuario.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                     if ((Item["FechaModificacion"]) != DBNull.Value) oUsuario.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
 

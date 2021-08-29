@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BE;
+using BLL;
+using Seguridad;
 
 namespace UI.Controllers
 {
     public class LoginController : Controller
     {
+        UsuarioBLL bllUser = new UsuarioBLL();
         // GET: Login
         public ActionResult Index()
         {
@@ -28,11 +32,56 @@ namespace UI.Controllers
 
         // POST: Login/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Login(CredencialBE cred)
         {
             try
             {
-                // TODO: Add insert logic here
+
+
+
+                if (ModelState.IsValid)
+
+                {
+                    if (bllUser.ValidarExistencia(cred))
+
+                    {
+                        UsuarioBE user = new UsuarioBE();
+                        user = bllUser.ObtenerUno(user);
+
+                        if (user.Activo)
+
+                        {
+                            if (user.Credencial.Contraseña.Equals(Encriptado.Hash(cred.Contraseña)))
+                            
+                            
+                            {
+
+                                // Reiniciar Contador
+                                // Iniciar Sesión
+                            }
+
+                            else
+                            {
+                                // Contraseña incorrecta
+                                // Intentos Fallidos +1
+
+                            }
+                                               
+                        }
+                        else
+                        {
+                            // Usuario Bloqueado
+
+                        }
+                    
+                    }
+                    
+                    else 
+                    
+                    { 
+                        // Mensaje "verifique los datos"
+                    }
+                }
 
                 return RedirectToAction("Index");
             }
