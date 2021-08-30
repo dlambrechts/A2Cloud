@@ -13,12 +13,13 @@ namespace BE
     {
         public UsuarioBE() { }
 
-        public UsuarioBE(string _nombre,string _apellido,CredencialBE _cred,IdiomaBE _idioma) 
+        public UsuarioBE(CredencialBE cred) 
         
         {
-            nombre = _nombre;
-            apellido = _apellido;
+            this.credencial = cred;
         }
+
+
 
         private string nombre;
 

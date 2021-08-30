@@ -32,12 +32,13 @@ namespace UI.Controllers
 
         // POST: Login/Create
         [HttpPost]
-        public ActionResult Login(CredencialBE cred)
+        public ActionResult Index(CredencialBE cred)
         {
             try
             {
 
-
+                ModelState.Remove("Contraseña");
+                ModelState.Remove("ConfirmarCont");
 
                 if (ModelState.IsValid)
 
@@ -46,18 +47,31 @@ namespace UI.Controllers
 
                     {
                         UsuarioBE user = new UsuarioBE();
-                        user = bllUser.ObtenerUno(user);
+                                         
+                        user = bllUser.ObtenerPorMail(cred);
 
                         if (user.Activo)
 
                         {
+                            string ingresada = cred.Contraseña;
+                            string ingresadaEnc = Encriptado.Hash(cred.Contraseña);
+
+                            string contraseñaReal = user.Credencial.Contraseña;
+
                             if (user.Credencial.Contraseña.Equals(Encriptado.Hash(cred.Contraseña)))
                             
                             
                             {
 
+
+
+
                                 // Reiniciar Contador
                                 // Iniciar Sesión
+                                Session["IdUsuario"] = user.Id.ToString();
+                                Session["NombreCompleto"] = user.Nombre.ToString() + " " + user.Apellido.ToString();
+                         
+                                return RedirectToAction("Index", "Home");
                             }
 
                             else
@@ -82,8 +96,8 @@ namespace UI.Controllers
                         // Mensaje "verifique los datos"
                     }
                 }
+                return View("Index");
 
-                return RedirectToAction("Index");
             }
             catch
             {

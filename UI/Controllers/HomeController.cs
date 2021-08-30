@@ -10,7 +10,11 @@ namespace UI.Controllers
     {
         public ActionResult Index()
         {
+            if (Session["IdUsuario"] != null) { 
             return View();
+            }
+
+            else { return RedirectToAction("Index", "Login"); }
         }
 
         public ActionResult About()

@@ -89,7 +89,7 @@ namespace MPP
             Hashtable Param = new Hashtable();
             Param.Add("@Id", usuario.Id);
             DataSet DS = new DataSet();
-            DS = AccesoDB.LeerDatos("UsuarioObtenerUno", Param);
+            DS = AccesoDB.LeerDatos("UsuarioObtenerPorId", Param);
 
             UsuarioBE oUsuario = new UsuarioBE();
 
@@ -108,6 +108,42 @@ namespace MPP
                     oUsuario.Credencial.Mail = Item["Mail"].ToString().Trim();
                     oUsuario.Credencial.Contraseña = Item["Contraseña"].ToString().Trim();
                     oUsuario.Idioma.Id= Convert.ToInt32(Item["Idioma"]);
+                    oUsuario.Activo = Convert.ToBoolean(Item["Activo"]);
+                    if ((Item["FechaCreacion"]) != DBNull.Value) { oUsuario.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
+                    if ((Item["FechaModificacion"]) != DBNull.Value) oUsuario.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
+
+                }
+            }
+
+            return oUsuario;
+
+        }
+
+        public UsuarioBE ObtenerPorMail(CredencialBE credencial)
+
+        {
+            Hashtable Param = new Hashtable();
+            Param.Add("@Mail", credencial.Mail);
+            DataSet DS = new DataSet();
+            DS = AccesoDB.LeerDatos("UsuarioObtenerPorMail", Param);
+
+            UsuarioBE oUsuario = new UsuarioBE();
+
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow Item in DS.Tables[0].Rows)
+                {
+
+                    CredencialBE oCred = new CredencialBE();
+                    IdiomaBE Idio = new IdiomaBE();
+                    oUsuario.Credencial = oCred;
+                    oUsuario.Idioma = Idio;
+                    oUsuario.Id = Convert.ToInt32(Item["Id"]);
+                    oUsuario.Nombre = Item["Nombre"].ToString().Trim();
+                    oUsuario.Apellido = Item["Apellido"].ToString().Trim();
+                    oUsuario.Credencial.Mail = Item["Mail"].ToString().Trim();
+                    oUsuario.Credencial.Contraseña = Item["Contraseña"].ToString().Trim();
+                    oUsuario.Idioma.Id = Convert.ToInt32(Item["Idioma"]);
                     oUsuario.Activo = Convert.ToBoolean(Item["Activo"]);
                     if ((Item["FechaCreacion"]) != DBNull.Value) { oUsuario.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                     if ((Item["FechaModificacion"]) != DBNull.Value) oUsuario.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
