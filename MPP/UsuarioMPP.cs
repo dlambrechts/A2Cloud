@@ -51,6 +51,7 @@ namespace MPP
                     oUsuario.Nombre = Item["Nombre"].ToString().Trim();
                     oUsuario.Apellido = Item["Apellido"].ToString().Trim();
                     oUsuario.Credencial.Mail = Item["Mail"].ToString().Trim();
+                    oUsuario.Activo = Convert.ToBoolean(Item["Activo"]);
 
 
                     ListaUsuarios.Add(oUsuario);
@@ -109,6 +110,7 @@ namespace MPP
                     oUsuario.Credencial.Contraseña = Item["Contraseña"].ToString().Trim();
                     oUsuario.Idioma.Id= Convert.ToInt32(Item["Idioma"]);
                     oUsuario.Activo = Convert.ToBoolean(Item["Activo"]);
+                    oUsuario.IntentosFallidos = Convert.ToInt32(Item["IntentosFallidos"]);
                     if ((Item["FechaCreacion"]) != DBNull.Value) { oUsuario.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                     if ((Item["FechaModificacion"]) != DBNull.Value) oUsuario.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
 
@@ -145,6 +147,7 @@ namespace MPP
                     oUsuario.Credencial.Contraseña = Item["Contraseña"].ToString().Trim();
                     oUsuario.Idioma.Id = Convert.ToInt32(Item["Idioma"]);
                     oUsuario.Activo = Convert.ToBoolean(Item["Activo"]);
+                    oUsuario.IntentosFallidos= Convert.ToInt32(Item["IntentosFallidos"]);
                     if ((Item["FechaCreacion"]) != DBNull.Value) { oUsuario.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                     if ((Item["FechaModificacion"]) != DBNull.Value) oUsuario.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
 
@@ -167,6 +170,43 @@ namespace MPP
             Parametros.Add("@Mail", Usuario.Credencial.Mail);
             Parametros.Add("@Idioma", Usuario.Idioma.Id);
             Parametros.Add("@FechaModificacion", Usuario.FechaModificacion);
+            Parametros.Add("@Activo",Usuario.Activo);
+
+            Acceso nAcceso = new Acceso();
+
+            nAcceso.Escribir(Consulta, Parametros);
+        }
+
+        public void IncrementarIntentosFallidos(UsuarioBE Usuario)
+
+        {
+            string Consulta = "UsuarioIncrementarIntentosFallidos";
+            Hashtable Parametros = new Hashtable();
+            Parametros.Add("@Mail", Usuario.Credencial.Mail);
+
+            Acceso nAcceso = new Acceso();
+
+            nAcceso.Escribir(Consulta, Parametros);
+        }
+
+        public void BloquarUsuario(UsuarioBE Usuario)
+
+        {
+            string Consulta = "UsuarioBloquear";
+            Hashtable Parametros = new Hashtable();
+            Parametros.Add("@Mail", Usuario.Credencial.Mail);
+
+            Acceso nAcceso = new Acceso();
+
+            nAcceso.Escribir(Consulta, Parametros);
+        }
+
+        public void ReiniciarContador(UsuarioBE Usuario)
+
+        {
+            string Consulta = "UsuarioReiniciarContador";
+            Hashtable Parametros = new Hashtable();
+            Parametros.Add("@Mail", Usuario.Credencial.Mail);
 
             Acceso nAcceso = new Acceso();
 

@@ -15,95 +15,114 @@ namespace UI.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            return View();
+            ViewBag.Resultado = TempData["Resultado"] as string;
+
+            if (Session["IdUsuario"] == null)
+             {
+                return View();
+              }
+            else { return RedirectToAction("Index", "Home"); }
         }
 
-        // GET: Login/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
-        // GET: Login/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: Login/Create
+        // POST: Login/Index
         [HttpPost]
         public ActionResult Index(CredencialBE cred)
         {
-            try
-            {
-
-                ModelState.Remove("Contraseña");
-                ModelState.Remove("ConfirmarCont");
-
-                if (ModelState.IsValid)
-
+  
+                try
                 {
-                    if (bllUser.ValidarExistencia(cred))
+
+                    ModelState.Remove("Contraseña");
+                    ModelState.Remove("ConfirmarCont");
+
+                    if (ModelState.IsValid)
 
                     {
-                        UsuarioBE user = new UsuarioBE();
-                                         
-                        user = bllUser.ObtenerPorMail(cred);
-
-                        if (user.Activo)
+                        if (bllUser.ValidarExistencia(cred))
 
                         {
-                            string ingresada = cred.Contraseña;
-                            string ingresadaEnc = Encriptado.Hash(cred.Contraseña);
+                            UsuarioBE user = new UsuarioBE();
 
-                            string contraseñaReal = user.Credencial.Contraseña;
+                            user = bllUser.ObtenerPorMail(cred);
 
-                            if (user.Credencial.Contraseña.Equals(Encriptado.Hash(cred.Contraseña)))
-                            
-                            
+                            if (user.Activo)
+
                             {
+                                string ingresada = cred.Contraseña;
+                                string ingresadaEnc = Encriptado.Hash(cred.Contraseña);
 
+                                string contraseñaReal = user.Credencial.Contraseña;
 
+                                if (user.Credencial.Contraseña.Equals(Encriptado.Hash(cred.Contraseña)))
 
+                                {
+                                    bllUser.ReiniciarContador(user); // Reiniciar Contador
 
-                                // Reiniciar Contador
-                                // Iniciar Sesión
-                                Session["IdUsuario"] = user.Id.ToString();
-                                Session["NombreCompleto"] = user.Nombre.ToString() + " " + user.Apellido.ToString();
-                         
-                                return RedirectToAction("Index", "Home");
+                                    // Iniciar Sesión
+                                    Session["IdUsuario"] = user.Id.ToString();
+                                    Session["NombreCompleto"] = user.Nombre.ToString() + " " + user.Apellido.ToString();
+
+                                    return RedirectToAction("Index", "Home");
+                                }
+
+                                else
+                                {
+                                    // Contraseña incorrecta
+                                    // Intentos Fallidos +1
+                                    bllUser.IncrementarIntentosFallidos(user);
+                                    if (user.IntentosFallidos == 3)
+
+                                    {
+                                        bllUser.BloquarUsuario(user);
+                                    }
+
+                                     TempData["Resultado"] = "Contraseña Incorrecta";
+                                     return RedirectToAction("Index");
                             }
 
+                            }
                             else
                             {
-                                // Contraseña incorrecta
-                                // Intentos Fallidos +1
+                            // El usuario está bloqueado
+                            TempData["Resultado"] = "Usuario Bloqueado, comuniquese con el Administrador";
+                            return RedirectToAction("Index");
 
-                            }
-                                               
                         }
+
+                        }
+
                         else
+
                         {
-                            // Usuario Bloqueado
+                        // El usuario no existe
+                        TempData["Resultado"] = "Usuario Inexistente";
+                        return RedirectToAction("Index");
+                    }
+                    }
+                    return View("Index");
 
-                        }
-                    
-                    }
-                    
-                    else 
-                    
-                    { 
-                        // Mensaje "verifique los datos"
-                    }
                 }
-                return View("Index");
+                catch
+                {
+                    return View();
+                }
 
-            }
-            catch
-            {
-                return View();
-            }
+         }
+
+        // GET: Logout
+        public ActionResult Logout()
+        {
+
+
+            Session.Abandon();
+            return RedirectToAction("Index", "Login");
+
         }
+
+
+
 
 
 

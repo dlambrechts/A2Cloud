@@ -18,18 +18,27 @@ namespace UI.Controllers
         // GET: Usuario
         public ActionResult Index()
         {
-            UsuarioBLL bllUsuario = new UsuarioBLL();
-            var lista=bllUsuario.ListarTodos();
-            ViewBag.Resultado = TempData["Resultado"] as string;
-            ViewBag.Usuario = TempData["IdUsuario"] as string;
-            ViewBag.Mail = TempData["Mail"] as string;
-            return View(lista);
+            if (Session["IdUsuario"] != null)
+            {
+                UsuarioBLL bllUsuario = new UsuarioBLL();
+                var lista = bllUsuario.ListarTodos();
+                ViewBag.Resultado = TempData["Resultado"] as string;
+                ViewBag.Usuario = TempData["IdUsuario"] as string;
+                ViewBag.Mail = TempData["Mail"] as string;
+                return View(lista);
+            }
+
+            else { return RedirectToAction("Index", "Login"); }
+
         }
 
         // GET: Usuario/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            UsuarioBE user = new UsuarioBE();
+            user.Id = id;
+            user=bllU.ObtenerUno(user);
+            return View(user);
         }
 
         // GET: Usuario/Create

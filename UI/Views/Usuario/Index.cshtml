@@ -48,6 +48,7 @@
                 <th scope="col">@Html.DisplayNameFor(model => model.Nombre)</th>
                 <th scope="col">@Html.DisplayNameFor(model => model.Apellido)</th>
                 <th scope="col">@Html.DisplayNameFor(model => model.Credencial.Mail)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Activo)</th>
                 <th scope="col">Acciones</th>
 
             </tr>
@@ -56,14 +57,19 @@
             @foreach (var item in Model)
 
             {
-                <tr>
-                    <th scope="row">@Html.DisplayFor(model => item.Id)</th>
-                    <td>@Html.DisplayFor(model => item.Nombre)</td>
-                    <td>@Html.DisplayFor(model => item.Apellido)</td>
-                    <td>@Html.DisplayFor(model => item.Credencial.Mail)</td>
-                    <td><a href="@Url.Action("Edit", "Usuario", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;<a href="@Url.Action("Delete", "Usuario", new {id=item.Id })"><i class="fa fa-trash"></i></a></td>
+            <tr>
+                <th scope="row">@Html.DisplayFor(model => item.Id)</th>
+                <td>@Html.DisplayFor(model => item.Nombre)</td>
+                <td>@Html.DisplayFor(model => item.Apellido)</td>
+                <td>@Html.DisplayFor(model => item.Credencial.Mail)</td>
+                <td>@Html.DisplayFor(model => item.Activo)</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Usuario", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
+                    <a href="@Url.Action("Delete", "Usuario", new {id=item.Id })"><i class="fa fa-trash"></i></a>&ensp;&ensp;
+                    <a href="@Url.Action("Details", "Usuario", new { id = item.Id })"><i class="fa fa-eye"></i></a>&ensp; &ensp;
+                </td>
 
-                </tr>
+            </tr>
 
 
 

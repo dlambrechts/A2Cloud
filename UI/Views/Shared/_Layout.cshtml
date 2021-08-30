@@ -45,7 +45,7 @@
                 <li><a class="dropdown-item" href="#">Ver Perfil</a></li>
                 <li><a class="dropdown-item" href="#">Otra Opción</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                <li>@Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "dropdown-item" })</li>
             </ul>
         </div>
     </header>

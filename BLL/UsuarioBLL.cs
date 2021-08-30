@@ -58,5 +58,23 @@ namespace BLL
 
         }
 
+        public void IncrementarIntentosFallidos(UsuarioBE Usuario) 
+        
+        {
+            Usuario.IntentosFallidos++;
+            mppUsuario.IncrementarIntentosFallidos(Usuario);
+        }
+
+        public void BloquarUsuario(UsuarioBE Usuario)
+        {            
+            mppUsuario.BloquarUsuario(Usuario);
+        }
+
+        public void ReiniciarContador(UsuarioBE Usuario) 
+        
+        {
+            mppUsuario.ReiniciarContador(Usuario);
+        }
+
     }
 }

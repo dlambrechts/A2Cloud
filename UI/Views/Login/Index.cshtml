@@ -15,6 +15,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
 
 
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -40,38 +41,47 @@
         {
             @Html.AntiForgeryToken()
 
-             <form>
-                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                 <img class="mb-4" src="~/Content/img/Logo.png" alt="" width="191" height="156">
-                    <h1 class="h3 mb-3 fw-normal">Inicie sesión</h1>
-
-                 <div class="form-floating">
-
-                     @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control" } })
-
-                    </div>
-                    <div class="form-floating">
-
-                      @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "form-control" } })
-    
-                     </div>
-
-                 <div class="checkbox mb-3">
-                    <label>
-                         <input type="checkbox" value="remember-me"> Recordarme
-                    </label>
+        <form>
+            @if (ViewBag.Resultado != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>No se pudo iniciar sesión: </strong>@ViewBag.Resultado
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+            }
+
+            <img class="mb-4" src="~/Content/img/Logo.png" alt="" width="191" height="109">
+            <h2 class="fw-normal" style="color:#148AB6" >A2Cloud</h2>
+            <h1 class="h3 mb-3 fw-normal">Iniciar sesión</h1>
+
+            <div class="form-floating">
+
+                @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+
+            </div>
+            <div class="form-floating">
+
+                @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Recordarme
+                </label>
+            </div>
 
 
             <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
             <p class="mt-5 mb-3 text-muted">&copy; A2Cloud - 2021</p>
 
-            
+
         </form>
         }
-        </main>
-    
+    </main>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 
 
 </body>
