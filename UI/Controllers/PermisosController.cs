@@ -57,15 +57,32 @@ namespace UI.Controllers
             }
         }
 
-        // GET: Permisos/Edit/5
-        public ActionResult Edit(int id)
+        // GET: GrupoPermisos/Edit/5
+        public ActionResult EditarGrupo(int id)
         {
-            return View();
+            if (Session["IdUsuario"] != null)
+            {
+                PerfilFamiliaBE sel = new PerfilFamiliaBE();
+                sel.Id = id;
+
+                IList<PerfilComponenteBE> flia = null;
+
+  
+                    flia = perBLL.ObtenerTodo(sel);  // Traer de la DB
+                    foreach (var i in flia)
+                        sel.AgregarHijo(i);
+  
+                return View(sel);
+
+            }
+
+            else { return RedirectToAction("Index", "Login"); }
+     
         }
 
-        // POST: Permisos/Edit/5
+        // POST: GrupoPermisos/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult EditarGrupo(int id, FormCollection collection)
         {
             try
             {

@@ -94,7 +94,7 @@ namespace MPP
         public void GuardarComponente(PerfilComponenteBE Comp, bool EsFamilia)
 
         {
-            Acceso nAcceso = new Acceso();
+          
 
             string Consulta = "sp_InsertarComponente";
             Hashtable Parametros = new Hashtable();
@@ -105,17 +105,17 @@ namespace MPP
 
             else Parametros.Add("Permiso", Comp.Permiso.ToString()); ;
 
-            nAcceso.Escribir(Consulta, Parametros);
+            AccesoDB.Escribir(Consulta, Parametros);
 
         }
 
         public IList<PerfilComponenteBE> ObtenerTodo(PerfilFamiliaBE Familia)
         {
-            Acceso nAcceso = new Acceso();
+          
             Hashtable Parametros = new Hashtable();
             Parametros.Add("Fam", Familia.Id);
             DataSet DS = new DataSet();
-            DS = nAcceso.LeerDatos("sp_ObtenerTodoFamilia", Parametros);
+            DS = AccesoDB.LeerDatos("PerfilFamiliaCompleta", Parametros);
 
             var Lista = new List<PerfilComponenteBE>();
 
@@ -142,7 +142,7 @@ namespace MPP
 
                     if (string.IsNullOrEmpty(permiso))
                         c = new PerfilFamiliaBE();
-
+                     
                     else
                         c = new PerfilPatenteBE();
 

@@ -44,10 +44,13 @@ namespace UI.Controllers
         // GET: Usuario/Create
         public ActionResult Create()
         {
-            
-            ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
-            ViewBag.Resultado = TempData["Resultado"] as string;
-            return View();
+            if (Session["IdUsuario"] != null)
+            {
+                ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
+                ViewBag.Resultado = TempData["Resultado"] as string;
+                return View();
+            }
+            else { return RedirectToAction("Index", "Login"); }
         }
 
         // POST: Usuario/Create

@@ -18,7 +18,7 @@ namespace BE
         private string nombre;
 
         [Required(ErrorMessage = "El nombre es obligatorio")]
-        [DisplayName("Nombre del Usuario")]       
+        [DisplayName("Nombre")]       
         public string Nombre
         {
             get { return nombre; }

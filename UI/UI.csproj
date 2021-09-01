@@ -223,6 +223,7 @@
     <Content Include="Views\Usuario\Details.cshtml" />
     <Content Include="Views\Permisos\GrupoPermisos.cshtml" />
     <Content Include="Views\Permisos\CrearGrupo.cshtml" />
+    <Content Include="Views\Permisos\EditarGrupo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
