@@ -46,11 +46,31 @@ namespace BLL
             return mppPerfil.ObtenerTodo(Fam);
         }
 
-        public void CompletarComponentesFamilia(PerfilFamiliaBE Familia)
+        public PerfilFamiliaBE ObtenerFamiliaPorId (PerfilFamiliaBE fam)
+        
+        {
+            return mppPerfil.ObtenerFamiliaPorId(fam);
+        
+        }
+
+
+        public PerfilFamiliaBE CompletarFamilia (PerfilFamiliaBE fam)
 
         {
-            mppPerfil.CompletarComponentesFamilia(Familia);
+
+            IList<PerfilComponenteBE> flia = null;
+
+            flia = ObtenerTodo(fam);  
+            foreach (var i in flia)
+            fam.AgregarHijo(i);
+
+            return fam;
         }
+        //public void CompletarComponentesFamilia(PerfilFamiliaBE Familia)
+
+        //{
+        //    mppPerfil.CompletarComponentesFamilia(Familia);
+        //}
 
         public void CargarPerfilUsuario(UsuarioBE Us)
 

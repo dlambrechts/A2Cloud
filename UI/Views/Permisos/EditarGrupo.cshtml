@@ -1,18 +1,23 @@
-﻿@*@model IEnumerable<BE.PerfilComponenteBE>*@
+﻿
 @model BE.PerfilFamiliaBE
+
 @{
     ViewBag.Title = "EditarGrupo";
 }
+@section scripts {
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Editar Grupo @Model.Descripcion.ToString()</h1>
+        <h1 class="h2">Editar Grupo de Permisos </h1>
         <div class="btn-toolbar mb-2 mb-md-0">
 
         </div>
     </div>
 
 
-    @using (Html.BeginForm())
+  @using (Html.BeginForm())
+
     {
         @Html.AntiForgeryToken()
 
@@ -21,8 +26,12 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)
 
-    <ul >
-       
+
+
+ 
+    <ul class="list-group" style="max-width: 300px;">
+        <li class="list-group-item active" aria-current="true">@Model.Descripcion</li>
+
         @foreach (var item in Model.Hijos)
         {
 
@@ -30,31 +39,42 @@
             if (@item.Permiso.ToString() == "Ninguno")
             {
 
-             <li >@item.Descripcion
+                <li class="list-group-item d-flex justify-content-between align-items-start">
 
-                 <ul>
-                     @foreach (var subitem in item.Hijos)
-                     {
-                         <li>@subitem.Descripcion</li>
-                       
-                     }
-                 </ul>
-            </li>
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"><i class="fa fa-folder"></i> @item.Descripcion</div>
+
+                    </div>
+                    <span><a href="@Url.Action("QuitarElemento", "Permisos", new {item=item.Id,fam=Model.Id,grupo=true } )"  onclick="return confirm('Confirma?')"><i class="fa fa-remove"></i></a></span>
+                </li>
             }
             else
 
             {
-            <li >@item.Descripcion</li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"><i class="fa fa-key"></i> @item.Descripcion</div>
+
+                    </div>
+                    <span><a href="@Url.Action("QuitarElemento", "Permisos", new {item=item.Id,fam=Model.Id,grupo=false })" onclick="return confirm('Confirma?')"><i class="fa fa-remove"></i></a></span>
+                </li>
             }
 
 
 
-          }
+        }
 
-        
 
-</ul>
- </div>
+
+    </ul>
+
+</div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
 
     }
 

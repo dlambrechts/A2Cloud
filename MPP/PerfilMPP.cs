@@ -17,7 +17,7 @@ namespace MPP
         {
             List<PerfilPatenteBE> ListaPatentes = new List<PerfilPatenteBE>();
 
-           
+
             DataSet DS = new DataSet();
             DS = AccesoDB.LeerDatos("PerfilListarPatentes", null);
 
@@ -42,6 +42,29 @@ namespace MPP
             }
         }
 
+
+        public PerfilFamiliaBE ObtenerFamiliaPorId(PerfilFamiliaBE fam)
+
+        {
+  
+                Hashtable Param = new Hashtable();
+                Param.Add("@Id", fam.Id);
+                DataSet DS = new DataSet();
+                DS = AccesoDB.LeerDatos("PerfilFamiliaObtenerPorId", Param);
+
+               
+                if (DS.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow Item in DS.Tables[0].Rows)
+                    {                   
+                        fam.Descripcion = Item["Descripcion"].ToString().Trim();
+                    }
+                }
+
+                return fam;
+      
+
+        }
         public IList<PerfilFamiliaBE> ObtenerFamilias()
         {
             List<PerfilFamiliaBE> ListaFamilias = new List<PerfilFamiliaBE>();
@@ -73,12 +96,12 @@ namespace MPP
 
         {
 
-            string ConsultaDel = "sp_BorrarFamilia"; // Primero borro la Familia
+            string ConsultaDel = "PerfilFamiliaEliminar"; // Primero borro la Familia
             Hashtable ParametrosDel = new Hashtable();
             ParametrosDel.Add("Id", Fam.Id);
             AccesoDB.Escribir(ConsultaDel, ParametrosDel);
 
-            string ConsultaAdd = "sp_GuardarFamilia"; // Luego guardo la familia actualizada
+            string ConsultaAdd = "PerfilFamiliaGuardar"; // Luego guardo la familia actualizada
             Hashtable ParametrosAdd = new Hashtable();
             ParametrosAdd.Add("IdPadre", Fam.Id);
 

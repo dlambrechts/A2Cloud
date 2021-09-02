@@ -29,6 +29,10 @@ namespace UI.Controllers
             else { return RedirectToAction("Index", "Login"); }
         }
 
+
+
+
+
         // GET: Permisos/Details/5
         public ActionResult Details(int id)
         {
@@ -64,13 +68,9 @@ namespace UI.Controllers
             {
                 PerfilFamiliaBE sel = new PerfilFamiliaBE();
                 sel.Id = id;
+                sel = perBLL.ObtenerFamiliaPorId(sel);
 
-                IList<PerfilComponenteBE> flia = null;
-
-  
-                    flia = perBLL.ObtenerTodo(sel);  // Traer de la DB
-                    foreach (var i in flia)
-                        sel.AgregarHijo(i);
+                sel = perBLL.CompletarFamilia(sel);
   
                 return View(sel);
 
@@ -80,21 +80,44 @@ namespace UI.Controllers
      
         }
 
-        // POST: GrupoPermisos/Edit/5
-        [HttpPost]
-        public ActionResult EditarGrupo(int id, FormCollection collection)
+
+ 
+        public ActionResult QuitarElemento(int item, int fam, bool grupo)
         {
             try
             {
                 // TODO: Add update logic here
+                PerfilFamiliaBE familia = new PerfilFamiliaBE();
+                PerfilComponenteBE comp;
 
-                return RedirectToAction("Index");
+                familia.Id = fam;
+                familia = perBLL.ObtenerFamiliaPorId(familia);
+                familia = perBLL.CompletarFamilia(familia);
+
+                if (grupo == true) { comp = new PerfilFamiliaBE(); }
+                else { comp = new PerfilPatenteBE(); }
+
+                comp.Id = item;
+
+                familia.QuitarHijo(comp);
+
+                perBLL.GuardarFamilia(familia);
+
+
+                return RedirectToAction("EditarGrupo", new { id = familia.Id });
             }
             catch
             {
-                return View();
+                return View("GrupoPermisos");
             }
         }
+
+
+        public ActionResult EditarGrupoParcial()
+        {
+            return PartialView();
+        }
+
 
         // GET: Permisos/Delete/5
         public ActionResult Delete(int id)

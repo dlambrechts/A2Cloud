@@ -12,6 +12,8 @@ namespace BLL
     {
         UsuarioMPP mppUsuario = new UsuarioMPP();
 
+
+        
         public int Insertar(UsuarioBE usuario) 
         
         {
