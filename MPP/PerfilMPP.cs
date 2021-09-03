@@ -228,7 +228,7 @@ namespace MPP
             Parametros.Add("IdHijo", hijo.Id);
 
             DataSet DS = new DataSet();
-                DS = AccesoDB.LeerDatos("PerfilFamiliaVerificarExplisito", Parametros);
+                DS = AccesoDB.LeerDatos("PerfilFamiliaVerificarExplicito", Parametros);
 
                 if (DS.Tables[0].Rows.Count > 0)
                 {

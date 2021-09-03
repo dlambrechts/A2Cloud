@@ -71,16 +71,12 @@ namespace UI.Controllers
                 sel.Id = id;
                 sel = perBLL.ObtenerFamiliaPorId(sel);
                 sel = perBLL.CompletarFamilia(sel);
+              
 
-                // Obtengo todos los grupos para poder agregar
-           
-
-               ViewBag.Familias = perBLL.ObtenerFamilias();
-
-                // Obtengo todos los permisos individuales para poder agregar
-
-
-                ViewBag.Permisos = perBLL.ObtenerPatentes();
+                
+               ViewBag.Familias = perBLL.ObtenerFamilias(); // Obtengo todos los grupos para poder agregar
+              
+               ViewBag.Permisos = perBLL.ObtenerPatentes(); // Obtengo todos los permisos individuales para poder agregar
 
                 return View(sel);
 

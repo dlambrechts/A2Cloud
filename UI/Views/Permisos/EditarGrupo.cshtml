@@ -39,7 +39,7 @@
 
 
             <ul class="list-group" style="max-width: 400px;">
-                <li class="list-group-item active" aria-current="true">@Model.Descripcion</li>
+                <li class="list-group-item active" aria-current="true">Elementos del Grupo:</li>
                 @foreach (var item in Model.Hijos)
                 {
                     if (@item.Permiso.ToString() == "Ninguno")
