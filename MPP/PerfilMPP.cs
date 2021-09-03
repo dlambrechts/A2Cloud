@@ -13,7 +13,7 @@ namespace MPP
     public class PerfilMPP
     {
         Acceso AccesoDB = new Acceso();
-        public IList<PerfilPatenteBE> ObtenerPatentes()
+        public List<PerfilPatenteBE> ObtenerPatentes()
         {
             List<PerfilPatenteBE> ListaPatentes = new List<PerfilPatenteBE>();
 

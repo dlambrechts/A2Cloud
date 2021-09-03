@@ -4,86 +4,130 @@
 @{
     ViewBag.Title = "EditarGrupo";
 }
-@section scripts {
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-}
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Editar Grupo de Permisos </h1>
+        <h1 class="h2">Editar Grupo @Model.Descripcion </h1>
         <div class="btn-toolbar mb-2 mb-md-0">
 
         </div>
     </div>
 
 
-  @using (Html.BeginForm())
+    @using (Html.BeginForm())
 
     {
         @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
+        <div class="form-horizontal">
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
 
-
-
- 
-    <ul class="list-group" style="max-width: 300px;">
-        <li class="list-group-item active" aria-current="true">@Model.Descripcion</li>
-
-        @foreach (var item in Model.Hijos)
-        {
-
-
-            if (@item.Permiso.ToString() == "Ninguno")
-            {
-
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold"><i class="fa fa-folder"></i> @item.Descripcion</div>
-
-                    </div>
-                    <span><a href="@Url.Action("QuitarElemento", "Permisos", new {item=item.Id,fam=Model.Id,grupo=true } )"  onclick="return confirm('Confirma?')"><i class="fa fa-remove"></i></a></span>
-                </li>
-            }
-            else
-
-            {
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold"><i class="fa fa-key"></i> @item.Descripcion</div>
-
-                    </div>
-                    <span><a href="@Url.Action("QuitarElemento", "Permisos", new {item=item.Id,fam=Model.Id,grupo=false })" onclick="return confirm('Confirma?')"><i class="fa fa-remove"></i></a></span>
-                </li>
-            }
-
-
-
-        }
-
-
-
-    </ul>
-
-</div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="input-group" style="max-width: 400px;">
+                <span class="input-group-text">Grupos</span>
+                @Html.DropDownList("Grupos", new SelectList(ViewBag.Familias, "Id", "Descripcion"), new { @class = "form-select", @Id = "GruposSel" })
+                <button class="btn btn-outline-secondary" type="button" onclick="AgregarGrupo()">Agregar</button>
             </div>
+            <br />
+            <div class="input-group" style="max-width: 400px;">
+                <span class="input-group-text">Permisos</span>
+                @Html.DropDownList("Grupos", new SelectList(ViewBag.Permisos, "Id", "Descripcion"), new { @class = "form-select" })
+                <button class="btn btn-outline-secondary" type="button">Agregar</button>
+            </div>
+            <br />
+
+
+
+
+
+            <ul class="list-group" style="max-width: 400px;">
+                <li class="list-group-item active" aria-current="true">@Model.Descripcion</li>
+                @foreach (var item in Model.Hijos)
+                {
+                    if (@item.Permiso.ToString() == "Ninguno")
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><i class="fa fa-folder"></i> @item.Descripcion</div>
+                            </div>
+                            <span><a href="#" onclick="ConfirmDelete(@item.Id,'@item.Permiso.ToString()')"><i class="fa fa-remove"></i></a></span>
+                        </li>
+                    }
+                    else
+
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><i class="fa fa-key"></i> @item.Descripcion</div>
+                            </div>
+                            <span><a href="#" onclick="ConfirmDelete(@item.Id,'@item.Permiso.ToString()')"><i class="fa fa-remove"></i></a></span>
+                        </li>
+                    }
+
+                }
+            </ul>
+
         </div>
+
 
     }
 
+    <br />
+
+    <div class="alert alert-danger fade collapse" role="alert" id="Mensaje" style="max-width: 400px;">
+        No es posible agregar el componente seleccionado
+    </div>
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Volver", "GrupoPermisos")
     </div>
 
 
 </main>
+
+<!-- Modal Eliminar-->
+<div class="modal fade" id="Eliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Quitar el elemento del grupo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Está seguro de que desea eliminar el elemento del grupo?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="EliminarComponente()">Borrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar-->
+<div class="modal fade" id="Agregar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Quitar el elemento del grupo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Está seguro de que desea eliminar el elemento del grupo?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="EliminarComponente()">Borrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Campo Oculto para el Id de la familia y el tipo de componente*@
+<input type="hidden" id="IdComponente" />
+<input type="hidden" id="Tipo" />
+
 <script>
 
     window.onload = function () {
@@ -91,3 +135,67 @@
         document.getElementById('Grupos').className = 'btn-activo';
     };
 </script>
+
+
+@section scripts{
+
+
+    <script>
+        var AgregarGrupo = function () {
+
+            var GrupoSeleccionado = $('#GruposSel').val();
+            var ComponentesActuales =@Html.Raw(Json.Encode(Model.Hijos));
+            var GrupoActual =@Html.Raw(Json.Encode(Model.Id));
+
+           
+
+
+            if (GrupoActual == GrupoSeleccionado || (ComponentesActuales.find(element => element.Id == GrupoSeleccionado))) // No permitir agregar al grupo el mismo grupo, ni un permiso que ya exista
+
+            {
+
+                $('#Mensaje').addClass('show');
+                window.setTimeout(function () {
+                    $('#Mensaje').removeClass('show');
+                }, 2000);
+
+            }
+
+            // INSERT LOGIC
+
+            else {
+
+            }
+
+        }
+
+    </script>
+
+    <script>
+
+        var ConfirmDelete = function (CompId,Tipo) {
+
+            $("#IdComponente").val(CompId);
+            $("#Tipo").val(Tipo);
+            $("#Eliminar").modal('show');
+        }
+
+        var EliminarComponente = function () {
+            var Comp = $("#IdComponente").val();
+            var Tipo = $("#Tipo").val();
+            var Fam = '@Model.Id';
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Permisos/QuitarElemento",
+                data: { Item: Comp,Tipo:Tipo,Fam:Fam},
+                success: function (result) {
+
+                    $("#Eliminar").modal("hide");
+                    location.reload();
+                }
+            })
+        }
+    </script>
+}

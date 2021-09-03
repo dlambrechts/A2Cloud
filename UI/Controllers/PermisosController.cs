@@ -66,12 +66,22 @@ namespace UI.Controllers
         {
             if (Session["IdUsuario"] != null)
             {
+                // Obtengo los datos completos de la famila que voy a editar
                 PerfilFamiliaBE sel = new PerfilFamiliaBE();
                 sel.Id = id;
                 sel = perBLL.ObtenerFamiliaPorId(sel);
-
                 sel = perBLL.CompletarFamilia(sel);
-  
+
+                // Obtengo todos los grupos para poder agregar
+           
+
+               ViewBag.Familias = perBLL.ObtenerFamilias();
+
+                // Obtengo todos los permisos individuales para poder agregar
+
+
+                ViewBag.Permisos = perBLL.ObtenerPatentes();
+
                 return View(sel);
 
             }
@@ -81,42 +91,36 @@ namespace UI.Controllers
         }
 
 
- 
-        public ActionResult QuitarElemento(int item, int fam, bool grupo)
+     
+        public JsonResult QuitarElemento(int Item, string Tipo, int Fam )
         {
             try
             {
-                // TODO: Add update logic here
                 PerfilFamiliaBE familia = new PerfilFamiliaBE();
                 PerfilComponenteBE comp;
 
-                familia.Id = fam;
+                familia.Id = Fam;
                 familia = perBLL.ObtenerFamiliaPorId(familia);
                 familia = perBLL.CompletarFamilia(familia);
 
-                if (grupo == true) { comp = new PerfilFamiliaBE(); }
+                if (Tipo=="Ninguno") { comp = new PerfilFamiliaBE(); }
                 else { comp = new PerfilPatenteBE(); }
 
-                comp.Id = item;
-
+                comp.Id = Item;
                 familia.QuitarHijo(comp);
 
                 perBLL.GuardarFamilia(familia);
 
-
-                return RedirectToAction("EditarGrupo", new { id = familia.Id });
+                return Json(new { status = "Success" }); 
             }
             catch
             {
-                return View("GrupoPermisos");
+                return Json(new { status = "Error" });
             }
         }
 
 
-        public ActionResult EditarGrupoParcial()
-        {
-            return PartialView();
-        }
+
 
 
         // GET: Permisos/Delete/5
