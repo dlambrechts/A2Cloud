@@ -119,6 +119,48 @@ namespace UI.Controllers
             }
         }
 
+        public JsonResult AgregarElemento(int Item,  string Tipo, int Fam)
+        {
+            try
+            {
+                PerfilFamiliaBE familia = new PerfilFamiliaBE();
+                PerfilComponenteBE comp;
+
+                familia.Id = Fam;
+                familia = perBLL.ObtenerFamiliaPorId(familia);
+                familia = perBLL.CompletarFamilia(familia);
+
+                if (Tipo == "Grupo") 
+                
+                {
+                    
+                    comp = new PerfilFamiliaBE();
+                    comp.Id = Item;
+
+                    if(perBLL.VerificarPermisoExplisito(familia, comp))  // Esto evita que se genere una consulta recursiva al consultar el grupo despues de insertar
+                    
+                    {
+                        return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                    }                   
+
+                }
+
+
+                else { comp = new PerfilPatenteBE(); comp.Id = Item; }
+
+                
+                familia.AgregarHijo(comp);               
+
+                perBLL.GuardarFamilia(familia);
+
+                return Json(new { success = true });
+            }
+            catch
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
 
 
 

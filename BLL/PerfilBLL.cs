@@ -66,6 +66,12 @@ namespace BLL
 
             return fam;
         }
+
+        public bool VerificarPermisoExplisito(PerfilFamiliaBE padre, PerfilComponenteBE hijo)
+        {
+            return mppPerfil.VerificarPermisoExplisito(padre, hijo);
+        }
+
         //public void CompletarComponentesFamilia(PerfilFamiliaBE Familia)
 
         //{

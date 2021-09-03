@@ -46,23 +46,23 @@ namespace MPP
         public PerfilFamiliaBE ObtenerFamiliaPorId(PerfilFamiliaBE fam)
 
         {
-  
-                Hashtable Param = new Hashtable();
-                Param.Add("@Id", fam.Id);
-                DataSet DS = new DataSet();
-                DS = AccesoDB.LeerDatos("PerfilFamiliaObtenerPorId", Param);
 
-               
-                if (DS.Tables[0].Rows.Count > 0)
+            Hashtable Param = new Hashtable();
+            Param.Add("@Id", fam.Id);
+            DataSet DS = new DataSet();
+            DS = AccesoDB.LeerDatos("PerfilFamiliaObtenerPorId", Param);
+
+
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow Item in DS.Tables[0].Rows)
                 {
-                    foreach (DataRow Item in DS.Tables[0].Rows)
-                    {                   
-                        fam.Descripcion = Item["Descripcion"].ToString().Trim();
-                    }
+                    fam.Descripcion = Item["Descripcion"].ToString().Trim();
                 }
+            }
 
-                return fam;
-      
+            return fam;
+
 
         }
         public IList<PerfilFamiliaBE> ObtenerFamilias()
@@ -117,8 +117,6 @@ namespace MPP
         public void GuardarComponente(PerfilComponenteBE Comp, bool EsFamilia)
 
         {
-          
-
             string Consulta = "sp_InsertarComponente";
             Hashtable Parametros = new Hashtable();
 
@@ -134,7 +132,7 @@ namespace MPP
 
         public IList<PerfilComponenteBE> ObtenerTodo(PerfilFamiliaBE Familia)
         {
-          
+
             Hashtable Parametros = new Hashtable();
             Parametros.Add("Fam", Familia.Id);
             DataSet DS = new DataSet();
@@ -165,7 +163,7 @@ namespace MPP
 
                     if (string.IsNullOrEmpty(permiso))
                         c = new PerfilFamiliaBE();
-                     
+
                     else
                         c = new PerfilPatenteBE();
 
@@ -221,6 +219,30 @@ namespace MPP
             return Componente;
         }
 
+        public bool VerificarPermisoExplisito(PerfilFamiliaBE padre, PerfilComponenteBE hijo) 
+        
+        {
+            Hashtable Parametros = new Hashtable();
+
+            Parametros.Add("IdPadre", padre.Id);
+            Parametros.Add("IdHijo", hijo.Id);
+
+            DataSet DS = new DataSet();
+                DS = AccesoDB.LeerDatos("PerfilFamiliaVerificarExplisito", Parametros);
+
+                if (DS.Tables[0].Rows.Count > 0)
+                {
+                     return true;
+                                  
+                }
+                else
+                {
+                return false;
+                }
+            }
+
+      
+
         public void CargarPerfilUsuario(UsuarioBE Us)
 
         {
@@ -258,7 +280,7 @@ namespace MPP
 
                     {
                         PerfilFamiliaBE Familia = new PerfilFamiliaBE();
-                       // Familia.Permiso = (PerfilTipoPermisoBE)Enum.Parse(typeof(PerfilTipoPermisoBE), "Ninguno"); // Se hace esto porque al instanciar la familia asigna un permiso enum automáticamente
+                       Familia.Permiso = (PerfilPermisoBE)Enum.Parse(typeof(PerfilPermisoBE), "Ninguno"); // Se hace esto porque al instanciar la familia asigna un permiso enum automáticamente
                         Familia.Id = IdPermiso;
                         Familia.Descripcion = DescPermiso;
 

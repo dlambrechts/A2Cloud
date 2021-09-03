@@ -27,18 +27,15 @@
             <div class="input-group" style="max-width: 400px;">
                 <span class="input-group-text">Grupos</span>
                 @Html.DropDownList("Grupos", new SelectList(ViewBag.Familias, "Id", "Descripcion"), new { @class = "form-select", @Id = "GruposSel" })
-                <button class="btn btn-outline-secondary" type="button" onclick="AgregarGrupo()">Agregar</button>
+                <button class="btn btn-outline-secondary" type="button" onclick="ConfirmAgragarGrupo()">Agregar</button>
             </div>
             <br />
             <div class="input-group" style="max-width: 400px;">
                 <span class="input-group-text">Permisos</span>
-                @Html.DropDownList("Grupos", new SelectList(ViewBag.Permisos, "Id", "Descripcion"), new { @class = "form-select" })
-                <button class="btn btn-outline-secondary" type="button">Agregar</button>
+                @Html.DropDownList("Grupos", new SelectList(ViewBag.Permisos, "Id", "Descripcion"), new { @class = "form-select", @Id = "PermisoSel" })
+                <button class="btn btn-outline-secondary" type="button" onclick="ConfirmAgragarPermiso()">Agregar</button>
             </div>
             <br />
-
-
-
 
 
             <ul class="list-group" style="max-width: 400px;">
@@ -77,7 +74,10 @@
     <br />
 
     <div class="alert alert-danger fade collapse" role="alert" id="Mensaje" style="max-width: 400px;">
-        No es posible agregar el componente seleccionado
+        El Elemento ya es parte del Grupo!
+    </div>
+    <div class="alert alert-danger fade collapse" role="alert" id="Mensaje2" style="max-width: 400px;">
+        Asignación no permitida
     </div>
     <div>
         @Html.ActionLink("Volver", "GrupoPermisos")
@@ -91,7 +91,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Quitar el elemento del grupo</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Quitar Elemento </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -99,32 +99,51 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" onclick="EliminarComponente()">Borrar</button>
+                <button type="button" class="btn btn-primary" onclick="EliminarComponente()">Quitar</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal Agregar-->
-<div class="modal fade" id="Agregar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal Agregar Grupo -->
+<div class="modal fade" id="ModalAgregarGrupo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Quitar el elemento del grupo</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Elemento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Está seguro de que desea eliminar el elemento del grupo?
+                Está seguro de que desea agregar el elemento al grupo?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" onclick="EliminarComponente()">Borrar</button>
+                <button type="button" class="btn btn-primary" onclick="AgregarGrupo()">Agregar</button>
             </div>
         </div>
     </div>
 </div>
 
-@*Campo Oculto para el Id de la familia y el tipo de componente*@
+<!-- Modal Agregar Grupo -->
+<div class="modal fade" id="ModalAgregarPermiso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Elemento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Está seguro de que desea agregar el elemento al grupo?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="AgregarPermiso()">Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*PAra eliminar, Campo Oculto para el Id de la familia y el tipo de componente*@
 <input type="hidden" id="IdComponente" />
 <input type="hidden" id="Tipo" />
 
@@ -141,14 +160,15 @@
 
 
     <script>
+        var ConfirmAgragarGrupo = function (CompId) {
+
+            $("#ModalAgregarGrupo").modal('show');
+        }
         var AgregarGrupo = function () {
 
             var GrupoSeleccionado = $('#GruposSel').val();
             var ComponentesActuales =@Html.Raw(Json.Encode(Model.Hijos));
             var GrupoActual =@Html.Raw(Json.Encode(Model.Id));
-
-           
-
 
             if (GrupoActual == GrupoSeleccionado || (ComponentesActuales.find(element => element.Id == GrupoSeleccionado))) // No permitir agregar al grupo el mismo grupo, ni un permiso que ya exista
 
@@ -159,16 +179,74 @@
                     $('#Mensaje').removeClass('show');
                 }, 2000);
 
+                $("#ModalAgregarGrupo").modal("hide");
             }
-
-            // INSERT LOGIC
 
             else {
 
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Permisos/AgregarElemento",
+                    data: { Item: GrupoSeleccionado, Tipo: 'Grupo', Fam: GrupoActual },
+                    success: function (response) {
+                        if (response.success) {
+                            $("#ModalAgregarGrupo").modal("hide");
+                            location.reload();
+                        } else {
+          
+                         
+                            $("#ModalAgregarGrupo").modal("hide");
+                            $('#Mensaje2').addClass('show');
+                            window.setTimeout(function () {
+                                $('#Mensaje2').removeClass('show');
+                            }, 2000);
+                        }
+                    }
+                   
+                })
             }
-
         }
+    </script>
 
+    <script>
+        var ConfirmAgragarPermiso = function (CompId) {
+
+            $("#ModalAgregarPermiso").modal('show');
+        }
+        var AgregarPermiso = function () {
+
+            var PermisoSeleccionado = $('#PermisoSel').val();
+            var ComponentesActuales =@Html.Raw(Json.Encode(Model.Hijos));
+            var GrupoActual =@Html.Raw(Json.Encode(Model.Id));
+
+            if ((ComponentesActuales.find(element => element.Id == PermisoSeleccionado))) // No permitir agregar al grupo un permiso que ya exista
+
+            {
+
+                $('#Mensaje').addClass('show');
+                window.setTimeout(function () {
+                    $('#Mensaje').removeClass('show');
+                }, 2000);
+
+                $("#ModalAgregarPermiso").modal("hide");
+            }
+            
+            else {
+                console.log(PermisoSeleccionado, GrupoActual);
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Permisos/AgregarElemento",
+                    data: { Item: PermisoSeleccionado, Tipo:'Permiso',Fam: GrupoActual},
+                    success: function (result) {
+
+                        $("#ModalAgregarPermiso").modal("hide");
+                        location.reload();
+                    }
+                })
+            }
+        }
     </script>
 
     <script>
