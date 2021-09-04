@@ -9,6 +9,10 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Editar Grupo @Model.Descripcion </h1>
         <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a> @Html.ActionLink("Volver", "GrupoPermisos", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+            </div>
 
         </div>
     </div>
@@ -19,59 +23,64 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
+        <div class="container-fluid">
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Id)
+            <div class="row">
+                <div class="col-4">
+                    <div class="input-group mb-3" style="max-width: 400px;">
+                        <span class="input-group-text primary" id="basic-addon3">Nombre</span>
+                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Guardar</button>
+                    </div>
 
-            <div class="input-group" style="max-width: 400px;">
-                <span class="input-group-text">Grupos</span>
-                @Html.DropDownList("Grupos", new SelectList(ViewBag.Familias, "Id", "Descripcion"), new { @class = "form-select", @Id = "GruposSel" })
-                <button class="btn btn-outline-secondary" type="button" onclick="ConfirmAgragarGrupo()">Agregar</button>
+                    <div class="input-group" style="max-width: 400px;">
+                        <span class="input-group-text">Grupos</span>
+                        @Html.DropDownList("Grupos", new SelectList(ViewBag.Familias, "Id", "Descripcion"), new { @class = "form-select", @Id = "GruposSel" })
+                        <button class="btn btn-outline-secondary" type="button" onclick="ConfirmAgragarGrupo()">Agregar</button>
+                    </div>
+                    <br />
+                    <div class="input-group" style="max-width: 400px;">
+                        <span class="input-group-text">Permisos</span>
+                        @Html.DropDownList("Grupos", new SelectList(ViewBag.Permisos, "Id", "Descripcion"), new { @class = "form-select", @Id = "PermisoSel" })
+                        <button class="btn btn-outline-secondary" type="button" onclick="ConfirmAgragarPermiso()">Agregar</button>
+                    </div>
+                    <br />
+                </div>
+
+                <div class="col-4">
+                    <ul class="list-group" style="max-width: 400px;">
+                        <li class="list-group-item active " aria-current="true">Elementos del Grupo:</li>
+                        @foreach (var item in Model.Hijos)
+                        {
+                            if (@item.Permiso.ToString() == "Ninguno")
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold"><i class="fa fa-folder"></i><a href="@Url.Action("EditarGrupo", "Permisos", new {id=item.Id })">@item.Descripcion</a> </div>
+                                    </div>
+                                    <span><a href="#" onclick="ConfirmDelete(@item.Id,'@item.Permiso.ToString()')"><span class="badge bg-primary rounded-pill">@item.Hijos.Count()  </span><i class="fa fa-remove"></i></a></span>
+                                </li>
+                            }
+                            else
+
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold"><i class="fa fa-key"></i> @item.Descripcion</div>
+                                    </div>
+                                    <span><a href="#" onclick="ConfirmDelete(@item.Id,'@item.Permiso.ToString()')"><i class="fa fa-remove"></i></a></span>
+                                </li>
+                            }
+
+                        }
+                    </ul>
+                </div>
             </div>
-            <br />
-            <div class="input-group" style="max-width: 400px;">
-                <span class="input-group-text">Permisos</span>
-                @Html.DropDownList("Grupos", new SelectList(ViewBag.Permisos, "Id", "Descripcion"), new { @class = "form-select", @Id = "PermisoSel" })
-                <button class="btn btn-outline-secondary" type="button" onclick="ConfirmAgragarPermiso()">Agregar</button>
-            </div>
-            <br />
-
-
-            <ul class="list-group" style="max-width: 400px;">
-                <li class="list-group-item active" aria-current="true">Elementos del Grupo:</li>
-                @foreach (var item in Model.Hijos)
-                {
-                    if (@item.Permiso.ToString() == "Ninguno")
-                    {
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold"><i class="fa fa-folder"></i> @item.Descripcion</div>
-                            </div>
-                            <span><a href="#" onclick="ConfirmDelete(@item.Id,'@item.Permiso.ToString()')"><i class="fa fa-remove"></i></a></span>
-                        </li>
-                    }
-                    else
-
-                    {
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold"><i class="fa fa-key"></i> @item.Descripcion</div>
-                            </div>
-                            <span><a href="#" onclick="ConfirmDelete(@item.Id,'@item.Permiso.ToString()')"><i class="fa fa-remove"></i></a></span>
-                        </li>
-                    }
-
-                }
-            </ul>
-
         </div>
-
-
     }
 
-    <br />
 
     <div class="alert alert-danger fade collapse" role="alert" id="Mensaje" style="max-width: 400px;">
         El Elemento ya es parte del Grupo!
@@ -79,9 +88,7 @@
     <div class="alert alert-danger fade collapse" role="alert" id="Mensaje2" style="max-width: 400px;">
         Asignación no permitida
     </div>
-    <div>
-        @Html.ActionLink("Volver", "GrupoPermisos")
-    </div>
+
 
 
 </main>
@@ -124,7 +131,7 @@
     </div>
 </div>
 
-<!-- Modal Agregar Grupo -->
+<!-- Modal Agregar Permiso -->
 <div class="modal fade" id="ModalAgregarPermiso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -193,9 +200,7 @@
                         if (response.success) {
                             $("#ModalAgregarGrupo").modal("hide");
                             location.reload();
-                        } else {
-          
-                         
+                        } else {                                   
                             $("#ModalAgregarGrupo").modal("hide");
                             $('#Mensaje2').addClass('show');
                             window.setTimeout(function () {
