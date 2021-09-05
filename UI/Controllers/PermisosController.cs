@@ -11,6 +11,7 @@ namespace UI.Controllers
     public class PermisosController : Controller
     {
         PerfilBLL perBLL = new PerfilBLL();
+        UsuarioBLL usBLL = new UsuarioBLL();
 
         // GET: Permisos
         public ActionResult Index()
@@ -63,10 +64,15 @@ namespace UI.Controllers
                 sel.Id = id;
                 sel = perBLL.ObtenerFamiliaPorId(sel);
                 sel = perBLL.CompletarFamilia(sel);
-                              
-               ViewBag.Familias = perBLL.ObtenerFamilias(); // Obtengo todos los grupos para poder agregar
-              
-               ViewBag.Permisos = perBLL.ObtenerPatentes(); // Obtengo todos los permisos individuales para poder agregar
+
+                IList<PerfilFamiliaBE> familias = perBLL.ObtenerFamilias(); // Obtengo todos los grupos para poder agregar desde el select
+                familias = familias.Where(item => item.Id != sel.Id).ToList(); // Quitar el grupo actual de la lista
+                ViewBag.Familias = familias;
+
+                IList<PerfilPatenteBE> permisos = perBLL.ObtenerPatentes(); // Obtengo todos los permisos individuales para poder agregar
+
+
+                ViewBag.Permisos = permisos; 
 
                 return View(sel);
 
@@ -141,7 +147,7 @@ namespace UI.Controllers
                     comp = new PerfilFamiliaBE();
                     comp.Id = Item;
 
-                    if(perBLL.VerificarPermisoExplisito(familia, comp))  // Esto evita que se genere una consulta recursiva al consultar el grupo despues de insertar
+                    if(perBLL.VerificarPermisoExplisito(familia, comp))  // Detectar permisos explísitos que generen errores de recursividad
                     
                     {
                         return Json(new { success = false }, JsonRequestBehavior.AllowGet);
@@ -164,10 +170,6 @@ namespace UI.Controllers
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-
-
-
-
 
         // GET: Permisos/Delete/5
         public ActionResult Delete(int id)
@@ -194,6 +196,36 @@ namespace UI.Controllers
             {
                 return View();
             }
+        }
+
+        // GET: GrupoPermisos/EditarPerfilUsuario/5
+        public ActionResult EditarPerfilUsuario(int id)
+        {
+            if (Session["IdUsuario"] != null)
+            {
+                // Obtengo los datos completos del usuario
+                UsuarioBE usuario = new UsuarioBE();
+                usuario.Id = id;
+                usBLL.ObtenerUno(usuario);
+
+          
+
+
+
+                IList<PerfilFamiliaBE> familias = perBLL.ObtenerFamilias(); // Obtengo todos los grupos para poder agregar desde el select
+                ViewBag.Familias = familias;
+
+                IList<PerfilPatenteBE> permisos = perBLL.ObtenerPatentes(); // Obtengo todos los permisos individuales para poder agregar
+
+
+                ViewBag.Permisos = permisos;
+
+                return View(usuario);
+
+            }
+
+            else { return RedirectToAction("Index", "Login"); }
+
         }
     }
 }

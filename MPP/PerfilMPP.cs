@@ -263,22 +263,31 @@ namespace MPP
         {
             Hashtable Parametros = new Hashtable();
 
-            Parametros.Add("IdPadre", padre.Id);
-            Parametros.Add("IdHijo", hijo.Id);
-
+            Parametros.Add("fam", hijo.Id);
+    
             DataSet DS = new DataSet();
-                DS = AccesoDB.LeerDatos("PerfilFamiliaVerificarExplicito", Parametros);
+            DS = AccesoDB.LeerDatos("PerfilFamiliaCompleta", Parametros);
+
+            bool resultado = false;
 
                 if (DS.Tables[0].Rows.Count > 0)
                 {
-                     return true;
-                                  
+                    foreach(DataRow Item in DS.Tables[0].Rows)
+                
+                    {
+                    if (Convert.ToInt32(Item["IdHijo"]) == padre.Id){ resultado= true; }
+                                         
+                    }
+
+
                 }
                 else
                 {
-                return false;
+                return resultado;
                 }
-            }
+
+            return resultado;
+        }
 
       
 

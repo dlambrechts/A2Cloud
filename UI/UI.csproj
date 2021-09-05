@@ -234,6 +234,7 @@
     <Content Include="Views\Permisos\CrearGrupo.cshtml" />
     <Content Include="Views\Permisos\EditarGrupo.cshtml" />
     <Content Include="Views\Permisos\Delete.cshtml" />
+    <Content Include="Views\Permisos\EditarPerfilUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
