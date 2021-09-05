@@ -219,6 +219,22 @@ namespace MPP
             return Componente;
         }
 
+        public void EditarGrupo(PerfilFamiliaBE fam)
+
+        {
+            {
+                Hashtable Parametros = new Hashtable();
+
+                Parametros.Add("Id", fam.Id);
+                Parametros.Add("Descripcion", fam.Descripcion);
+
+                string Consulta = "PerfilFamiliaEditar";
+                AccesoDB.Escribir(Consulta, Parametros);
+
+            }
+
+        }
+
         public bool VerificarPermisoExplisito(PerfilFamiliaBE padre, PerfilComponenteBE hijo) 
         
         {

@@ -13,7 +13,7 @@ namespace BLL
         PerfilMPP mppPerfil = new PerfilMPP();
         public IList<PerfilPatenteBE> ObtenerPatentes() // Traigo todas las patentes   
         {
-           
+
             return mppPerfil.ObtenerPatentes();
         }
 
@@ -23,21 +23,21 @@ namespace BLL
         }
 
         public IList<PerfilFamiliaBE> ObtenerFamilias() // Traigo todas las Familias    
-       
-        {         
+
+        {
             return mppPerfil.ObtenerFamilias();
         }
 
         public void GuardarFamilia(PerfilFamiliaBE Fam)
 
-        {  
+        {
             mppPerfil.GuardarFamilia(Fam);
         }
 
         public void GuardarComponente(PerfilComponenteBE Comp, bool EsFamilia)
 
-        {        
-           mppPerfil.GuardarComponente(Comp, EsFamilia);
+        {
+            mppPerfil.GuardarComponente(Comp, EsFamilia);
         }
 
         public IList<PerfilComponenteBE> ObtenerTodo(PerfilFamiliaBE Fam)
@@ -46,25 +46,31 @@ namespace BLL
             return mppPerfil.ObtenerTodo(Fam);
         }
 
-        public PerfilFamiliaBE ObtenerFamiliaPorId (PerfilFamiliaBE fam)
-        
+        public PerfilFamiliaBE ObtenerFamiliaPorId(PerfilFamiliaBE fam)
+
         {
             return mppPerfil.ObtenerFamiliaPorId(fam);
-        
+
         }
 
 
-        public PerfilFamiliaBE CompletarFamilia (PerfilFamiliaBE fam)
+        public PerfilFamiliaBE CompletarFamilia(PerfilFamiliaBE fam)
 
         {
 
             IList<PerfilComponenteBE> flia = null;
 
-            flia = ObtenerTodo(fam);  
+            flia = ObtenerTodo(fam);
             foreach (var i in flia)
-            fam.AgregarHijo(i);
+                fam.AgregarHijo(i);
 
             return fam;
+        }
+
+        public void EditarGrupo(PerfilFamiliaBE fam)
+        
+        {
+            mppPerfil.EditarGrupo(fam);
         }
 
         public bool VerificarPermisoExplisito(PerfilFamiliaBE padre, PerfilComponenteBE hijo)
@@ -72,11 +78,6 @@ namespace BLL
             return mppPerfil.VerificarPermisoExplisito(padre, hijo);
         }
 
-        //public void CompletarComponentesFamilia(PerfilFamiliaBE Familia)
-
-        //{
-        //    mppPerfil.CompletarComponentesFamilia(Familia);
-        //}
 
         public void CargarPerfilUsuario(UsuarioBE Us)
 

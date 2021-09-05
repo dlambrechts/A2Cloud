@@ -31,14 +31,6 @@ namespace UI.Controllers
 
 
 
-
-
-        // GET: Permisos/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: GrupoPermisos/Create
         public ActionResult CrearGrupo()
         {
@@ -84,8 +76,26 @@ namespace UI.Controllers
      
         }
 
+        // POST: GrupoPermisos/Edit/5
+        [HttpPost]
+        public ActionResult EditarGrupo(PerfilFamiliaBE familia)
+        {
+            try
+            {
+                
+                perBLL.EditarGrupo(familia);
+                            
+            
+                return RedirectToAction("EditarGrupo","Permisos",familia.Id);
+              
+            }
+            catch
+            {
+                return View("EditarGrupo", familia);
+            }
 
-     
+        }
+
         public JsonResult QuitarElemento(int Item, string Tipo, int Fam )
         {
             try
