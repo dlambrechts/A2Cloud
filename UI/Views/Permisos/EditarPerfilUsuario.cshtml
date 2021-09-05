@@ -7,7 +7,7 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Editar Perfil de Usuario: @Model.Nombre.ToString() </h1>
+        <h1 class="h2">Editar Perfil: @Model.Nombre @Model.Apellido </h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 <a> @Html.ActionLink("Volver", "GrupoPermisos", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
@@ -102,7 +102,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Está seguro de que desea eliminar el elemento del grupo?
+                Está seguro de que desea eliminar el elemento?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -121,7 +121,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Está seguro de que desea agregar el elemento al grupo?
+                Está seguro de que desea agregar el Grupo al Perfil del Usuario?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -140,7 +140,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Está seguro de que desea agregar el elemento al grupo?
+                Está seguro de que desea agregar el Permiso al Perfil del Usuario?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -158,7 +158,7 @@
 
     window.onload = function () {
         document.getElementById('account-collapse').className = 'show';
-        document.getElementById('Grupos').className = 'btn-activo';
+        document.getElementById('Usuarios').className = 'btn-activo';
     };
 </script>
 
@@ -175,7 +175,7 @@
 
             var GrupoSeleccionado = $('#GruposSel').val();
             var ComponentesActuales =@Html.Raw(Json.Encode(Model.Permisos));
-            var GrupoActual =@Html.Raw(Json.Encode(Model.Id));
+            var UsuarioActual =@Html.Raw(Json.Encode(Model.Id));
 
             if ((ComponentesActuales.find(element => element.Id == GrupoSeleccionado))) // No permitir agregar un permiso que ya exista
 
@@ -194,8 +194,8 @@
                 $.ajax({
 
                     type: "POST",
-                    url: "/Permisos/AgregarElemento",
-                    data: { Item: GrupoSeleccionado, Tipo: 'Grupo', Fam: GrupoActual },
+                    url: "/Permisos/AgregarElementoAlPerfil",
+                    data: { Item: GrupoSeleccionado, Tipo: 'Grupo', Usuario: UsuarioActual },
                     success: function (response) {
                         if (response.success) {
                             $("#ModalAgregarGrupo").modal("hide");
@@ -223,7 +223,7 @@
 
             var PermisoSeleccionado = $('#PermisoSel').val();
             var ComponentesActuales =@Html.Raw(Json.Encode(Model.Permisos));
-            var GrupoActual =@Html.Raw(Json.Encode(Model.Id));
+            var UsuarioActual =@Html.Raw(Json.Encode(Model.Id));
 
             if ((ComponentesActuales.find(element => element.Id == PermisoSeleccionado))) // No permitir agregar al grupo un permiso que ya exista
 
@@ -238,12 +238,12 @@
             }
 
             else {
-                console.log(PermisoSeleccionado, GrupoActual);
+                
                 $.ajax({
 
                     type: "POST",
-                    url: "/Permisos/AgregarElemento",
-                    data: { Item: PermisoSeleccionado, Tipo:'Permiso',Fam: GrupoActual},
+                    url: "/Permisos/AgregarElementoAlPerfil",
+                    data: { Item: PermisoSeleccionado, Tipo: 'Permiso', Usuario: UsuarioActual},
                     success: function (result) {
 
                         $("#ModalAgregarPermiso").modal("hide");
@@ -266,13 +266,13 @@
         var EliminarComponente = function () {
             var Comp = $("#IdComponente").val();
             var Tipo = $("#Tipo").val();
-            var Fam = '@Model.Id';
+            var Usuario = '@Model.Id';
 
             $.ajax({
 
                 type: "POST",
-                url: "/Permisos/QuitarElemento",
-                data: { Item: Comp,Tipo:Tipo,Fam:Fam},
+                url: "/Permisos/QuitarElementoDelPerfil",
+                data: { Item: Comp,Tipo:Tipo,Usuario:Usuario},
                 success: function (result) {
 
                     $("#Eliminar").modal("hide");

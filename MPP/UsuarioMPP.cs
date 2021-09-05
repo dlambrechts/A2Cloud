@@ -226,5 +226,28 @@ namespace MPP
             nAcceso.Escribir(Consulta, Parametros);
 
         }
+
+        public void GuardarPefil(UsuarioBE Usuario)
+
+        {
+      
+            string ConsultaDel = "UsuarioPermisosBorrar"; // Primero borro los permisos que tenía el usuario
+            Hashtable ParametrosDel = new Hashtable();
+            ParametrosDel.Add("IdUsuario", Usuario.Id);
+            AccesoDB.Escribir(ConsultaDel, ParametrosDel);
+
+            string ConsultaAdd = "UsuarioPermisosGuardar"; // Luego guardo los nuevos permisos
+            Hashtable ParametrosAdd = new Hashtable();
+            ParametrosAdd.Add("IdUsuario", Usuario.Id);
+
+            foreach (var item in Usuario.Permisos)
+            {
+
+                ParametrosAdd.Add("IdPermiso", item.Id);
+                AccesoDB.Escribir(ConsultaAdd, ParametrosAdd);
+                ParametrosAdd.Remove("IdPermiso");
+
+            }
+        }
     }
 }

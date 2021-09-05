@@ -19,7 +19,7 @@ namespace MPP
 
 
             DataSet DS = new DataSet();
-            DS = AccesoDB.LeerDatos("PerfilListarPatentes", null);
+            DS = AccesoDB.LeerDatos("PerfilPatentesListar", null);
 
             if (DS.Tables[0].Rows.Count > 0)
             {
@@ -298,7 +298,7 @@ namespace MPP
             Hashtable Parametros = new Hashtable();
             Parametros.Add("IdUsuario", Us.Id);
             DataSet DS = new DataSet();
-            DS = AccesoDB.LeerDatos("sp_ListaPermisosUsuario", Parametros);
+            DS = AccesoDB.LeerDatos("PermisosUsuarioListar", Parametros);
 
             Us.Permisos.Clear();
             if (DS.Tables[0].Rows.Count > 0)

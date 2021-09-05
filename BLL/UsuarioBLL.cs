@@ -78,5 +78,10 @@ namespace BLL
             mppUsuario.ReiniciarContador(Usuario);
         }
 
+        public void GuardarPerfil(UsuarioBE Usuario)
+
+        {
+            mppUsuario.GuardarPefil(Usuario);
+        }
     }
 }

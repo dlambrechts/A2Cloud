@@ -206,9 +206,9 @@ namespace UI.Controllers
                 // Obtengo los datos completos del usuario
                 UsuarioBE usuario = new UsuarioBE();
                 usuario.Id = id;
-                usBLL.ObtenerUno(usuario);
+                usuario=usBLL.ObtenerUno(usuario);
 
-          
+                perBLL.CargarPerfilUsuario(usuario);
 
 
 
@@ -226,6 +226,69 @@ namespace UI.Controllers
 
             else { return RedirectToAction("Index", "Login"); }
 
+        }
+
+        public JsonResult AgregarElementoAlPerfil(int Item, string Tipo, int Usuario)
+        {
+            try
+            {
+                UsuarioBE usuario = new UsuarioBE();
+                PerfilComponenteBE comp;
+
+                usuario.Id = Usuario;
+                usuario = usBLL.ObtenerUno(usuario);
+
+                perBLL.CargarPerfilUsuario(usuario);
+
+                if (Tipo == "Grupo")
+
+                {
+                    comp = new PerfilFamiliaBE();
+                    comp.Id = Item;
+                }
+
+
+                else { comp = new PerfilPatenteBE(); comp.Id = Item; }
+
+
+                usuario.AgregarPermiso(comp);
+
+                usBLL.GuardarPerfil(usuario);
+
+                return Json(new { success = true });
+            }
+            catch
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult QuitarElementoDelPerfil(int Item, string Tipo, int Usuario)
+        {
+            try
+            {
+                UsuarioBE usuario = new UsuarioBE();
+                PerfilComponenteBE comp;
+
+                usuario.Id = Usuario;
+                usuario = usBLL.ObtenerUno(usuario);
+
+                perBLL.CargarPerfilUsuario(usuario);
+
+                if (Tipo == "Ninguno") { comp = new PerfilFamiliaBE(); }
+                else { comp = new PerfilPatenteBE(); }
+
+                comp.Id = Item;
+                usuario.QuitarPermiso(comp);
+
+                usBLL.GuardarPerfil(usuario);
+
+                return Json(new { status = "Success" });
+            }
+            catch
+            {
+                return Json(new { status = "Error" });
+            }
         }
     }
 }
