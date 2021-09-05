@@ -67,10 +67,22 @@ namespace BLL
             return fam;
         }
 
-        public void EditarGrupo(PerfilFamiliaBE fam)
+        public void CrearFamilia(PerfilFamiliaBE fam)
+        {
+
+            mppPerfil.CrearFamilia(fam);
+        }
+
+        public void EditarFamilia(PerfilFamiliaBE fam)
         
         {
-            mppPerfil.EditarGrupo(fam);
+            mppPerfil.EditarFamilia(fam);
+        }
+
+        public void EliminarFamilia(PerfilFamiliaBE fam)
+
+        {
+            mppPerfil.EliminarFamilia(fam);
         }
 
         public bool VerificarPermisoExplisito(PerfilFamiliaBE padre, PerfilComponenteBE hijo)

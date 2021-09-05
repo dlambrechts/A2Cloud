@@ -39,13 +39,13 @@ namespace UI.Controllers
 
         // POST: GrupoPermisos/Create
         [HttpPost]
-        public ActionResult CrearGrupo(FormCollection collection)
+        public ActionResult CrearGrupo(PerfilFamiliaBE fam)
         {
             try
             {
-                // TODO: Add insert logic here
+                perBLL.CrearFamilia(fam);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("GrupoPermisos");
             }
             catch
             {
@@ -83,7 +83,7 @@ namespace UI.Controllers
             try
             {
                 
-                perBLL.EditarGrupo(familia);
+                perBLL.EditarFamilia(familia);
                             
             
                 return RedirectToAction("EditarGrupo","Permisos",familia.Id);
@@ -172,7 +172,9 @@ namespace UI.Controllers
         // GET: Permisos/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            PerfilFamiliaBE famDel = new PerfilFamiliaBE();
+            famDel.Id = id;           
+            return View(famDel);
         }
 
         // POST: Permisos/Delete/5
@@ -181,9 +183,12 @@ namespace UI.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                PerfilFamiliaBE famDel = new PerfilFamiliaBE();
+                famDel.Id = id;
+                perBLL.EliminarFamilia(famDel);
 
-                return RedirectToAction("Index");
+
+                return RedirectToAction("GrupoPermisos");
             }
             catch
             {

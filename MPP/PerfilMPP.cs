@@ -96,7 +96,7 @@ namespace MPP
 
         {
 
-            string ConsultaDel = "PerfilFamiliaEliminar"; // Primero borro la Familia
+            string ConsultaDel = "PerfilFamiliaEliminarComponentes"; // Primero borro los componentes
             Hashtable ParametrosDel = new Hashtable();
             ParametrosDel.Add("Id", Fam.Id);
             AccesoDB.Escribir(ConsultaDel, ParametrosDel);
@@ -219,9 +219,9 @@ namespace MPP
             return Componente;
         }
 
-        public void EditarGrupo(PerfilFamiliaBE fam)
+        public void EditarFamilia(PerfilFamiliaBE fam)
 
-        {
+    
             {
                 Hashtable Parametros = new Hashtable();
 
@@ -233,8 +233,31 @@ namespace MPP
 
             }
 
+        public void EliminarFamilia(PerfilFamiliaBE fam)
+
+        {
+          
+
+            string ConsultaDel = "PerfilFamiliaEliminarComponentes"; // Primero borro los componentes
+            Hashtable ParametrosDel = new Hashtable();
+            ParametrosDel.Add("Id", fam.Id);
+            AccesoDB.Escribir(ConsultaDel, ParametrosDel);
+
+            string Consulta = "PerfilFamiliaEliminar";
+            AccesoDB.Escribir(Consulta, ParametrosDel);
+
         }
 
+        public void CrearFamilia (PerfilFamiliaBE fam)
+        {
+            Hashtable Parametros = new Hashtable();
+
+            Parametros.Add("Descripcion", fam.Descripcion);
+
+            string Consulta = "PerfilFamiliaInsertar";
+            AccesoDB.Escribir(Consulta, Parametros);
+
+        }
         public bool VerificarPermisoExplisito(PerfilFamiliaBE padre, PerfilComponenteBE hijo) 
         
         {
