@@ -142,12 +142,11 @@ namespace UI.Controllers
 
                 if (Tipo == "Grupo") 
                 
-                {
-                    
+                {                   
                     comp = new PerfilFamiliaBE();
                     comp.Id = Item;
 
-                    if(perBLL.VerificarPermisoExplisito(familia, comp))  // Detectar permisos explísitos que generen errores de recursividad
+                    if(perBLL.VerificarPermisoImplicito(familia, comp))  // Detectar permisos explísitos que generen errores de recursividad
                     
                     {
                         return Json(new { success = false }, JsonRequestBehavior.AllowGet);

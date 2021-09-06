@@ -34,11 +34,6 @@ namespace BLL
             mppPerfil.GuardarFamilia(Fam);
         }
 
-        //public void GuardarComponente(PerfilComponenteBE Comp, bool EsFamilia)
-
-        //{
-        //    mppPerfil.GuardarComponente(Comp, EsFamilia);
-        //}
 
         public IList<PerfilComponenteBE> ObtenerTodo(PerfilFamiliaBE Fam)
 
@@ -85,9 +80,9 @@ namespace BLL
             mppPerfil.EliminarFamilia(fam);
         }
 
-        public bool VerificarPermisoExplisito(PerfilFamiliaBE padre, PerfilComponenteBE hijo)
+        public bool VerificarPermisoImplicito(PerfilFamiliaBE padre, PerfilComponenteBE hijo)
         {
-            return mppPerfil.VerificarPermisoExplisito(padre, hijo);
+            return mppPerfil.VerificarPermisoImplicito(padre, hijo);
         }
 
 

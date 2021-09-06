@@ -258,7 +258,7 @@ namespace MPP
             AccesoDB.Escribir(Consulta, Parametros);
 
         }
-        public bool VerificarPermisoExplisito(PerfilFamiliaBE padre, PerfilComponenteBE hijo) 
+        public bool VerificarPermisoImplicito(PerfilFamiliaBE padre, PerfilComponenteBE hijo) 
         
         {
             Hashtable Parametros = new Hashtable();
