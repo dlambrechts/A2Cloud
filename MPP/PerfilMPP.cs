@@ -28,7 +28,7 @@ namespace MPP
                     PerfilPatenteBE oPatente = new PerfilPatenteBE();
 
                     oPatente.Id = Convert.ToInt32(Item["Id"]);
-                    oPatente.Permiso = (PerfilPermisoBE)Enum.Parse(typeof(PerfilPermisoBE), Convert.ToString(Item["Permiso"]));
+                    oPatente.Permiso =  Convert.ToString(Item["Permiso"]).Trim();
                     oPatente.Descripcion = Item["Descripcion"].ToString().Trim();
 
                     ListaPatentes.Add(oPatente);
@@ -114,21 +114,21 @@ namespace MPP
             }
         }
 
-        public void GuardarComponente(PerfilComponenteBE Comp, bool EsFamilia)
+        //public void GuardarComponente(PerfilComponenteBE Comp, bool EsFamilia)
 
-        {
-            string Consulta = "sp_InsertarComponente";
-            Hashtable Parametros = new Hashtable();
+        //{
+        //    string Consulta = "sp_InsertarComponente";
+        //    Hashtable Parametros = new Hashtable();
 
-            Parametros.Add("Descripcion", Comp.Descripcion);
+        //    Parametros.Add("Descripcion", Comp.Descripcion);
 
-            if (EsFamilia) Parametros.Add("Permiso", DBNull.Value);
+        //    if (EsFamilia) Parametros.Add("Permiso", DBNull.Value);
 
-            else Parametros.Add("Permiso", Comp.Permiso.ToString()); ;
+        //    else Parametros.Add("Permiso", Comp.Permiso.ToString()); ;
 
-            AccesoDB.Escribir(Consulta, Parametros);
+        //    AccesoDB.Escribir(Consulta, Parametros);
 
-        }
+        //}
 
         public IList<PerfilComponenteBE> ObtenerTodo(PerfilFamiliaBE Familia)
         {
@@ -152,11 +152,11 @@ namespace MPP
                     }
 
                     var id = Convert.ToInt32(Item["Id"]);
-                    var nombre = Convert.ToString(Item["Descripcion"]);
+                    var nombre = Convert.ToString(Item["Descripcion"]).Trim();
 
                     var permiso = string.Empty;
                     if (Item["Permiso"] != DBNull.Value)
-                        permiso = Convert.ToString(Item["Permiso"]);
+                        permiso = Convert.ToString(Item["Permiso"]).Trim();
 
 
                     PerfilComponenteBE c;
@@ -170,7 +170,7 @@ namespace MPP
                     c.Id = id;
                     c.Descripcion = nombre;
                     if (!string.IsNullOrEmpty(permiso))
-                        c.Permiso = (PerfilPermisoBE)Enum.Parse(typeof(PerfilPermisoBE), permiso);
+                        c.Permiso = permiso;
 
                     var padre = ObtenerComponente(id_padre, Lista);
 
@@ -307,10 +307,10 @@ namespace MPP
                 foreach (DataRow Item in DS.Tables[0].Rows)
                 {
                     var IdPermiso = Convert.ToInt32(Item["Id"]);
-                    var DescPermiso = Convert.ToString(Item["Descripcion"]);
+                    var DescPermiso = Convert.ToString(Item["Descripcion"]).Trim();
                     var Permiso = string.Empty;
 
-                    if (Item["Permiso"] != DBNull.Value) { Permiso = Convert.ToString(Item["Permiso"]); }
+                    if (Item["Permiso"] != DBNull.Value) { Permiso = Convert.ToString(Item["Permiso"]).Trim(); }
 
 
 
@@ -320,15 +320,14 @@ namespace MPP
                         PerfilPatenteBE Patente = new PerfilPatenteBE();
                         Patente.Id = IdPermiso;
                         Patente.Descripcion = DescPermiso;
-                        Patente.Permiso = (PerfilPermisoBE)Enum.Parse(typeof(PerfilPermisoBE), Permiso);
+                        Patente.Permiso = Permiso;
                         Us.Permisos.Add(Patente);
                     }
 
                     else
 
                     {
-                        PerfilFamiliaBE Familia = new PerfilFamiliaBE();
-                       Familia.Permiso = (PerfilPermisoBE)Enum.Parse(typeof(PerfilPermisoBE), "Ninguno"); // Se hace esto porque al instanciar la familia asigna un permiso enum automáticamente
+                        PerfilFamiliaBE Familia = new PerfilFamiliaBE();                     
                         Familia.Id = IdPermiso;
                         Familia.Descripcion = DescPermiso;
 

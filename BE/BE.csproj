@@ -49,7 +49,7 @@
     <Compile Include="PerfilComponenteBE.cs" />
     <Compile Include="PerfilFamiliaBE.cs" />
     <Compile Include="PerfilPatenteBE.cs" />
-    <Compile Include="PerfilPermisoBE.cs" />
+    <Compile Include="_PerfilPermisoBE.cs" />
     <Compile Include="UsuarioBE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

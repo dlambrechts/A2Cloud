@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BE
 {
 
-        public enum PerfilPermisoBE
+        public enum _PerfilPermisoBE
         {
             Ninguno,
             GestionUsuarios,        // ABM Usuarios

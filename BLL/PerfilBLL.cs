@@ -19,7 +19,7 @@ namespace BLL
 
         public Array ObtenerPatentesAtomicas() // Traigo las Patentes Atómicas
         {
-            return Enum.GetValues(typeof(PerfilPermisoBE));
+            return Enum.GetValues(typeof(_PerfilPermisoBE));
         }
 
         public IList<PerfilFamiliaBE> ObtenerFamilias() // Traigo todas las Familias    
@@ -34,11 +34,11 @@ namespace BLL
             mppPerfil.GuardarFamilia(Fam);
         }
 
-        public void GuardarComponente(PerfilComponenteBE Comp, bool EsFamilia)
+        //public void GuardarComponente(PerfilComponenteBE Comp, bool EsFamilia)
 
-        {
-            mppPerfil.GuardarComponente(Comp, EsFamilia);
-        }
+        //{
+        //    mppPerfil.GuardarComponente(Comp, EsFamilia);
+        //}
 
         public IList<PerfilComponenteBE> ObtenerTodo(PerfilFamiliaBE Fam)
 

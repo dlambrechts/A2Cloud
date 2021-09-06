@@ -113,7 +113,7 @@ namespace UI.Controllers
                 familia = perBLL.ObtenerFamiliaPorId(familia);
                 familia = perBLL.CompletarFamilia(familia);
 
-                if (Tipo=="Ninguno") { comp = new PerfilFamiliaBE(); }
+                if (Tipo=="") { comp = new PerfilFamiliaBE(); }
                 else { comp = new PerfilPatenteBE(); }
 
                 comp.Id = Item;

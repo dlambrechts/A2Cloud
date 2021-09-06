@@ -115,27 +115,29 @@ namespace UI.Controllers
 
          }
 
-            public List<PerfilPermisoBE> CargarRoles() 
+            public List<string> CargarRoles() 
         
         {
             bllPer.CargarPerfilUsuario(user);
-            List<PerfilPermisoBE> Permisos = Enum.GetValues(typeof(PerfilPermisoBE)).Cast<PerfilPermisoBE>().ToList();
 
-            List<PerfilPermisoBE> PermisoDeSesion = new List<PerfilPermisoBE>();
+            List<PerfilPatenteBE> Permisos = new List<PerfilPatenteBE>(bllPer.ObtenerPatentes());
 
-            foreach (PerfilPermisoBE item in Permisos) 
+            List<string> PermisoDeSesion = new List<string>();
+
+            foreach (PerfilPatenteBE item in Permisos)
+
             
             {
-                if (IsInRole(item)) { PermisoDeSesion.Add(item); } 
+                if (IsInRole(item.Permiso)) { PermisoDeSesion.Add(item.Permiso); } 
             
             }
 
             return PermisoDeSesion;
          }
 
-        bool isInRole(PerfilComponenteBE Comp, PerfilPermisoBE Permiso, bool existe)
+        bool isInRole(PerfilComponenteBE Comp, string Permiso, bool existe)
         {
-            if (Comp.Permiso.Equals(Permiso))
+            if (Comp.Permiso==Permiso)
                 existe = true;
             else
             {
@@ -148,12 +150,12 @@ namespace UI.Controllers
             return existe;
         }
 
-        public bool IsInRole(PerfilPermisoBE Permiso)
+        public bool IsInRole(string Permiso)
         {
             bool existe = false;
             foreach (var item in user.Permisos)
             {
-                if (item.Permiso.Equals(Permiso))
+                if (item.Permiso==Permiso)
                     return true;
                 else
                 {

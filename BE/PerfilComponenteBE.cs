@@ -18,7 +18,7 @@ namespace BE
         public abstract void AgregarHijo(PerfilComponenteBE Comp);
         public abstract void QuitarHijo(PerfilComponenteBE Comp);
         public abstract void VaciarHijos();
-        public PerfilPermisoBE Permiso { get; set; }
+        public string Permiso { get; set; }
         public override string ToString()
         {
             return Descripcion;
