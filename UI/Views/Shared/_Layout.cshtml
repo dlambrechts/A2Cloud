@@ -1,4 +1,11 @@
-﻿<!doctype html>
+﻿@using BE
+
+@{
+
+    var Permisos = (List<PerfilPermisoBE>)Session["Permisos"];
+
+}
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -30,7 +37,7 @@
 <body>
 
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-     
+
         @Html.ActionLink("A2Cloud", "Index", "Home", null, new { @class = "navbar-brand col-md-3 col-lg-2 me-0 px-3" })
 
         <button class="navbar-toggler  d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,11 +133,19 @@
                             </button>
                             <div class="collapse" id="account-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+
+                                    @{
+                                           <li>@Permisos.Count.ToString()</li>
+
+                                        }
+
+                                
                                     <li>@Html.ActionLink("Usuarios", "Index", "Usuario", null, new { @class = "link-dark rounded", @id = "Usuarios" })</li>
+
                                     <li><a href="~/Usuario" class="link-dark rounded">Permisos de Usuario</a></li>
 
                                     <li>@Html.ActionLink("Grupo de Permisos", "GrupoPermisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Grupos" })</li>
-                        
+
                                 </ul>
                             </div>
                         </li>

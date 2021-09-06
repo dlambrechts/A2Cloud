@@ -10,8 +10,8 @@ namespace BE
         public enum PerfilPermisoBE
         {
             Ninguno,
-            Gestion1, // ABM Usuarios
-            Gestion2, // 
+            GestionUsuarios,        // ABM Usuarios
+            GestionPerfilUsuario,   // Configuración de Perfiles de Usuario
             Gestion3, // 
             Gestion4, // 
     }
