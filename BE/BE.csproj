@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bitacora\BitacoraBE.cs" />
+    <Compile Include="Bitacora\BitacoraTipoBE.cs" />
+    <Compile Include="Bitacora\BitacoraUsuarioBE.cs" />
     <Compile Include="CredencialBE.cs" />
     <Compile Include="EntityBE.cs" />
     <Compile Include="IdiomaBE.cs" />
