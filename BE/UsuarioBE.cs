@@ -11,9 +11,7 @@ namespace BE
 {
     public class UsuarioBE:EntityBE
     {
-        public UsuarioBE() { permisos = new List<PerfilComponenteBE>(); }
 
-        public UsuarioBE(CredencialBE cred) {this.credencial = cred; }
 
         private string nombre;
 
@@ -65,6 +63,12 @@ namespace BE
             get { return activo; }
             set { activo = value; }
         }
+
+        public UsuarioBE() { permisos = new List<PerfilComponenteBE>(); }
+
+        public UsuarioBE(CredencialBE cred) {
+           
+            credencial = cred; }
 
         List<PerfilComponenteBE> permisos;
         public List<PerfilComponenteBE> Permisos { get { return permisos; } }

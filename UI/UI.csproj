@@ -236,11 +236,11 @@
     <Content Include="Views\Permisos\EditarGrupo.cshtml" />
     <Content Include="Views\Permisos\Delete.cshtml" />
     <Content Include="Views\Permisos\EditarPerfilUsuario.cshtml" />
+    <Content Include="Views\Bitacora\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Bitacora\" />
     <Folder Include="Views\Idioma\" />
   </ItemGroup>
   <ItemGroup>

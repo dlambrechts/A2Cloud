@@ -3,16 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BLL;
 
 namespace UI.Controllers
 {
     public class BitacoraController : Controller
     {
+
+        BitacoraBLL bllBit = new BitacoraBLL();
         // GET: Bitacora
         public ActionResult Index()
         {
-            return View();
+            if (Session["IdUsuario"] != null)
+            {
+               
+                var lista = bllBit.ListarTodos();
+
+                return View(lista);
+            }
+
+            else { return RedirectToAction("Index", "Login"); }
+
         }
+    
 
         // GET: Bitacora/Details/5
         public ActionResult Details(int id)

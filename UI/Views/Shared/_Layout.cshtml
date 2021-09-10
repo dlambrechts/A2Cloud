@@ -136,17 +136,23 @@
 
                                     @{ if (Permisos.Exists(per => per.ToString() == "GestionUsuarios"))
 
-                                        {<li>@Html.ActionLink("Usuarios", "Index", "Usuario", null, new { @class = "link-dark rounded", @id = "Usuarios" })</li>}
+                                        {
+                                            <li>@Html.ActionLink("Usuarios", "Index", "Usuario", null, new { @class = "link-dark rounded", @id = "Usuarios" })</li>
+                                        }
                                     }
 
                                     @{ if (Permisos.Exists(per => per.ToString() == "GestionPerfilUsuario"))
 
-                                        { <li><a href="~/Usuario" class="link-dark rounded">Permisos de Usuario</a></li>}
+                                        {
+                                            <li><a href="~/Usuario" class="link-dark rounded">Permisos de Usuario</a></li>
+                                        }
                                     }
 
                                     @{ if (Permisos.Exists(per => per.ToString() == "GestionPerfilUsuario"))
 
-                                        { <li>@Html.ActionLink("Grupo de Permisos", "GrupoPermisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Grupos" })</li>}
+                                        {
+                                            <li>@Html.ActionLink("Grupo de Permisos", "GrupoPermisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Grupos" })</li>
+                                        }
                                     }
 
 
@@ -176,6 +182,24 @@
                                 </ul>
                             </div>
                         </li>
+                        @{ if (Permisos.Exists(per => per.ToString() == "Bitacora"))
+
+                            {
+                                <li class="mb-1">
+                                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#bit-collapse" aria-expanded="false">
+                                        Bitácora
+                                    </button>
+                                    <div class="collapse" id="bit-collapse">
+                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+
+                                            <li>@Html.ActionLink("Bitácora", "Index", "Bitacora", null, new { @class = "link-dark rounded", @id = "Bitacora" })</li>
+
+
+
+                                        </ul>
+                                    </div>
+                                </li>
+                            } }
                     </ul>
                 </div>
             </nav>
