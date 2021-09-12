@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Verificación de Integridad de Datos";
+}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Verificación de Integridad de DB</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="card" style="max-width:500px;">
+
+            <div class="card-body">
+                <h5 class="card-title">Ejecutar Análisis</h5>
+                <p class="card-text">Al ejecutar el Análisis de Integridad de la Base de Datos, se comprobará que los datos no hayan sido manipulados por fuera del sistema. Para ello se realizará la verificación de los Dígitos Horizontales y Verticales.</p>
+                <a href="#" class="btn btn-primary" onclick="Confirmar()">Ejecutar</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Modal Confirmar-->
+<div class="modal fade" id="Confirmar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ejecutar Análisis </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Está seguro que desea ejecutar el Analisis de Integridad de Datos?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="Ejecutar()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    window.onload = function () {
+        document.getElementById('db-collapse').className = 'show';
+        document.getElementById('IntegridadDb').className = 'btn-activo';
+    };
+</script>
+
+<script>
+    var Confirmar = function () {
+
+
+         $("#Confirmar").modal('show');
+    }
+
+          var Ejecutar = function () {
+
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Db/EjecutarAnalisis",
+                success: function (result) {
+
+                    $("#Confirmar").modal("hide");
+                    location.reload();
+                }
+            })
+        }
+
+</script>
+

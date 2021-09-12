@@ -26,10 +26,30 @@ namespace MPP
             Parametros.Add("@Idioma", Usuario.Idioma.Id);
             Parametros.Add("@Contraseña", Usuario.Credencial.Contraseña);
             Parametros.Add("@FechaCreacion", Usuario.FechaCreacion);
+            Parametros.Add("@Dvh", Usuario.DigitoHorizontal);
 
             return AccesoDB.Escribir(Consulta, Parametros);
         }
 
+        public void Editar(UsuarioBE Usuario)
+
+        {
+            string Consulta = "UsuarioEditar";
+            Hashtable Parametros = new Hashtable();
+
+            Parametros.Add("@Id", Usuario.Id);
+            Parametros.Add("@Nombre", Usuario.Nombre);
+            Parametros.Add("@Apellido", Usuario.Apellido);
+            Parametros.Add("@Mail", Usuario.Credencial.Mail);
+            Parametros.Add("@Idioma", Usuario.Idioma.Id);
+            Parametros.Add("@FechaModificacion", Usuario.FechaModificacion);
+            Parametros.Add("@Activo", Usuario.Activo);
+            Parametros.Add("@Dvh", Usuario.DigitoHorizontal);
+
+            Acceso nAcceso = new Acceso();
+
+            nAcceso.Escribir(Consulta, Parametros);
+        }
 
         public List<UsuarioBE> ListarUsuarios()
 
@@ -52,6 +72,8 @@ namespace MPP
                     oUsuario.Apellido = Item["Apellido"].ToString().Trim();
                     oUsuario.Credencial.Mail = Item["Mail"].ToString().Trim();
                     oUsuario.Activo = Convert.ToBoolean(Item["Activo"]);
+                    oUsuario.DigitoHorizontal = Convert.ToString(Item["Dvh"]).Trim();
+
 
 
                     ListaUsuarios.Add(oUsuario);
@@ -158,24 +180,7 @@ namespace MPP
 
         }
 
-        public void Editar(UsuarioBE Usuario)
 
-        {
-            string Consulta = "UsuarioEditar";
-            Hashtable Parametros = new Hashtable();
-
-            Parametros.Add("@Id", Usuario.Id);
-            Parametros.Add("@Nombre", Usuario.Nombre);
-            Parametros.Add("@Apellido", Usuario.Apellido);
-            Parametros.Add("@Mail", Usuario.Credencial.Mail);
-            Parametros.Add("@Idioma", Usuario.Idioma.Id);
-            Parametros.Add("@FechaModificacion", Usuario.FechaModificacion);
-            Parametros.Add("@Activo",Usuario.Activo);
-
-            Acceso nAcceso = new Acceso();
-
-            nAcceso.Escribir(Consulta, Parametros);
-        }
 
         public void IncrementarIntentosFallidos(UsuarioBE Usuario)
 

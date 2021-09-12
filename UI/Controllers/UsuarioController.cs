@@ -91,6 +91,7 @@ namespace UI.Controllers
             us.Id = id;
             us=bllU.ObtenerUno(us);
 
+
             ViewBag.Resultado = TempData["Editado"] as string;
             ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
             return View(us);
@@ -122,7 +123,7 @@ namespace UI.Controllers
 
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
                     return View();
                 }

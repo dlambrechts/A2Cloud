@@ -11,12 +11,20 @@ namespace BLL
     public class UsuarioBLL
     {
         UsuarioMPP mppUsuario = new UsuarioMPP();
+        DigitoVerificadorBLL dvBLL = new DigitoVerificadorBLL();
        
         public int Insertar(UsuarioBE usuario) 
         
         {
             usuario.FechaCreacion = DateTime.Now;
+            usuario.DigitoHorizontal = dvBLL.CalcularDigitoHorizontal(usuario);
+
+            string Dvv = dvBLL.CalcularDigitoVertical(ListarTodos());
+            dvBLL.ActualizarDigitoVertical(Dvv);
+
             return mppUsuario.Insertar(usuario);
+
+
         }
 
         public List<UsuarioBE> ListarTodos() 
@@ -47,7 +55,10 @@ namespace BLL
         
         {
             usuario.FechaModificacion = DateTime.Now;
+            usuario.DigitoHorizontal = dvBLL.CalcularDigitoHorizontal(usuario);
             mppUsuario.Editar(usuario);
+            string Dvv= dvBLL.CalcularDigitoVertical(ListarTodos());
+            dvBLL.ActualizarDigitoVertical(Dvv);
         }
 
         public void Eliminar(UsuarioBE usuario) 

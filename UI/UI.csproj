@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BitacoraController.cs" />
+    <Compile Include="Controllers\DbController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdiomaController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -237,6 +238,7 @@
     <Content Include="Views\Permisos\Delete.cshtml" />
     <Content Include="Views\Permisos\EditarPerfilUsuario.cshtml" />
     <Content Include="Views\Bitacora\Index.cshtml" />
+    <Content Include="Views\Db\Integridad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

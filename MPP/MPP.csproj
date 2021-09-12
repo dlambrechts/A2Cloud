@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitacoraMPP.cs" />
+    <Compile Include="DigitoVerificadorMPP.cs" />
     <Compile Include="IdiomaMPP.cs" />
     <Compile Include="PerfilMPP.cs" />
     <Compile Include="UsuarioMPP.cs" />

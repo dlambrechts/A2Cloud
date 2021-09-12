@@ -70,6 +70,17 @@ namespace BE
            
             credencial = cred; }
 
+
+        private string digitoHorizontal;
+
+        public string DigitoHorizontal
+
+        {
+            get { return digitoHorizontal; }
+            set { digitoHorizontal = value; }
+        }
+
+
         List<PerfilComponenteBE> permisos;
         public List<PerfilComponenteBE> Permisos { get { return permisos; } }
         public void AgregarPermiso(PerfilComponenteBE Perm) { permisos.Add(Perm); }

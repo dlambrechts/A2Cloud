@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitacoraBLL.cs" />
+    <Compile Include="DigitoVerificadorBLL.cs" />
     <Compile Include="IdiomaBLL.cs" />
     <Compile Include="PerfilBLL.cs" />
     <Compile Include="UsuarioBLL.cs" />
@@ -55,6 +56,10 @@
     <ProjectReference Include="..\MPP\MPP.csproj">
       <Project>{4bcf8e1e-1872-4370-9acd-5803b041a307}</Project>
       <Name>MPP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Seguridad\Seguridad.csproj">
+      <Project>{28f14eba-2373-42c0-99d2-11d66584e177}</Project>
+      <Name>Seguridad</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
