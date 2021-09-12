@@ -11,18 +11,18 @@ namespace DAL
     public class GestorDeArchivo
     {
 
-       public FileInfo[] ListarBackups() 
+       public FileInfo[] ListarBackups(string path) 
         
         {
 
-            string Path= @"C:\Backup\";
-
-            DirectoryInfo Carpeta = new DirectoryInfo(Path);
+            DirectoryInfo Carpeta = new DirectoryInfo(path);
             FileInfo[] Backups = Carpeta.GetFiles("*.bak");
 
             return Backups;
 
         }
+
+
 
     }
 }

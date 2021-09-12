@@ -12,6 +12,7 @@ namespace UI.Controllers
     {
         BitacoraBLL bllBit = new BitacoraBLL();
         DigitoVerificadorBLL bllDv = new DigitoVerificadorBLL();
+        BackupBLL bllBak = new BackupBLL();
 
 
         // GET: Integridad
@@ -59,99 +60,98 @@ namespace UI.Controllers
         {
             if (Session["IdUsuario"] != null)
             {
-                return View();
+                ViewBag.Resultado = TempData["Resultado"] as string;
+                ViewBag.Fecha = TempData["FechaBack"] as string;
+                return View(bllBak.ListarBackups());
             }
             else { return RedirectToAction("Index", "Login"); }
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-        // GET: Db
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: Db/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: Db/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["IdUsuario"] != null)
+            {                
+                
+                return View();
+            }
+
+            else { return RedirectToAction("Index", "Login"); }
         }
+
 
         // POST: Db/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(BackupBE nuevoBackup)
         {
             try
-            {
-                // TODO: Add insert logic here
+            {             
 
-                return RedirectToAction("Index");
+                CredencialBE cre = new CredencialBE();
+                UsuarioBE user = new UsuarioBE(cre);
+                user.Id = Convert.ToInt32(Session["IdUsuario"]);
+                user.Credencial.Mail = Session["Mail"].ToString();
+
+                if (bllDv.VerificarIntegridad(user))
+                {
+                    bllBak.NuevoBackup(nuevoBackup);
+
+                    TempData["Resultado"] = "Creado";
+
+                    return RedirectToAction("Backup");
+                }
+
+                else 
+                
+                {
+                    TempData["Resultado"] = "ErrorDv";
+
+                    return RedirectToAction("Backup");
+                }
+
+
             }
             catch
             {
-                return View();
+                return RedirectToAction("Backup");
             }
         }
 
-        // GET: Db/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: Db/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Db/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Db/Restaurar/5
+        public ActionResult Restaurar(string Nombre,DateTime Creacion)
         {
-            return View();
+            BackupBE backRestore = new BackupBE();
+
+            backRestore.Nombre = Nombre;
+            backRestore.FechaCreacion = Creacion;
+
+            return View(backRestore);
         }
 
         // POST: Db/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Restaurar(string Nombre, DateTime Creacion,FormCollection form)
         {
             try
             {
-                // TODO: Add delete logic here
+                BackupBE backRestore = new BackupBE();
 
-                return RedirectToAction("Index");
+                backRestore.Nombre = Nombre;
+                backRestore.FechaCreacion = Creacion;
+
+                bllBak.RestaurarDb(backRestore);
+
+                TempData["Resultado"] = "RestauradoOk";
+                TempData["FechaBack"] = backRestore.FechaCreacion.ToString();
+
+                return RedirectToAction("Backup");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Backup");
             }
         }
     }

@@ -6,10 +6,10 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Usuarios</h1>
+        <h1 class="h2">Copias de Seguridad</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a>@Html.ActionLink("Nuevo", "Create", "Backup", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <a>@Html.ActionLink("Nuevo", "Create", "Db", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
                 <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
             </div>
             <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
@@ -21,9 +21,35 @@
 
     <div class="container-fluid">
 
+
+        @if (ViewBag.Resultado != null && ViewBag.Resultado == "Creado")
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Correcto:</strong> La Copia de Seguridad se creó correctamente
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (ViewBag.Resultado != null && ViewBag.Resultado == "RestauradoOk")
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Correcto:</strong> Se restauró la Base de Datos al @ViewBag.Fecha
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (ViewBag.Resultado != null && ViewBag.Resultado == "ErrorDv")
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error:</strong> No se pudo crear la Copia de Seguridad, porque la verificación de Dígitos Verificadores entontró inconsistencias. Revice la Bitácora para más información.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
         <table class="table table-hover">
             <thead>
                 <tr>
+
+                    <th scope="col">@Html.DisplayNameFor(model => model.FechaCreacion)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Nombre)</th>
                     <th scope="col">Acciones</th>
 
@@ -34,15 +60,18 @@
                 @foreach (var item in Model)
 
                 {
-                    <tr>
-                        <th scope="row">@Html.DisplayFor(model => item.Nombre)</th>
+                <tr>
+                    <th scope="row">@Html.DisplayFor(model => item.FechaCreacion)</th>
+                    <th scope="row">@Html.DisplayFor(model => item.Nombre)</th>
 
-                        <td>
-                            <a href="#">Restaurar</a>
 
-                        </td>
+                    <td>
 
-                    </tr>
+                        <a href="@Url.Action("Restaurar", "Db", new { nombre = item.Nombre,creacion=item.FechaCreacion })">Restaurar</a>
+
+                    </td>
+
+                </tr>
 
 
 
@@ -54,3 +83,11 @@
 
 
 </main>
+
+<script>
+
+    window.onload = function () {
+        document.getElementById('db-collapse').className = 'show';
+        document.getElementById('CopiasSeg').className = 'btn-activo';
+    };
+</script>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    public class BackupBE
+    public class BackupBE:EntityBE
     {
         private string nombre;
 

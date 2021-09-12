@@ -15,5 +15,18 @@ namespace BLL
         {
             return mppBak.ListarBackups();
         }
+
+        public void NuevoBackup(BackupBE back) 
+        
+        {
+            mppBak.NuevoBackup(back);
+        }
+
+        public void RestaurarDb(BackupBE back)
+
+        {
+            mppBak.RestaurarDb(back);
+
+        }
     }
 }

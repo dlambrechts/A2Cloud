@@ -90,5 +90,30 @@ namespace DAL
             return Afectadas;
         }
 
+        public void QueryBackup(string Consulta) // Exclusivo para tareas de backup: se conecta a la base MASTER y no utiliza Transacciones
+        {
+            ComandoSQL = new SqlCommand();
+            Conexion = new SqlConnection("Data Source=.;Initial Catalog=master;Integrated Security=True");
+            Conexion.Open();
+            ComandoSQL.Connection = Conexion;
+
+            try
+            {
+                ComandoSQL.CommandText = Consulta;
+                ComandoSQL.CommandTimeout = 600;
+                ComandoSQL.CommandType = CommandType.Text;
+                ComandoSQL.ExecuteNonQuery();
+                
+            }
+            catch (Exception ex)
+            {
+         
+            }
+            finally
+            {
+                Conexion.Close();
+            }
+        }
+
     }
 }
