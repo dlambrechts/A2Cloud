@@ -55,6 +55,14 @@ namespace MPP
 
         }
 
+        public void EliminarBackup(BackupBE back)
+
+        {
+
+            Ges.EliminarBackup(CarpetaBackups, back.Nombre);
+
+        }
+
         public void RestaurarDb(BackupBE back)
 
         {

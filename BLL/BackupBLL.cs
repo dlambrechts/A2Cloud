@@ -26,7 +26,12 @@ namespace BLL
 
         {
             mppBak.RestaurarDb(back);
+        }
 
+        public void EliminarBackup(BackupBE back)
+
+        {
+            mppBak.EliminarBackup(back);
         }
     }
 }

@@ -31,7 +31,6 @@ namespace UI.Controllers
             try
             {
                 
-
                 CredencialBE cred = new CredencialBE();
                 UsuarioBE user = new UsuarioBE(cred);
 
@@ -131,7 +130,7 @@ namespace UI.Controllers
             return View(backRestore);
         }
 
-        // POST: Db/Delete/5
+        // POST: Db/Restaurar/5
         [HttpPost]
         public ActionResult Restaurar(string Nombre, DateTime Creacion,FormCollection form)
         {
@@ -153,6 +152,22 @@ namespace UI.Controllers
             {
                 return RedirectToAction("Backup");
             }
+
+
         }
+
+        // GET: Db/Restaurar/5
+        public JsonResult Delete(string Nombre)
+        {
+            BackupBE backDel = new BackupBE();
+
+            backDel.Nombre = Nombre;
+            bllBak.EliminarBackup(backDel);
+
+            return Json(new { success = true });
+
+        }
+
+    
     }
 }

@@ -60,18 +60,19 @@
                 @foreach (var item in Model)
 
                 {
-                <tr>
-                    <th scope="row">@Html.DisplayFor(model => item.FechaCreacion)</th>
-                    <th scope="row">@Html.DisplayFor(model => item.Nombre)</th>
+                    <tr>
+                        <th scope="row">@Html.DisplayFor(model => item.FechaCreacion)</th>
+                        <th scope="row">@Html.DisplayFor(model => item.Nombre)</th>
 
 
-                    <td>
+                        <td>
 
-                        <a href="@Url.Action("Restaurar", "Db", new { nombre = item.Nombre,creacion=item.FechaCreacion })">Restaurar</a>
+                            <a href="@Url.Action("Restaurar", "Db", new { nombre = item.Nombre,creacion=item.FechaCreacion })">Restaurar</a>&ensp;&ensp;
+                            <a href="#" onclick="Confirmar('@item.Nombre')"><i class="fa fa-trash"></i></a>
 
-                    </td>
+                        </td>
 
-                </tr>
+                    </tr>
 
 
 
@@ -81,13 +82,64 @@
         </table>
     </div>
 
+    <!-- Modal Confirmar Eliminación-->
+    <div class="modal fade" id="Confirmar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Está seguro que desea Eliminar el Backup?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="Eliminar()">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </main>
 
+
+@*PAra eliminar, Campo Oculto para el Nombre*@
+
+<input type="hidden" id="NombreBackup" />
 <script>
 
     window.onload = function () {
         document.getElementById('db-collapse').className = 'show';
         document.getElementById('CopiasSeg').className = 'btn-activo';
     };
+</script>
+
+<script>
+    var Confirmar = function (nombre) {
+
+        $("#NombreBackup").val(nombre);
+        $("#Confirmar").modal('show');
+    }
+
+    var Eliminar = function () {
+
+        var Nombre = $('#NombreBackup').val();
+
+        $.ajax({
+
+            type: "POST",
+            url: "/Db/Delete",
+            data: { Nombre: Nombre },
+            success: function (response) {
+                if (response.success) {
+                    $("#Confirmar").modal("hide");
+                    location.reload();
+
+                } else {}
+            }
+        })
+    }
+
 </script>

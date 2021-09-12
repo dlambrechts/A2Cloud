@@ -22,6 +22,24 @@ namespace DAL
 
         }
 
+        public void EliminarBackup(string path,string nombreBackup)
+
+        {
+
+            DirectoryInfo Carpeta = new DirectoryInfo(path);
+            FileInfo[] Backups = Carpeta.GetFiles("*.bak");
+
+            foreach(FileInfo archivo in Backups) 
+            
+            { 
+                if(archivo.Name==nombreBackup)
+                {
+                    archivo.Delete();
+                }
+            }
+
+        }
+
 
 
     }
