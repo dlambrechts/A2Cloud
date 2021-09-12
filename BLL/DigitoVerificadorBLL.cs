@@ -148,7 +148,7 @@ namespace BLL
             RegistroFinVerificacion.Detalle = "Fin de Verificación de Integridad de Datos";
             bllBit.Registrar(RegistroFinVerificacion);
 
-            if (ResultadoHorizontal || ResultadoVertical)
+            if (!ResultadoHorizontal || !ResultadoVertical)
 
             {
                 return false;

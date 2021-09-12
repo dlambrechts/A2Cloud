@@ -54,7 +54,15 @@ namespace UI.Controllers
         }
 
 
-
+        // GET: Backup
+        public ActionResult Backup()
+        {
+            if (Session["IdUsuario"] != null)
+            {
+                return View();
+            }
+            else { return RedirectToAction("Index", "Login"); }
+        }
 
 
 

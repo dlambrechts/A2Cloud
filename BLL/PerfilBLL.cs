@@ -17,10 +17,6 @@ namespace BLL
             return mppPerfil.ObtenerPatentes();
         }
 
-        public Array ObtenerPatentesAtomicas() // Traigo las Patentes Atómicas
-        {
-            return Enum.GetValues(typeof(_PerfilPermisoBE));
-        }
 
         public IList<PerfilFamiliaBE> ObtenerFamilias() // Traigo todas las Familias    
 

@@ -239,6 +239,7 @@
     <Content Include="Views\Permisos\EditarPerfilUsuario.cshtml" />
     <Content Include="Views\Bitacora\Index.cshtml" />
     <Content Include="Views\Db\Integridad.cshtml" />
+    <Content Include="Views\Db\Backup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

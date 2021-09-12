@@ -13,17 +13,16 @@ namespace BLL
         UsuarioMPP mppUsuario = new UsuarioMPP();
         DigitoVerificadorBLL dvBLL = new DigitoVerificadorBLL();
        
-        public int Insertar(UsuarioBE usuario) 
+        public void Insertar(UsuarioBE usuario) 
         
         {
             usuario.FechaCreacion = DateTime.Now;
             usuario.DigitoHorizontal = dvBLL.CalcularDigitoHorizontal(usuario);
 
+            mppUsuario.Insertar(usuario);
+
             string Dvv = dvBLL.CalcularDigitoVertical(ListarTodos());
             dvBLL.ActualizarDigitoVertical(Dvv);
-
-            return mppUsuario.Insertar(usuario);
-
 
         }
 

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackupBE.cs" />
     <Compile Include="BitacoraBE.cs" />
     <Compile Include="CredencialBE.cs" />
     <Compile Include="EntityBE.cs" />
@@ -50,7 +51,6 @@
     <Compile Include="PerfilComponenteBE.cs" />
     <Compile Include="PerfilFamiliaBE.cs" />
     <Compile Include="PerfilPatenteBE.cs" />
-    <Compile Include="_PerfilPermisoBE.cs" />
     <Compile Include="UsuarioBE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
