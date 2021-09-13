@@ -144,16 +144,18 @@
                                     @{ if (Permisos.Exists(per => per.ToString() == "GestionPerfilUsuario"))
 
                                         {
-                                            <li><a href="~/Usuario" class="link-dark rounded">Permisos de Usuario</a></li>
+                                            <li>@Html.ActionLink("Grupos de Permisos", "GrupoPermisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Grupos" })</li>
                                         }
                                     }
 
                                     @{ if (Permisos.Exists(per => per.ToString() == "GestionPerfilUsuario"))
 
                                         {
-                                            <li>@Html.ActionLink("Grupo de Permisos", "GrupoPermisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Grupos" })</li>
+                                            <li>@Html.ActionLink("Permisos del Sistema", "Permisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Permisos" })</li>
                                         }
                                     }
+
+
 
 
                                 </ul>

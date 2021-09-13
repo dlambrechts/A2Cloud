@@ -242,6 +242,7 @@
     <Content Include="Views\Db\Backup.cshtml" />
     <Content Include="Views\Db\Create.cshtml" />
     <Content Include="Views\Db\Restaurar.cshtml" />
+    <Content Include="Views\Permisos\Permisos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

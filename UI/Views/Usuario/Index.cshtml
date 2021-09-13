@@ -17,68 +17,69 @@
             </button>
         </div>
     </div>
+    <div class="container-fluid">
 
-    @if (ViewBag.Resultado != null && ViewBag.Resultado == "Creado")
-    {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Correcto:</strong> El Usuario fue Creado
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
-    @if (ViewBag.Resultado != null && ViewBag.Resultado == "Editado")
-    {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Correcto:</strong> El Usuario  @ViewBag.Usuario fue Editado
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
+        @if (ViewBag.Resultado != null && ViewBag.Resultado == "Creado")
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Correcto:</strong> El Usuario fue Creado
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (ViewBag.Resultado != null && ViewBag.Resultado == "Editado")
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Correcto:</strong> El Usuario  @ViewBag.Usuario fue Editado
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
 
-    @if (ViewBag.Resultado != null && ViewBag.Resultado == "Eliminado")
-    {
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong>Correcto:</strong> El Usuario  @ViewBag.Mail (@ViewBag.Usuario) fue Eliminado
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        @if (ViewBag.Resultado != null && ViewBag.Resultado == "Eliminado")
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Correcto:</strong> El Usuario  @ViewBag.Mail (@ViewBag.Usuario) fue Eliminado
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Nombre)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Apellido)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Credencial.Mail)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Activo)</th>
+                    <th scope="col">Acciones</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+
+                {
+                    <tr>
+                        <th scope="row">@Html.DisplayFor(model => item.Id)</th>
+                        <td>@Html.DisplayFor(model => item.Nombre)</td>
+                        <td>@Html.DisplayFor(model => item.Apellido)</td>
+                        <td>@Html.DisplayFor(model => item.Credencial.Mail)</td>
+                        <td>@Html.DisplayFor(model => item.Activo)</td>
+                        <td>
+                            <a href="@Url.Action("Edit", "Usuario", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
+                            <a href="@Url.Action("Delete", "Usuario", new {id=item.Id })"><i class="fa fa-trash"></i></a>&ensp;&ensp;
+                            <a href="@Url.Action("Details", "Usuario", new { id = item.Id })"><i class="fa fa-eye"></i></a>&ensp; &ensp;
+                            <a href="@Url.Action("EditarPerfilUsuario", "Permisos", new { id = item.Id })"><i class="fa fa-key"></i></a>&ensp; &ensp;
+                        </td>
+
+                    </tr>
+
+
+
+                }
+
+            </tbody>
+        </table>
 </div>
-    }
-
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
-                <th scope="col">@Html.DisplayNameFor(model => model.Nombre)</th>
-                <th scope="col">@Html.DisplayNameFor(model => model.Apellido)</th>
-                <th scope="col">@Html.DisplayNameFor(model => model.Credencial.Mail)</th>
-                <th scope="col">@Html.DisplayNameFor(model => model.Activo)</th>
-                <th scope="col">Acciones</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-
-            {
-            <tr>
-                <th scope="row">@Html.DisplayFor(model => item.Id)</th>
-                <td>@Html.DisplayFor(model => item.Nombre)</td>
-                <td>@Html.DisplayFor(model => item.Apellido)</td>
-                <td>@Html.DisplayFor(model => item.Credencial.Mail)</td>
-                <td>@Html.DisplayFor(model => item.Activo)</td>
-                <td>
-                    <a href="@Url.Action("Edit", "Usuario", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
-                    <a href="@Url.Action("Delete", "Usuario", new {id=item.Id })"><i class="fa fa-trash"></i></a>&ensp;&ensp;
-                    <a href="@Url.Action("Details", "Usuario", new { id = item.Id })"><i class="fa fa-eye"></i></a>&ensp; &ensp;
-                    <a href="@Url.Action("EditarPerfilUsuario", "Permisos", new { id = item.Id })"><i class="fa fa-key"></i></a>&ensp; &ensp;
-                </td>
-
-            </tr>
-
-
-
-            }
-
-        </tbody>
-    </table>
-
 </main>
 
 <script>

@@ -14,9 +14,18 @@ namespace UI.Controllers
         UsuarioBLL usBLL = new UsuarioBLL();
 
         // GET: Permisos
-        public ActionResult Index()
+        public ActionResult Permisos()
         {
-            return View();
+            if (Session["IdUsuario"] != null)
+            {
+
+                List<PerfilPatenteBE> lista = new List<PerfilPatenteBE>(perBLL.ObtenerPatentes());
+
+                return View(lista);
+                            
+            }
+
+            else { return RedirectToAction("Index", "Login"); }
         }
 
         public ActionResult GrupoPermisos()
@@ -215,8 +224,6 @@ namespace UI.Controllers
                 ViewBag.Familias = familias;
 
                 IList<PerfilPatenteBE> permisos = perBLL.ObtenerPatentes(); // Obtengo todos los permisos individuales para poder agregar
-
-
                 ViewBag.Permisos = permisos;
 
                 return View(usuario);

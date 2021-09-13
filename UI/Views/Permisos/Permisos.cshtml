@@ -1,29 +1,31 @@
-﻿@model IEnumerable<BE.PerfilFamiliaBE>
+﻿@model IEnumerable<BE.PerfilPatenteBE>
 
 @{
-    ViewBag.Title = "Grupos de Permisos";
+    ViewBag.Title = "Permisos del Sistema";
 }
+
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Grupos de Permisos</h1>
+        <h1 class="h2">Permisos del Sistema</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a>@Html.ActionLink("Nuevo", "CrearGrupo", "Permisos", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                
                 <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
             </div>
 
         </div>
     </div>
+
     <div class="container-fluid">
 
         <table class="table table-hover">
             <thead>
                 <tr>
                     <th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Permiso)</th>
                     <th scope="col">@Html.DisplayNameFor(model => model.Descripcion)</th>
 
-                    <th scope="col">Acciones</th>
 
                 </tr>
             </thead>
@@ -33,30 +35,26 @@
                 {
                     <tr>
                         <th scope="row">@Html.DisplayFor(model => item.Id)</th>
+                        <td>@Html.DisplayFor(model => item.Permiso)</td>
                         <td>@Html.DisplayFor(model => item.Descripcion)</td>
 
-                        <td>
-                            <a href="@Url.Action("EditarGrupo", "Permisos", new {id=item.Id })"><i class="fa fa-gear"></i></a>&ensp;&ensp;
-                            <a href="@Url.Action("Delete", "Permisos", new {id=item.Id })"><i class="fa fa-trash"></i></a>&ensp;&ensp;
-
-                        </td>
 
                     </tr>
-
-
 
                 }
 
             </tbody>
         </table>
 
-        </div>
-</main>
+    </div>
+
+    </main>
+
 
 <script>
 
     window.onload = function () {
         document.getElementById('account-collapse').className = 'show';
-        document.getElementById('Grupos').className = 'btn-activo';
+        document.getElementById('Permisos').className = 'btn-activo';
     };
 </script>
