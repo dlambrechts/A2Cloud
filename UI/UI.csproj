@@ -243,11 +243,13 @@
     <Content Include="Views\Db\Create.cshtml" />
     <Content Include="Views\Db\Restaurar.cshtml" />
     <Content Include="Views\Permisos\Permisos.cshtml" />
+    <Content Include="Views\Idioma\Index.cshtml" />
+    <Content Include="Views\Idioma\Create.cshtml" />
+    <Content Include="Views\Idioma\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Idioma\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

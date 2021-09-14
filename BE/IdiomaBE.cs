@@ -23,6 +23,17 @@ namespace BE
             set { descripcion = value; }
         }
 
+        private bool porDefecto;
+
+        public bool PorDefecto 
+        
+        { 
+            get { return porDefecto; }
+            set { porDefecto = value; }
+        }
+
+
+
 
     }
 }

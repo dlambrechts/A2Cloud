@@ -123,7 +123,7 @@ namespace UI.Controllers
 
                     }
                 }
-                catch (Exception ex)
+                catch 
                 {
                     return View();
                 }

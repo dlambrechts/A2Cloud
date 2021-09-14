@@ -17,5 +17,29 @@ namespace BLL
         {           
             return mppIdioma.ObtenerIdiomas();
         }
+
+        public void Insertar(IdiomaBE Idioma)
+        
+        
+        {
+            Idioma.FechaCreacion = DateTime.Now;
+
+            mppIdioma.Insertar(Idioma);
+        }
+
+        public IdiomaBE ObtenerUno(IdiomaBE idioma) 
+        
+        {
+
+            return mppIdioma.ObtenerUno(idioma);
+        }
+
+        public void Editar (IdiomaBE idioma) 
+        
+        {
+            idioma.FechaModificacion = DateTime.Now;
+            mppIdioma.Editar(idioma);
+        }
+
     }
 }

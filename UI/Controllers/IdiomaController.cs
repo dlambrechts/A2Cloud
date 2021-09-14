@@ -10,11 +10,18 @@ namespace UI.Controllers
 {
     public class IdiomaController : Controller
     {
+        IdiomaBLL bllId = new IdiomaBLL();
         // GET: Idioma
         public ActionResult Index()
         {
 
-            return View();
+            if (Session["IdUsuario"] != null)
+            {
+
+                return View(bllId.ObtenerIdiomas());
+            }
+
+            else { return RedirectToAction("Index", "Login"); }
         }
 
         // GET: Idioma/Details/5
@@ -26,45 +33,106 @@ namespace UI.Controllers
         // GET: Idioma/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["IdUsuario"] != null)
+            {
+                return View();
+
+            }
+
+            else { return RedirectToAction("Index", "Login"); }
         }
 
         // POST: Idioma/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(IdiomaBE idioma)
         {
-            try
-            {
-                // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (Session["IdUsuario"] != null)
             {
-                return View();
+
+                try
+                {
+                    UsuarioBE user = new UsuarioBE();
+
+                    user.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+                    idioma.UsuarioCreacion = user;
+
+                    bllId.Insertar(idioma);
+
+
+
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
+       
+
             }
+
+            else { return RedirectToAction("Index", "Login"); }
+
         }
 
         // GET: Idioma/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+
+
+            if (Session["IdUsuario"] != null)
+            {
+
+                try
+                {
+                    IdiomaBE idioma = new IdiomaBE();
+
+                    idioma.Id = id;
+
+                    idioma = bllId.ObtenerUno(idioma);
+
+                    return View(idioma);
+                }
+                catch 
+                {
+                    return View();
+                }
+
+            }
+            else { return RedirectToAction("Index", "Login"); }
         }
 
         // POST: Idioma/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, IdiomaBE idioma)
         {
-            try
-            {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (Session["IdUsuario"] != null)
             {
-                return View();
+                try
+                {
+
+                    UsuarioBE user = new UsuarioBE();
+                    user.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+                    idioma.UsuarioModificacion = user;
+                    
+                    bllId.Editar(idioma);
+
+
+
+                    return RedirectToAction("Index");
+
+                }
+                catch 
+                {
+                    return View();
+                }
             }
+
+            else { return RedirectToAction("Index", "Login"); }
+
         }
 
         // GET: Idioma/Delete/5
