@@ -121,5 +121,19 @@ namespace MPP
             nAcceso.Escribir(Consulta, Parametros);
         }
 
+        public void Eliminar(IdiomaBE Idioma)
+
+        {
+            string Consulta = "IdiomaEliminar";
+            Hashtable Parametros = new Hashtable();
+
+            Parametros.Add("@Id", Idioma.Id);
+            Parametros.Add("@FechaModificacion", Idioma.FechaModificacion);
+            Acceso nAcceso = new Acceso();
+
+            nAcceso.Escribir(Consulta, Parametros);
+
+        }
+
     }
 }

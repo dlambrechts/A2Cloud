@@ -138,7 +138,16 @@ namespace UI.Controllers
         // GET: Idioma/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            if (Session["IdUsuario"] != null)
+            {
+                IdiomaBE Idioma = new IdiomaBE();
+                Idioma.Id = id;
+                Idioma = bllId.ObtenerUno(Idioma);
+
+                return View(Idioma);
+            }
+
+            else { return RedirectToAction("Index", "Login"); }
         }
 
         // POST: Idioma/Delete/5
