@@ -1,0 +1,111 @@
+﻿@model IEnumerable<BE.IdiomaTraduccionBE>
+
+@{
+    ViewBag.Title = "Traduccion";
+    var Idioma = Request.Url.Segments[3];
+}
+
+
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Editar Idioma</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a>@Html.ActionLink("Volver", "Index", "Idioma", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-fluid">
+
+
+
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Etiqueta.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Etiqueta.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Texto)
+                </th>
+
+                <th>
+                    Acciones
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Etiqueta.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Etiqueta.Nombre)
+                    </td>
+                    <td>
+                        @Html.EditorFor(modelItem => item.Texto, new { htmlAttributes = new { @id = item.Etiqueta.Id } })
+                    </td>   
+                    <td>
+                        <a href="#" onclick="GuardarTraduccion(@item.Etiqueta.Id,'@item.Texto')"><i class="fa fa-save"></i>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+
+
+    </div>
+
+
+</main>
+
+<script>
+
+    window.onload = function () {
+        document.getElementById('idioma-collapse').className = 'show';
+        document.getElementById('Idioma').className = 'btn-activo';
+    };
+</script>
+@section scripts{
+
+    <script>
+        var GuardarTraduccion = function (Etiqueta, Traduccion) {
+
+
+            var Idioma =@Html.Raw(Json.Encode(@Idioma));
+            var Traduccion = $('#'+Etiqueta).val();
+            $.ajax({
+
+                type: "POST",
+                url: "/Idioma/GuardarTraduccion",
+                data: { Idioma:Idioma, Etiqueta: Etiqueta, Traduccion: Traduccion },
+                success: function (response) {
+                    if (response.success) {
+
+
+                        //
+
+                        location.reload();
+                    } else {
+
+                        $('#Mensaje2').addClass('show');
+                        window.setTimeout(function () {
+                            $('#Mensaje2').removeClass('show');
+                        }, 2000);
+                    }
+                }
+
+            })
+
+        }
+
+    </script>
+    }

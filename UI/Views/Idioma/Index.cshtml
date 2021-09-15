@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<BE.IdiomaBE>
 
 @{
-    ViewBag.Title = "Gestión de Idiomas";
+    ViewBag.Title = "Traducciones";
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -39,6 +39,7 @@
 
                     <td>
                         <a href="@Url.Action("Edit", "Idioma", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
+                        <a href="@Url.Action("Traduccion", "Idioma", new {id=item.Id })"><i class="fa fa-language"></i></a>&ensp;&ensp;
                         <a href="@Url.Action("Delete", "Idioma", new {id=item.Id })"><i class="fa fa-trash"></i></a>&ensp;&ensp;
                     </td>
 

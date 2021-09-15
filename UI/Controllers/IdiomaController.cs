@@ -166,5 +166,54 @@ namespace UI.Controllers
             }
         }
 
+        // GET: Idioma/Traduccion/5
+        public ActionResult Traduccion(int id)
+        {
+
+
+            if (Session["IdUsuario"] != null)
+            {
+
+                try
+                {
+                    IdiomaBE idioma = new IdiomaBE();
+                    idioma.Id = id;
+                    List<IdiomaTraduccionBE> traducciones = new List<IdiomaTraduccionBE>();                  
+
+                    traducciones = bllId.ObtenerTraducciones(idioma);
+                   
+                    return View(traducciones);
+                }
+                catch
+                {
+                    return View();
+                }
+
+            }
+            else { return RedirectToAction("Index", "Login"); }
+        }
+
+
+        public JsonResult GuardarTraduccion(int Idioma,int Etiqueta,string Traduccion)
+        {
+
+
+                try
+                {
+
+
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+
+                }
+                catch
+                {
+                    return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                }
+
+
+        }
+
+
+
     }
 }

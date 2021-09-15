@@ -135,5 +135,101 @@ namespace MPP
 
         }
 
+        public Dictionary<string, IdiomaTraduccionBE> ObtenerTraduccionesDic(IdiomaBE Idioma)
+
+        {
+            Dictionary<string, IdiomaTraduccionBE> ListaTraducciones = new Dictionary<string, IdiomaTraduccionBE>();
+
+            DataSet DS = new DataSet();
+            Hashtable Param = new Hashtable();
+            Param.Add("@Idioma", Idioma.Id);
+            DS = AccesoDB.LeerDatos("IdiomaObtenerTraduccionesDic", Param);
+
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow Item in DS.Tables[0].Rows)
+                {
+
+                    IdiomaTraduccionBE Traduccion = new IdiomaTraduccionBE();
+                    IdiomaEtiquetaBE Etiqueta = new IdiomaEtiquetaBE();
+
+                    Etiqueta.Id = Convert.ToInt32(Item[0]);
+                    Etiqueta.Nombre = Item[1].ToString().Trim();
+                    Traduccion.Etiqueta = Etiqueta;
+                    Traduccion.Texto = Item[2].ToString().Trim();
+
+                    ListaTraducciones.Add(Etiqueta.Nombre, Traduccion);
+                }
+
+                return ListaTraducciones;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<IdiomaTraduccionBE> ObtenerTraducciones(IdiomaBE Idioma)
+
+        {
+            List<IdiomaTraduccionBE> ListaTraducciones = new List<IdiomaTraduccionBE>();
+
+            DataSet DS = new DataSet();
+            Hashtable Param = new Hashtable();
+            Param.Add("@Idioma", Idioma.Id);
+            DS = AccesoDB.LeerDatos("IdiomaObtenerTraducciones", Param);
+
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow Item in DS.Tables[0].Rows)
+                {
+
+                    IdiomaTraduccionBE Traduccion = new IdiomaTraduccionBE();
+
+                    Traduccion.Etiqueta.Id = Convert.ToInt32(Item[0]);
+                    Traduccion.Etiqueta.Nombre = Item[1].ToString().Trim();                   
+                    Traduccion.Texto = Item[2].ToString().Trim();
+
+                    ListaTraducciones.Add(Traduccion);
+                }
+
+                return ListaTraducciones;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<IdiomaEtiquetaBE> ObtenerEtiquetas()
+
+        {
+            List<IdiomaEtiquetaBE> ListaEtiquetas = new List<IdiomaEtiquetaBE>();
+
+            Acceso AccesoDB = new Acceso();
+            DataSet DS = new DataSet();
+            DS = AccesoDB.LeerDatos("IdiomaObtenerEtiquetas", null);
+
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow Item in DS.Tables[0].Rows)
+                {
+                    IdiomaEtiquetaBE oEtiqueta = new IdiomaEtiquetaBE();
+                    oEtiqueta.Id = Convert.ToInt32(Item[0]);
+                    oEtiqueta.Nombre = Item[1].ToString().Trim();
+
+
+                    ListaEtiquetas.Add(oEtiqueta);
+                }
+
+                return ListaEtiquetas;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
     }
 }

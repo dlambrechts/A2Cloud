@@ -48,6 +48,8 @@
     <Compile Include="CredencialBE.cs" />
     <Compile Include="EntityBE.cs" />
     <Compile Include="IdiomaBE.cs" />
+    <Compile Include="IdiomaEtiquetaBE.cs" />
+    <Compile Include="IdiomaTraduccionBE.cs" />
     <Compile Include="PerfilComponenteBE.cs" />
     <Compile Include="PerfilFamiliaBE.cs" />
     <Compile Include="PerfilPatenteBE.cs" />

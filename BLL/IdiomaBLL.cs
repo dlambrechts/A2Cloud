@@ -47,5 +47,27 @@ namespace BLL
             Idioma.FechaModificacion = DateTime.Now;
             mppIdioma.Eliminar(Idioma);
         }
+
+        public List<IdiomaEtiquetaBE> ObtenerEtiquetas()
+
+        {
+            return mppIdioma.ObtenerEtiquetas();
+        }
+
+        public Dictionary<string, IdiomaTraduccionBE> ObtenerTraduccionesDic(IdiomaBE Idioma)
+
+        {
+            return mppIdioma.ObtenerTraduccionesDic(Idioma);
+
+        }
+
+        public List<IdiomaTraduccionBE> ObtenerTraducciones(IdiomaBE Idioma)
+        {
+
+            return mppIdioma.ObtenerTraducciones(Idioma);
+        }
+
     }
 }
+
+
