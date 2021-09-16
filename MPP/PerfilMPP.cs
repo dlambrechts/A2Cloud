@@ -114,21 +114,7 @@ namespace MPP
             }
         }
 
-        //public void GuardarComponente(PerfilComponenteBE Comp, bool EsFamilia)
 
-        //{
-        //    string Consulta = "sp_InsertarComponente";
-        //    Hashtable Parametros = new Hashtable();
-
-        //    Parametros.Add("Descripcion", Comp.Descripcion);
-
-        //    if (EsFamilia) Parametros.Add("Permiso", DBNull.Value);
-
-        //    else Parametros.Add("Permiso", Comp.Permiso.ToString()); ;
-
-        //    AccesoDB.Escribir(Consulta, Parametros);
-
-        //}
 
         public IList<PerfilComponenteBE> ObtenerTodo(PerfilFamiliaBE Familia)
         {

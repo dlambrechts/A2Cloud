@@ -18,6 +18,16 @@ namespace BLL
             return mppIdioma.ObtenerIdiomas();
         }
 
+        public IdiomaBE ObtenerIdiomaPorDefecto()
+
+        {
+            IdiomaBE Idioma = new IdiomaBE();
+
+            Idioma = mppIdioma.ObtenerIdiomas().First(x => x.PorDefecto == true);
+
+            return Idioma;
+        }
+
         public void Insertar(IdiomaBE Idioma)
 
 
@@ -65,6 +75,12 @@ namespace BLL
         {
 
             return mppIdioma.ObtenerTraducciones(Idioma);
+        }
+
+        public void GuardarTraduccion(IdiomaTraduccionBE traduccion)
+        {
+
+            mppIdioma.GuardarTraduccion(traduccion);
         }
 
     }

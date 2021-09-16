@@ -200,7 +200,11 @@ namespace UI.Controllers
 
                 try
                 {
-
+                    IdiomaTraduccionBE traduccion = new IdiomaTraduccionBE();
+                    traduccion.Idioma.Id = Idioma;
+                    traduccion.Etiqueta.Id = Etiqueta;
+                    traduccion.Texto = Traduccion;
+                    bllId.GuardarTraduccion(traduccion);
 
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);
 
@@ -211,6 +215,28 @@ namespace UI.Controllers
                 }
 
 
+        }
+
+        public ActionResult CambiarIdioma(int id)
+        {
+
+
+            IdiomaBE Idioma = new IdiomaBE();
+            Idioma.Id = id;
+            Idioma=bllId.ObtenerUno(Idioma);
+
+            Dictionary<string, IdiomaTraduccionBE> Traducciones = bllId.ObtenerTraduccionesDic(Idioma);
+
+          
+            if (Traducciones.Count() > 0)
+                Session["Traducciones"] = Traducciones;
+            else
+            {
+                Session["IdiomaSelected"] = Session["IdiomaSelected"]; //Si falla dejo seleccionado en el combo el que tenia previamente en session.(Si no hago esto queda seleccionado el último)
+                return Json("Failed", JsonRequestBehavior.AllowGet);
+            }
+            Session["IdiomaSelected"] = Idioma;
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
 

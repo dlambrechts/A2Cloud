@@ -26,9 +26,19 @@ namespace BE
             set { texto = value; }
         }
 
+        private IdiomaBE idioma;
+
+        public IdiomaBE Idioma 
+        
+        {
+            get { return idioma; }
+            set { idioma = value; }
+        }
+
         public IdiomaTraduccionBE()
         
         {
+            idioma = new IdiomaBE();
             etiqueta = new IdiomaEtiquetaBE();
         }
 

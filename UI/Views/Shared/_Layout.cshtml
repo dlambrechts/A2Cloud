@@ -1,9 +1,9 @@
 ﻿
-
 @{
 
     var Permisos = (List<string>)Session["Permisos"];
-
+    var Idioma = (BE.IdiomaBE)Session["IdiomaSelected"];
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
 }
 <!doctype html>
 <html lang="en">
@@ -43,7 +43,9 @@
         <button class="navbar-toggler  d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+        <div class="col-md-1 ">
+            @Html.DropDownList("Idiomas", new SelectList((System.Collections.IEnumerable)Session["Idiomas"], "Id", "Descripcion"), new { @id = "selIdioma", @class = "form-select", @onchange = "refreshTable();" })
+        </div>
         <div class="btn-group">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 @if (Session["NombreCompleto"] != null)
@@ -66,8 +68,8 @@
 
                     <ul class="list-unstyled ps-0">
                         <li class="mb-1">
-                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#activos-collapse" aria-expanded="true">
-                                Gestión de Activos
+                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#activos-collapse" aria-expanded="false">
+                                @Traducciones["GestionDeActivos"].Texto
                             </button>
                             <div class="collapse" id="activos-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -80,7 +82,7 @@
                         </li>
                         <li class="mb-1">
                             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#licencias-collapse" aria-expanded="false">
-                                Gestión de Licencias
+                                @Traducciones["GestionDeLicencias"].Texto
                             </button>
                             <div class="collapse" id="licencias-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -93,7 +95,7 @@
                         </li>
                         <li class="mb-1">
                             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#org-collapse" aria-expanded="false">
-                                Organización
+                                @Traducciones["Organizacion"].Texto
                             </button>
                             <div class="collapse" id="org-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -105,7 +107,7 @@
                         </li>
                         <li class="mb-1">
                             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#presup-collapse" aria-expanded="false">
-                                Presupuesto
+                                @Traducciones["Presupuesto"].Texto
                             </button>
                             <div class="collapse" id="presup-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -115,7 +117,7 @@
                         </li>
                         <li class="mb-1">
                             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#int-collapse" aria-expanded="false">
-                                Gestión Inteligente de Activos
+                                @Traducciones["GestionInteligenteActivos"].Texto
                             </button>
                             <div class="collapse" id="int-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -167,8 +169,8 @@
                             </button>
                             <div class="collapse" id="idioma-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">                                   
-                                    <li>@Html.ActionLink("Gestión de Idiomas", "index", "Idioma", null, new { @class = "link-dark rounded", @id = "Idioma" })</li>
-                                    <li><a href="#" class="link-dark rounded">Traducciones</a></li>
+                                    <li>@Html.ActionLink("Idiomas", "index", "Idioma", null, new { @class = "link-dark rounded", @id = "Idioma" })</li>
+                                   
                                 </ul>
                             </div>
                         </li>
@@ -217,4 +219,30 @@
 </body>
 </html>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#selIdioma').val(@Idioma.Id);
+
+    });
+
+    function refreshTable() {
+        var selValue = { id: $('#selIdioma').val() };
+        $.ajax({
+            url: "/Idioma/CambiarIdioma/",
+            type: "get",
+            dataType: "json",
+            data: selValue,
+            success: function (data) {
+                if (data == 'Success') {
+                    window.location.reload();
+                }
+                else {
+                    //
+                }
+
+            }
+        });
+    };
+
+</script>
 

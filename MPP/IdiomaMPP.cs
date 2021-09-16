@@ -231,5 +231,23 @@ namespace MPP
 
         }
 
+        public void GuardarTraduccion(IdiomaTraduccionBE traduccion) 
+        
+        {
+
+                string Consulta = "IdiomaTraduccionGuardar";
+                Hashtable Parametros = new Hashtable();
+
+                Parametros.Add("@Idioma", traduccion.Idioma.Id);
+                Parametros.Add("@Etiqueta", traduccion.Etiqueta.Id);
+                Parametros.Add("@Traduccion", traduccion.Texto);
+
+
+                Acceso nAcceso = new Acceso();
+
+                nAcceso.Escribir(Consulta, Parametros);
+            }
+
+
     }
 }

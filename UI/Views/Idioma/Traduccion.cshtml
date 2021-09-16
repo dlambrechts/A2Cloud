@@ -50,10 +50,10 @@
                         @Html.DisplayFor(modelItem => item.Etiqueta.Nombre)
                     </td>
                     <td>
-                        @Html.EditorFor(modelItem => item.Texto, new { htmlAttributes = new { @id = item.Etiqueta.Id } })
+                        @Html.EditorFor(modelItem => item.Texto, new { htmlAttributes = new { @id = item.Etiqueta.Id }, onchange = "Editado()" })
                     </td>   
                     <td>
-                        <a href="#" onclick="GuardarTraduccion(@item.Etiqueta.Id,'@item.Texto')"><i class="fa fa-save"></i>
+                        <a href="#" onclick="GuardarTraduccion(@item.Etiqueta.Id,'@item.Texto')"  id= "Texto@(@item.Etiqueta.Id)" ><i class="fa fa-save guardar" id= "Guardar@(@item.Etiqueta.Id)"></i></a>
                     </td>
                 </tr>
             }
@@ -108,4 +108,9 @@
         }
 
     </script>
-    }
+
+
+
+
+
+ }
