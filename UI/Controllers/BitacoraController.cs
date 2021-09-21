@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BLL;
+using PagedList;
 
 namespace UI.Controllers
 {
@@ -12,14 +13,17 @@ namespace UI.Controllers
 
         BitacoraBLL bllBit = new BitacoraBLL();
         // GET: Bitacora
-        public ActionResult Index()
+        public ActionResult Index(int? pagina)
         {
             if (Session["IdUsuario"] != null)
             {
                
                 var lista = bllBit.ListarTodos();
 
-                return View(lista);
+                int RegistrosPorPagina = 10;
+                int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
+
+                return View(lista.ToPagedList(Indice, RegistrosPorPagina));
             }
 
             else { return RedirectToAction("Index", "Login"); }
