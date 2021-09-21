@@ -47,6 +47,7 @@ namespace DAL
 
             SqlDataAdapter Adaptador = new SqlDataAdapter(ComandoSQL);
             Adaptador.Fill(DS);
+            Conexion.Close();
             return DS;
         }
 

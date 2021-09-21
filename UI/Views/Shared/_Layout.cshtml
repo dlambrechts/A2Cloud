@@ -44,7 +44,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="col-md-1 ">
-            @Html.DropDownList("Idiomas", new SelectList((System.Collections.IEnumerable)Session["Idiomas"], "Id", "Descripcion"), new { @id = "selIdioma", @class = "form-select", @onchange = "refreshTable();" })
+            @Html.DropDownList("Idiomas", new SelectList((System.Collections.IEnumerable)Session["Idiomas"], "Id", "Descripcion"), new { @id = "selIdioma", @class = "form-select", @onchange = "CambiarIdioma();" })
         </div>
         <div class="btn-group">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -225,7 +225,7 @@
 
     });
 
-    function refreshTable() {
+    function CambiarIdioma() {
         var selValue = { id: $('#selIdioma').val() };
         $.ajax({
             url: "/Idioma/CambiarIdioma/",
