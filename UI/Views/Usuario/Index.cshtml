@@ -10,15 +10,23 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Usuarios</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-                <a>@Html.ActionLink("Nuevo", "Create", "Usuario", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+
+            @using (Html.BeginForm())
+            {
+                <div class="btn-group me-2">
+                    <span>
+                        Buscar: @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @class = "btn-outline-secondary" })
+                        <input type="submit" value="Buscar" class="btn btn-sm btn-outline-secondary" />
+                    </span>
+                     </div>
+                    }
+               
+                <div class="btn-group me-2">
+                    <a>@Html.ActionLink("Nuevo", "Create", "Usuario", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+                </div>
+
             </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <span data-feather="Opción"></span>
-                This week
-            </button>
-        </div>
     </div>
     <div class="container-fluid">
 
@@ -83,7 +91,7 @@
             </tbody>
         </table>
 
-        @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }),
+        @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina,Valor_Filtro=ViewBag.ValorFiltro }),
         new PagedListRenderOptions
         {
             DisplayLinkToIndividualPages = true,

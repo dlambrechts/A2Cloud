@@ -17,7 +17,7 @@ namespace UI.Controllers
         IdiomaBLL bllIdioma = new IdiomaBLL();
 
         // GET: Usuario
-        public ActionResult Index(int? pagina)
+        public ActionResult Index(int? pagina, string Dato_Buscar, string Valor_Filtro)
         {
             if (Session["IdUsuario"] != null)
             {
@@ -26,6 +26,24 @@ namespace UI.Controllers
                 ViewBag.Resultado = TempData["Resultado"] as string;
                 ViewBag.Usuario = TempData["IdUsuario"] as string;
                 ViewBag.Mail = TempData["Mail"] as string;
+                if (Dato_Buscar != null)
+                {
+                    pagina = 1;
+                }
+                else
+                {
+                    Dato_Buscar = Valor_Filtro;
+                }
+
+                ViewBag.ValorFiltro = Dato_Buscar;
+
+                if (!String.IsNullOrEmpty(Dato_Buscar))
+                {
+                    Usuarios= Usuarios.Where(u => u.Nombre.ToUpper().Contains(Dato_Buscar.ToUpper())
+                        || u.Apellido.ToUpper().Contains(Dato_Buscar.ToUpper())
+                        || u.Credencial.Mail.ToUpper().Contains(Dato_Buscar.ToUpper())
+                        ).ToList();
+                }
 
                 int RegistrosPorPagina = 10;
                 int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
