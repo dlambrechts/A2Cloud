@@ -183,7 +183,7 @@ namespace UI.Controllers
         }
 
         // GET: Idioma/Traduccion/5
-        public ActionResult Traduccion(int id)
+        public ActionResult Traduccion(int id, int? pagina, string Dato_Buscar, string Valor_Filtro)
         {
 
 
@@ -197,8 +197,29 @@ namespace UI.Controllers
                     List<IdiomaTraduccionBE> traducciones = new List<IdiomaTraduccionBE>();                  
 
                     traducciones = bllId.ObtenerTraducciones(idioma);
-                   
-                    return View(traducciones);
+
+                    if (Dato_Buscar != null)
+                    {
+                        pagina = 1;
+                    }
+                    else
+                    {
+                        Dato_Buscar = Valor_Filtro;
+                    }
+
+                    ViewBag.ValorFiltro = Dato_Buscar;
+
+                    if (!String.IsNullOrEmpty(Dato_Buscar))
+                    {
+                        traducciones = traducciones.Where(t => t.Etiqueta.Nombre.ToUpper().Contains(Dato_Buscar.ToUpper())
+                             || t.Texto.ToUpper().Contains(Dato_Buscar.ToUpper())
+                            ).ToList();
+                    }
+
+                    int RegistrosPorPagina = 10;
+                    int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
+
+                    return View(traducciones.ToPagedList(Indice, RegistrosPorPagina));
                 }
                 catch
                 {

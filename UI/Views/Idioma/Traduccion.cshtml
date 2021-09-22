@@ -1,4 +1,7 @@
-﻿@model IEnumerable<BE.IdiomaTraduccionBE>
+﻿@model X.PagedList.PagedList<BE.IdiomaTraduccionBE>
+
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Common
 
 @{
     ViewBag.Title = "Traduccion";
@@ -11,6 +14,15 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Editar Idioma</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
+            @using (Html.BeginForm())
+            {
+                <div class="btn-group me-2">
+                    <span>
+                        Buscar @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
+
+                    </span>
+                </div>
+            }
             <div class="btn-group me-2">
                 <a>@Html.ActionLink("Volver", "Index", "Idioma", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
             </div>
@@ -22,21 +34,20 @@
 
 
 
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Etiqueta.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Etiqueta.Nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Texto)
-                </th>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Etiqueta.Id)
+                    </th>
+                    <th>
+                        Etiqueta
+                    </th>
+                    <th>
+                        Traducción
+                    </th>
 
-                <th>
-                    Acciones
-                </th>
+            </thead>
 
             </tr>
 
@@ -49,17 +60,29 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Etiqueta.Nombre)
                     </td>
+
                     <td>
-                        @Html.EditorFor(modelItem => item.Texto, new { htmlAttributes = new { @id = item.Etiqueta.Id }, onchange = "Editado()" })
-                    </td>   
-                    <td>
-                        <a href="#" onclick="GuardarTraduccion(@item.Etiqueta.Id,'@item.Texto')"  id= "Texto@(@item.Etiqueta.Id)" ><i class="fa fa-save guardar" id= "Guardar@(@item.Etiqueta.Id)"></i></a>
+                        <div class="input-group mb-3">
+                            @Html.EditorFor(modelItem => item.Texto, new { htmlAttributes = new { @id = item.Etiqueta.Id, @class = "form-control", @type = "text" }, onchange = "Editado()" })
+                            <a href="#" onclick="GuardarTraduccion(@item.Etiqueta.Id,'@item.Texto')" id="Texto@(@item.Etiqueta.Id)" class="btn btn-outline-secondary" type="button"><i class="fa fa-save guardar" id="Guardar@(@item.Etiqueta.Id)"></i></a>
+                        </div>
+
                     </td>
                 </tr>
             }
 
         </table>
-
+        <div class="pagination">
+            @Html.PagedListPager(Model, pagina => Url.Action("Traduccion", new { pagina, Valor_Filtro = ViewBag.ValorFiltro }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToIndividualPages = true,
+                DisplayPageCountAndCurrentLocation = false,
+                MaximumPageNumbersToDisplay = 8,
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" },
+            })
+        </div>
 
 
     </div>
@@ -113,4 +136,4 @@
 
 
 
- }
+}
