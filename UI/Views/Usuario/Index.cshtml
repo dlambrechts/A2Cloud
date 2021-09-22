@@ -15,8 +15,8 @@
             {
                 <div class="btn-group me-2">
                     <span>
-                        Buscar: @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @class = "btn-outline-secondary" })
-                        <input type="submit" value="Buscar" class="btn btn-sm btn-outline-secondary" />
+                        Buscar @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete="off" ,@autofocus = "" })
+                      
                     </span>
                      </div>
                     }
@@ -90,16 +90,17 @@
 
             </tbody>
         </table>
-
-        @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina,Valor_Filtro=ViewBag.ValorFiltro }),
-        new PagedListRenderOptions
-        {
-            DisplayLinkToIndividualPages = true,
-            DisplayPageCountAndCurrentLocation = false,
-            MaximumPageNumbersToDisplay = 8,
-            LiElementClasses = new string[] { "page-item" },
-            PageClasses = new string[] { "page-link" },
-        })
+        <div class="pagination">
+            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, Valor_Filtro = ViewBag.ValorFiltro }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToIndividualPages = true,
+                DisplayPageCountAndCurrentLocation = false,
+                MaximumPageNumbersToDisplay = 8,
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" },
+            })
+        </div>
     </div>
 </main>
 

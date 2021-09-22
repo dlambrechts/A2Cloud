@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using X.PagedList;
 using BLL;
 using BE;
 
@@ -12,13 +13,28 @@ namespace UI.Controllers
     {
         IdiomaBLL bllId = new IdiomaBLL();
         // GET: Idioma
-        public ActionResult Index()
+        public ActionResult Index(int? pagina, string Dato_Buscar, string Valor_Filtro)
         {
 
             if (Session["IdUsuario"] != null)
             {
+                List<IdiomaBE> lista = new List<IdiomaBE>();
+                lista = bllId.ObtenerIdiomas();
 
-                return View(bllId.ObtenerIdiomas());
+                if (Dato_Buscar != null)
+                { pagina = 1; }
+                else { Dato_Buscar = Valor_Filtro; }
+
+                ViewBag.ValorFiltro = Dato_Buscar;
+
+                if (!String.IsNullOrEmpty(Dato_Buscar))
+                {
+                    lista = lista.Where(u => u.Descripcion.ToUpper().Contains(Dato_Buscar.ToUpper())).ToList();
+                }
+
+                int RegistrosPorPagina = 10;
+                int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
+                return View(lista.ToPagedList(Indice, RegistrosPorPagina));
             }
 
             else { return RedirectToAction("Index", "Login"); }

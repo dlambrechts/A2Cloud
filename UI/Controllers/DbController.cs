@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using X.PagedList;
 using BE;
 using BLL;
 
@@ -55,13 +56,34 @@ namespace UI.Controllers
 
 
         // GET: Backup
-        public ActionResult Backup()
+        public ActionResult Backup(int? pagina, string Dato_Buscar, string Valor_Filtro)
         {
             if (Session["IdUsuario"] != null)
             {
                 ViewBag.Resultado = TempData["Resultado"] as string;
                 ViewBag.Fecha = TempData["FechaBack"] as string;
-                return View(bllBak.ListarBackups());
+
+                List<BackupBE> lista = new List<BackupBE>();
+
+                lista = bllBak.ListarBackups();
+
+
+                if (Dato_Buscar != null)
+                { pagina = 1; }
+                else { Dato_Buscar = Valor_Filtro; }
+
+                ViewBag.ValorFiltro = Dato_Buscar;
+
+                if (!String.IsNullOrEmpty(Dato_Buscar))
+                {
+                    lista = lista.Where(u => u.Nombre.ToUpper().Contains(Dato_Buscar.ToUpper())
+                    || u.FechaCreacion.ToString().ToUpper().Contains(Dato_Buscar.ToUpper())
+                    ).ToList();
+                }
+
+                int RegistrosPorPagina = 10;
+                int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
+                return View(lista.ToPagedList(Indice, RegistrosPorPagina));
             }
             else { return RedirectToAction("Index", "Login"); }
         }

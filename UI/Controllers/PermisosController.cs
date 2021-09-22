@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using X.PagedList;
 using BLL;
 using BE;
+
 
 namespace UI.Controllers
 {
@@ -14,26 +16,55 @@ namespace UI.Controllers
         UsuarioBLL usBLL = new UsuarioBLL();
 
         // GET: Permisos
-        public ActionResult Permisos()
+        public ActionResult Permisos(int? pagina, string Dato_Buscar, string Valor_Filtro)
         {
             if (Session["IdUsuario"] != null)
             {
 
                 List<PerfilPatenteBE> lista = new List<PerfilPatenteBE>(perBLL.ObtenerPatentes());
+                if (Dato_Buscar != null)
+                { pagina = 1; }
+                else { Dato_Buscar = Valor_Filtro; }
 
-                return View(lista);
+                ViewBag.ValorFiltro = Dato_Buscar;
+
+                if (!String.IsNullOrEmpty(Dato_Buscar))
+                {
+                    lista = lista.Where(u => u.Permiso.ToUpper().Contains(Dato_Buscar.ToUpper())
+                         || u.Descripcion.ToUpper().Contains(Dato_Buscar.ToUpper())                       
+                        ).ToList();
+                }
+
+                int RegistrosPorPagina = 10;
+                int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
+                return View(lista.ToPagedList(Indice, RegistrosPorPagina));
                             
             }
 
             else { return RedirectToAction("Index", "Login"); }
         }
 
-        public ActionResult GrupoPermisos()
+        public ActionResult GrupoPermisos(int? pagina, string Dato_Buscar, string Valor_Filtro)
         {
             if (Session["IdUsuario"] != null)
             {
-                var lista=perBLL.ObtenerFamilias();
-                return View(lista);
+                List<PerfilFamiliaBE> lista = perBLL.ObtenerFamilias() as List<PerfilFamiliaBE>;
+
+                if (Dato_Buscar != null) 
+                    {pagina = 1;}
+                else  { Dato_Buscar = Valor_Filtro;  }
+
+                ViewBag.ValorFiltro = Dato_Buscar;
+
+                if (!String.IsNullOrEmpty(Dato_Buscar))
+                {
+                    lista = lista.Where(u => u.Descripcion.ToUpper().Contains(Dato_Buscar.ToUpper())).ToList();
+                }
+
+                int RegistrosPorPagina = 10;
+                int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
+
+                return View(lista.ToPagedList(Indice, RegistrosPorPagina));
             }
 
             else { return RedirectToAction("Index", "Login"); }

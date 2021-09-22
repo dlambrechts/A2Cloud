@@ -1,4 +1,7 @@
-﻿@model IEnumerable<BE.BackupBE>
+﻿@model X.PagedList.PagedList<BE.BackupBE>
+
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Common
 
 @{
     ViewBag.Title = "Copias de Seguridad";
@@ -8,6 +11,16 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Copias de Seguridad</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
+
+            @using (Html.BeginForm())
+            {
+                <div class="btn-group me-2">
+                    <span>
+                        Buscar @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
+
+                    </span>
+                </div>
+            }
             <div class="btn-group me-2">
                 <a>@Html.ActionLink("Nuevo", "Create", "Db", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
                 <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
@@ -49,8 +62,8 @@
             <thead>
                 <tr>
 
-                    <th scope="col">@Html.DisplayNameFor(model => model.FechaCreacion)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Nombre)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.First().FechaCreacion)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.First().Nombre)</th>
                     <th scope="col">Acciones</th>
 
 
@@ -80,6 +93,18 @@
 
             </tbody>
         </table>
+
+        <div class="pagination">
+            @Html.PagedListPager(Model, pagina => Url.Action("Backup", new { pagina, Valor_Filtro = ViewBag.ValorFiltro }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToIndividualPages = true,
+                DisplayPageCountAndCurrentLocation = false,
+                MaximumPageNumbersToDisplay = 8,
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" },
+            })
+        </div>
     </div>
 
     <!-- Modal Confirmar Eliminación-->
@@ -137,7 +162,7 @@
                     $("#Confirmar").modal("hide");
                     location.reload();
 
-                } else {}
+                } else { }
             }
         })
     }

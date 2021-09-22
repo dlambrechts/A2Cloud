@@ -1,65 +1,87 @@
-﻿@model IEnumerable<BE.IdiomaBE>
+﻿@model X.PagedList.PagedList<BE.IdiomaBE>
 
-@{
-    ViewBag.Title = "Traducciones";
-}
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Common
+
+    @{
+        ViewBag.Title = "Idiomas";
+    }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Gestión de Idiomas</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-                <a>@Html.ActionLink("Nuevo", "Create", "Idioma", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Gestión de Idiomas</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group me-2">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="btn-group me-2">
+                            <span>
+                                Buscar @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off",@autofocus=""})
+
+                            </span>
+                        </div>
+                    }
+                    <a>@Html.ActionLink("Nuevo", "Create", "Idioma", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="container-fluid">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">@Html.DisplayNameFor(model => model.First().Id)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.First().Descripcion)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.First().PorDefecto)</th>
+
+                        <th scope="col">Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+
+                    {
+                        <tr>
+                            <th scope="row">@Html.DisplayFor(model => item.Id)</th>
+                            <td>@Html.DisplayFor(model => item.Descripcion)</td>
+                            <td>@Html.DisplayFor(model => item.PorDefecto)</td>
+
+                            <td>
+                                <a href="@Url.Action("Edit", "Idioma", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
+                                <a href="@Url.Action("Traduccion", "Idioma", new {id=item.Id })"><i class="fa fa-language"></i></a>&ensp;&ensp;
+                                <a href="@Url.Action("Delete", "Idioma", new {id=item.Id })"><i class="fa fa-trash"></i></a>&ensp;&ensp;
+                            </td>
+
+                        </tr>
+
+
+
+                    }
+
+                </tbody>
+            </table>
+            <div class="pagination">
+                @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, Valor_Filtro = ViewBag.ValorFiltro }),
+                new PagedListRenderOptions
+                {
+                    DisplayLinkToIndividualPages = true,
+                    DisplayPageCountAndCurrentLocation = false,
+                    MaximumPageNumbersToDisplay = 8,
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new string[] { "page-link" },
+                })
             </div>
 
         </div>
-    </div>
-    <div class="container-fluid">
-
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Descripcion)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.PorDefecto)</th>
-
-                    <th scope="col">Acciones</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-
-                {
-                <tr>
-                    <th scope="row">@Html.DisplayFor(model => item.Id)</th>
-                    <td>@Html.DisplayFor(model => item.Descripcion)</td>
-                    <td>@Html.DisplayFor(model => item.PorDefecto)</td>
-
-                    <td>
-                        <a href="@Url.Action("Edit", "Idioma", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
-                        <a href="@Url.Action("Traduccion", "Idioma", new {id=item.Id })"><i class="fa fa-language"></i></a>&ensp;&ensp;
-                        <a href="@Url.Action("Delete", "Idioma", new {id=item.Id })"><i class="fa fa-trash"></i></a>&ensp;&ensp;
-                    </td>
-
-                </tr>
-
-
-
-                }
-
-            </tbody>
-        </table>
-
-
-    </div>
     </main>
 
-<script>
+    <script>
 
-    window.onload = function () {
-        document.getElementById('idioma-collapse').className = 'show';
-        document.getElementById('Idioma').className = 'btn-activo';
-    };
-</script>
+        window.onload = function () {
+            document.getElementById('idioma-collapse').className = 'show';
+            document.getElementById('Idioma').className = 'btn-activo';
+        };
+    </script>
