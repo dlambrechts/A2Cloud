@@ -1,4 +1,7 @@
-﻿@model IEnumerable<BE.UsuarioBE>
+﻿@model X.PagedList.PagedList<BE.UsuarioBE>
+
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Common
 @{
     ViewBag.Title = "Usuarios";
 }
@@ -45,11 +48,11 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Nombre)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Apellido)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Credencial.Mail)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Activo)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.First().Id)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.First().Nombre)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.First().Apellido)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.First().Credencial.Mail)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.First().Activo)</th>
                     <th scope="col">Acciones</th>
 
                 </tr>
@@ -79,7 +82,17 @@
 
             </tbody>
         </table>
-</div>
+
+        @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }),
+        new PagedListRenderOptions
+        {
+            DisplayLinkToIndividualPages = true,
+            DisplayPageCountAndCurrentLocation = false,
+            MaximumPageNumbersToDisplay = 8,
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" },
+        })
+    </div>
 </main>
 
 <script>

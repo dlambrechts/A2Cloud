@@ -1,6 +1,9 @@
-﻿@model PagedList.IPagedList<BE.BitacoraBE>
-@using PagedList
-@using PagedList.Mvc
+﻿@model X.PagedList.PagedList<BE.BitacoraBE>
+
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Common
+
+
 
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -37,20 +40,39 @@
 
                     </tr>
 
-
-
                 }
 
             </tbody>
         </table>
         <div class="pagination">
-            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }),PagedListRenderOptions.Classic)
+            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToIndividualPages = true,
+                DisplayPageCountAndCurrentLocation = false,
+                MaximumPageNumbersToDisplay = 8,
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" },
+            })
         </div>
-        @*<div class="pagination" style="margin-left: 400px">
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
-            of @Model.PageCount   @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }))
-        </div>*@
+
+
     </div>
 
 
 </main>
+@section scripts{
+    <script>
+        $(function () {
+            $('ul.pagination > li > a').addClass('page-link');
+        });
+    </script>
+
+    <script>
+
+        window.onload = function () {
+            document.getElementById('bit-collapse').className = 'show';
+            document.getElementById('Bitacora').className = 'btn-activo';
+        };
+    </script>
+}

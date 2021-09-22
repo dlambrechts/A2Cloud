@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BLL;
-using PagedList;
+using BE;
+using X.PagedList;
 
 namespace UI.Controllers
 {
@@ -17,13 +18,12 @@ namespace UI.Controllers
         {
             if (Session["IdUsuario"] != null)
             {
-               
-                var lista = bllBit.ListarTodos();
+               List<BitacoraBE> Registros = bllBit.ListarTodos();
 
-                int RegistrosPorPagina = 10;
+                int RegistrosPorPagina = 15;
                 int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
 
-                return View(lista.ToPagedList(Indice, RegistrosPorPagina));
+                return View(Registros.ToPagedList(Indice, RegistrosPorPagina));
             }
 
             else { return RedirectToAction("Index", "Login"); }

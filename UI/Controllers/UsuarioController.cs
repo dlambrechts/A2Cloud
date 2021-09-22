@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BE;
 using BLL;
 using Seguridad;
+using X.PagedList;
 
 namespace UI.Controllers
 {
@@ -16,16 +17,20 @@ namespace UI.Controllers
         IdiomaBLL bllIdioma = new IdiomaBLL();
 
         // GET: Usuario
-        public ActionResult Index()
+        public ActionResult Index(int? pagina)
         {
             if (Session["IdUsuario"] != null)
             {
                 UsuarioBLL bllUsuario = new UsuarioBLL();
-                var lista = bllUsuario.ListarTodos();
+                List<UsuarioBE> Usuarios = bllUsuario.ListarTodos();
                 ViewBag.Resultado = TempData["Resultado"] as string;
                 ViewBag.Usuario = TempData["IdUsuario"] as string;
                 ViewBag.Mail = TempData["Mail"] as string;
-                return View(lista);
+
+                int RegistrosPorPagina = 10;
+                int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
+
+                return View(Usuarios.ToPagedList(Indice, RegistrosPorPagina));
             }
 
             else { return RedirectToAction("Index", "Login"); }
