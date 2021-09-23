@@ -18,6 +18,10 @@ namespace UI.Controllers
 
             if (Session["IdUsuario"] != null)
             {
+
+                ViewBag.ResultadoOk = TempData["ResultadoOk"] as string;
+                ViewBag.ResultadoNoOk = TempData["ResultadoNoOk"] as string;
+
                 List<IdiomaBE> lista = new List<IdiomaBE>();
                 lista = bllId.ObtenerIdiomas();
 
@@ -68,23 +72,26 @@ namespace UI.Controllers
 
                 try
                 {
-                    UsuarioBE user = new UsuarioBE();
+                    if (ModelState.IsValid)
+                    {
 
-                    user.Id = Convert.ToInt32(Session["IdUsuario"]);
+                        UsuarioBE user = new UsuarioBE();
+                        user.Id = Convert.ToInt32(Session["IdUsuario"]);
+                        idioma.UsuarioCreacion = user;
 
-                    idioma.UsuarioCreacion = user;
+                        bllId.Insertar(idioma);
+                        TempData["ResultadoOk"] = "El Idioma fue Creado con éxito" + (idioma.Descripcion);
+                        return RedirectToAction("Index");
+                    }
 
-                    bllId.Insertar(idioma);
+                    else { return View("Create", idioma); }
 
-
-
-                    return RedirectToAction("Index");
                 }
                 catch
                 {
                     return View();
                 }
-       
+
 
             }
 
@@ -103,9 +110,7 @@ namespace UI.Controllers
                 try
                 {
                     IdiomaBE idioma = new IdiomaBE();
-
                     idioma.Id = id;
-
                     idioma = bllId.ObtenerUno(idioma);
 
                     return View(idioma);
@@ -128,17 +133,23 @@ namespace UI.Controllers
             {
                 try
                 {
+                    if(ModelState.IsValid)
+                    { 
 
-                    UsuarioBE user = new UsuarioBE();
-                    user.Id = Convert.ToInt32(Session["IdUsuario"]);
+                        UsuarioBE user = new UsuarioBE();
+                        user.Id = Convert.ToInt32(Session["IdUsuario"]);
 
-                    idioma.UsuarioModificacion = user;
+                        idioma.UsuarioModificacion = user;
                     
-                    bllId.Editar(idioma);
+                        bllId.Editar(idioma);
+                        TempData["ResultadoOk"] = "El Idioma fue Editado con éxito " + (idioma.Id);
+                        return RedirectToAction("Index");
 
+                    }
 
+                    else { return View("Edit", idioma); }
 
-                    return RedirectToAction("Index");
+      
 
                 }
                 catch 
@@ -159,8 +170,18 @@ namespace UI.Controllers
                 IdiomaBE Idioma = new IdiomaBE();
                 Idioma.Id = id;
                 Idioma = bllId.ObtenerUno(Idioma);
+                
+                if (Idioma.PorDefecto == true) 
+                
+                {
+                    TempData["ResultadoNoOk"] = "No se puede Eliminar el Idioma por Defecto. Primero asigne otro Idioma como Idioma por Defecto";
+                    return RedirectToAction("Index"); 
+                }
 
-                return View(Idioma);
+                else 
+                { return View(Idioma); }
+
+                
             }
 
             else { return RedirectToAction("Index", "Login"); }
@@ -172,8 +193,10 @@ namespace UI.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
+                IdiomaBE idioma = new IdiomaBE();
+                idioma.Id = id;
+                bllId.Eliminar(idioma);
+                TempData["ResultadoOk"] = "El Idioma fue Eliminado con éxito " + (idioma.Id) ;
                 return RedirectToAction("Index");
             }
             catch

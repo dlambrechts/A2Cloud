@@ -29,13 +29,33 @@
         </div>
         <div class="container-fluid">
 
+            @if (ViewBag.ResultadoOk != null )
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Correcto:</strong> @ViewBag.ResultadoOk
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+
+            @if (ViewBag.ResultadoNoOk != null )
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error:</strong> @ViewBag.ResultadoNoOk
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+
+
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">@Html.DisplayNameFor(model => model.First().Id)</th>
                         <th scope="col">@Html.DisplayNameFor(model => model.First().Descripcion)</th>
                         <th scope="col">@Html.DisplayNameFor(model => model.First().PorDefecto)</th>
-
+                        <th scope="col">@Html.DisplayNameFor(model => model.First().FechaCreacion)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.First().FechaModificacion)</th>
                         <th scope="col">Acciones</th>
 
                     </tr>
@@ -44,18 +64,20 @@
                     @foreach (var item in Model)
 
                     {
-                        <tr>
-                            <th scope="row">@Html.DisplayFor(model => item.Id)</th>
-                            <td>@Html.DisplayFor(model => item.Descripcion)</td>
-                            <td>@Html.DisplayFor(model => item.PorDefecto)</td>
+                    <tr>
+                        <th scope="row">@Html.DisplayFor(model => item.Id)</th>
+                        <td>@Html.DisplayFor(model => item.Descripcion)</td>
+                        <td>@Html.DisplayFor(model => item.PorDefecto)</td>
+                        <td>@Html.DisplayFor(model => item.FechaCreacion)</td>
+                        <td>@Html.DisplayFor(model => item.FechaModificacion)</td>
 
-                            <td>
-                                <a href="@Url.Action("Edit", "Idioma", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
-                                <a href="@Url.Action("Traduccion", "Idioma", new {id=item.Id })"><i class="fa fa-language"></i></a>&ensp;&ensp;
-                                <a href="@Url.Action("Delete", "Idioma", new {id=item.Id })"><i class="fa fa-trash"></i></a>&ensp;&ensp;
-                            </td>
+                        <td>
+                            <a href="@Url.Action("Edit", "Idioma", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
+                            <a href="@Url.Action("Traduccion", "Idioma", new {id=item.Id })"><i class="fa fa-language"></i></a>&ensp;&ensp;
+                            <a href="@Url.Action("Delete", "Idioma", new {id=item.Id })"><i class="fa fa-trash"></i></a>&ensp;&ensp;
+                        </td>
 
-                        </tr>
+                    </tr>
 
 
 

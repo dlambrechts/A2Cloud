@@ -206,7 +206,7 @@ namespace MPP
         {
             List<IdiomaEtiquetaBE> ListaEtiquetas = new List<IdiomaEtiquetaBE>();
 
-            Acceso AccesoDB = new Acceso();
+           
             DataSet DS = new DataSet();
             DS = AccesoDB.LeerDatos("IdiomaObtenerEtiquetas", null);
 
@@ -238,14 +238,12 @@ namespace MPP
                 string Consulta = "IdiomaTraduccionGuardar";
                 Hashtable Parametros = new Hashtable();
 
+                
                 Parametros.Add("@Idioma", traduccion.Idioma.Id);
                 Parametros.Add("@Etiqueta", traduccion.Etiqueta.Id);
                 Parametros.Add("@Traduccion", traduccion.Texto);
 
-
-                Acceso nAcceso = new Acceso();
-
-                nAcceso.Escribir(Consulta, Parametros);
+                AccesoDB.Escribir(Consulta, Parametros);
             }
 
 
