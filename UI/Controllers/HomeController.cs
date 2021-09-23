@@ -10,6 +10,7 @@ namespace UI.Controllers
 {
     public class HomeController : Controller
     {
+        UsuarioBLL bllUusuario = new UsuarioBLL();
         public ActionResult Index()
         {
             if (Session["IdUsuario"] != null) {
@@ -39,12 +40,23 @@ namespace UI.Controllers
         {
             IdiomaBLL bllIdioma = new IdiomaBLL();
             Session["Idiomas"] = bllIdioma.ObtenerIdiomas();
-            if (Session["IdUsuario"] == null || Session["IdiomaSelected"] == null)
-            {
-                IdiomaBE IdiomaDefecto = bllIdioma.ObtenerIdiomaPorDefecto();
-                Session["IdiomaSelected"] = IdiomaDefecto;
-                Session["Traducciones"] = bllIdioma.ObtenerTraduccionesDic(IdiomaDefecto);
-            }
+
+            UsuarioBE user = new UsuarioBE();
+            user.Id = Convert.ToInt32(Session["IdUsuario"]);
+            user = bllUusuario.ObtenerUno(user);
+
+            Session["IdiomaSelected"] = user.Idioma;
+            Session["Traducciones"] = bllIdioma.ObtenerTraduccionesDic(user.Idioma);
+
+
+            //if (Session["IdUsuario"] == null || Session["IdiomaSelected"] == null)
+            //{
+            //    IdiomaBE IdiomaDefecto = bllIdioma.ObtenerIdiomaPorDefecto();
+            //    Session["IdiomaSelected"] = IdiomaDefecto;
+            //    Session["Traducciones"] = bllIdioma.ObtenerTraduccionesDic(IdiomaDefecto);
+            //}
+
+
         }
     }
 }

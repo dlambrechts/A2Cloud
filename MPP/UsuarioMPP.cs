@@ -51,6 +51,8 @@ namespace MPP
             nAcceso.Escribir(Consulta, Parametros);
         }
 
+
+
         public List<UsuarioBE> ListarUsuarios()
 
         {

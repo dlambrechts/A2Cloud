@@ -128,13 +128,15 @@ namespace UI.Controllers
             {
                 ModelState.Remove("Credencial.Contraseña");
                 ModelState.Remove("Credencial.ConfirmarCont");
+                ModelState.Remove("Idioma.Descripcion");
 
-                if (ModelState.IsValid)  // Falta validar que si cambia el mail no exista, excluir el usuario que se esta editando de esa validación
+
+                if (ModelState.IsValid)  // Falta validar que si cambia el mail, no exista
                     {
                         bllU.Editar(usuario);
                         TempData["Resultado"] = "Editado";
                         TempData["IdUsuario"] = usuario.Id.ToString();
-                    return RedirectToAction("Index");
+                        return RedirectToAction("Index");
                     }
 
 

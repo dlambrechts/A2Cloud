@@ -12,6 +12,7 @@ namespace UI.Controllers
     public class IdiomaController : Controller
     {
         IdiomaBLL bllId = new IdiomaBLL();
+        UsuarioBLL bllUs = new UsuarioBLL();
         // GET: Idioma
         public ActionResult Index(int? pagina, string Dato_Buscar, string Valor_Filtro)
         {
@@ -217,8 +218,11 @@ namespace UI.Controllers
                 {
                     IdiomaBE idioma = new IdiomaBE();
                     idioma.Id = id;
-                    List<IdiomaTraduccionBE> traducciones = new List<IdiomaTraduccionBE>();                  
+                    List<IdiomaTraduccionBE> traducciones = new List<IdiomaTraduccionBE>();
 
+                    idioma= bllId.ObtenerUno(idioma);
+                    TempData["NombreIdioma"] = idioma.Descripcion;
+                    ViewBag.NombreIdioma = TempData["NombreIdioma"];
                     traducciones = bllId.ObtenerTraducciones(idioma);
 
                     if (Dato_Buscar != null)
@@ -280,21 +284,27 @@ namespace UI.Controllers
         public ActionResult CambiarIdioma(int id)
         {
 
-
             IdiomaBE Idioma = new IdiomaBE();
             Idioma.Id = id;
-            Idioma=bllId.ObtenerUno(Idioma);
+            Idioma = bllId.ObtenerUno(Idioma);
 
             Dictionary<string, IdiomaTraduccionBE> Traducciones = bllId.ObtenerTraduccionesDic(Idioma);
 
-          
-            if (Traducciones.Count() > 0)
-                Session["Traducciones"] = Traducciones;
-            else
+            if (Session["IdUsuario"] != null) // Si está logueado cambio el idioma del usuario en la  base
             {
-                Session["IdiomaSelected"] = Session["IdiomaSelected"]; //Si falla dejo seleccionado en el combo el que tenia previamente en session.(Si no hago esto queda seleccionado el último)
-                return Json("Failed", JsonRequestBehavior.AllowGet);
+                UsuarioBE user = new UsuarioBE();
+                user.Id = Convert.ToInt32(Session["IdUsuario"]);
+                user = bllUs.ObtenerUno(user);
+                user.Idioma = Idioma;
+                bllUs.Editar(user);
+               
             }
+
+            int TraduccionesNecesarias = bllId.ObtenerEtiquetas().Count;
+            Session["Traducciones"] = Traducciones;
+
+
+              
             Session["IdiomaSelected"] = Idioma;
             return Json("Success", JsonRequestBehavior.AllowGet);
         }

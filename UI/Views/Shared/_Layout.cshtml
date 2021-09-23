@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    <title>@ViewBag.Title - A2Cloud</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -47,17 +47,19 @@
             @Html.DropDownList("Idiomas", new SelectList((System.Collections.IEnumerable)Session["Idiomas"], "Id", "Descripcion"), new { @id = "selIdioma", @class = "form-select", @onchange = "CambiarIdioma();" })
         </div>
         <div class="btn-group">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="btn btn-secondary  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="">
                 @if (Session["NombreCompleto"] != null)
                 {@Session["NombreCompleto"].ToString()}
             </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#">Cambiar Idioma</a></li>
-                <li><a class="dropdown-item" href="#">Ver Perfil</a></li>
-                <li><a class="dropdown-item" href="#">Otra Opción</a></li>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Cambiar Contraseña</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li>@Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "dropdown-item" })</li>
+                <li>@Html.ActionLink("Cerrar Sesión", "Logout", "Login", null, new { @class = "dropdown-item" })</li>
+
             </ul>
+
+
+
         </div>
     </header>
 
@@ -69,14 +71,14 @@
                     <ul class="list-unstyled ps-0">
                         <li class="mb-1">
                             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#activos-collapse" aria-expanded="false">
-                                @Traducciones["GestionDeActivos"].Texto
+                                @if (Traducciones.ContainsKey("GestionDeActivos")) {@Traducciones["GestionDeActivos"].Texto;}
                             </button>
                             <div class="collapse" id="activos-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="#" class="link-dark rounded">Activos</a></li>
-                                    <li><a href="#" class="link-dark rounded">Componentes de Hardware</a></li>
-                                    <li><a href="#" class="link-dark rounded">Asignación de Perfiles de Hardware</a></li>
-                                    <li><a href="#" class="link-dark rounded">Asignación de Activos</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("Activos")){@Traducciones["Activos"].Texto;}</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("ComponentesDeHardware")){@Traducciones["ComponentesDeHardware"].Texto;}</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("PerfilesDeHardware")){@Traducciones["PerfilesDeHardware"].Texto;}</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("AsignacionDeActivos")){@Traducciones["AsignacionDeActivos"].Texto;}</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -168,9 +170,9 @@
                                 Gestión de Idiomas
                             </button>
                             <div class="collapse" id="idioma-collapse">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">                                   
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                     <li>@Html.ActionLink("Idiomas", "index", "Idioma", null, new { @class = "link-dark rounded", @id = "Idioma" })</li>
-                                   
+
                                 </ul>
                             </div>
                         </li>
@@ -206,6 +208,7 @@
                     </ul>
                 </div>
             </nav>
+
             @RenderBody()
 
         </div>
