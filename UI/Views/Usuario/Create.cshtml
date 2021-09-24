@@ -2,15 +2,16 @@
 
 
 @{
-    ViewBag.Title = "Crear";
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["NuevoUsuario"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Nuevo Usuario</h1>
+        <h1 class="h2">@Traducciones["NuevoUsuario"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a>@Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
                 
             </div>
         </div>
@@ -35,7 +36,7 @@
 
 
                 <div class="form-group col-sm-4">
-                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2"> @Traducciones["Nombre"].Texto</label>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
@@ -43,7 +44,7 @@
                 </div>
 
                 <div class="form-group col-sm-4">
-                    @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2"> @Traducciones["Apellido"].Texto</label>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
@@ -51,7 +52,7 @@
                 </div>
 
                 <div class="form-group col-sm-4">
-                    @Html.LabelFor(model => model.Credencial.Mail, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2"> @Traducciones["Email"].Texto</label>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Credencial.Mail, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Credencial.Mail, "", new { @class = "text-danger" })
@@ -59,7 +60,7 @@
                 </div>
 
                 <div class="form-group col-sm-4">
-                    @Html.LabelFor(model => model.Credencial.Contraseña, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2"> @Traducciones["Contraseña"].Texto</label>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Credencial.Contraseña, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Credencial.Contraseña, "", new { @class = "text-danger" })
@@ -67,7 +68,7 @@
                 </div>
 
                 <div class="form-group col-sm-4">
-                    @Html.LabelFor(model => model.Credencial.ConfirmarCont, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2"> @Traducciones["ConfirmarContraseña"].Texto</label>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Credencial.ConfirmarCont, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Credencial.ConfirmarCont, "", new { @class = "text-danger" })
@@ -75,7 +76,7 @@
                 </div>
 
                 <div class="form-group col-sm-4">
-                    @Html.LabelFor(model => model.Idioma, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2"> @Traducciones["Idioma"].Texto</label>
                     <div class="col-md-10">
                         @Html.DropDownListFor(model => model.Idioma.Id, new SelectList((System.Collections.IEnumerable)ViewData["Idiomas"], "Id", "Descripcion"), new { @class = "form-control" })
                     </div>
@@ -85,7 +86,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Crear" class="btn btn-primary" />
+                        <input type="submit" value="@Traducciones["Crear"].Texto" class="btn btn-primary" />
                     </div>
                 </div>
             </div>

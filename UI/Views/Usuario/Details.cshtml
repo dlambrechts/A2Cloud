@@ -1,14 +1,15 @@
 ﻿@model BE.UsuarioBE
 
 @{
-    ViewBag.Title = "Ver Usuario";
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["VerUsuario"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Consulta de Usuario</h1>
+        <h1 class="h2">@Traducciones["VerUsuario"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-
+            <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
         </div>
     </div>
 
@@ -16,7 +17,14 @@
 
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
+               Id
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt>
+                @Traducciones["FechaCreacion"].Texto
             </dt>
 
             <dd>
@@ -24,7 +32,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.FechaModificacion)
+                @Traducciones["FechaModificacion"].Texto
             </dt>
 
             <dd>
@@ -32,7 +40,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Nombre)
+                @Traducciones["Nombre"].Texto
             </dt>
 
             <dd>
@@ -40,7 +48,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Apellido)
+                @Traducciones["Apellido"].Texto
             </dt>
 
             <dd>
@@ -48,7 +56,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Credencial.Mail)
+                @Traducciones["Email"].Texto
             </dt>
 
             <dd>
@@ -56,7 +64,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.IntentosFallidos)
+                @Traducciones["IntentosFallidos"].Texto
             </dt>
 
             <dd>
@@ -64,7 +72,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Activo)
+                @Traducciones["Activo"].Texto
             </dt>
 
             <dd>
@@ -73,9 +81,13 @@
 
         </dl>
     </div>
-    <p>
 
-        @Html.ActionLink("Volver", "Index")
-    </p>
 
     </main>
+<script>
+
+    window.onload = function () {
+        document.getElementById('account-collapse').className = 'show';
+        document.getElementById('Usuarios').className = 'btn-activo';
+    };
+</script>

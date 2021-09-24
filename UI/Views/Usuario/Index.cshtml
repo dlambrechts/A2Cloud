@@ -1,32 +1,34 @@
 ﻿@model X.PagedList.PagedList<BE.UsuarioBE>
-
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Common
+
+
 @{
-    ViewBag.Title = "Usuarios";
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["Usuarios"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Usuarios</h1>
+        <h1 class="h2">@Traducciones["Usuarios"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
 
             @using (Html.BeginForm())
             {
                 <div class="btn-group me-2">
                     <span>
-                        Buscar @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete="off" ,@autofocus = "" })
-                      
-                    </span>
-                     </div>
-                    }
-               
-                <div class="btn-group me-2">
-                    <a>@Html.ActionLink("Nuevo", "Create", "Usuario", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
-                </div>
+                        @Traducciones["Buscar"].Texto @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
 
+                    </span>
+                </div>
+            }
+
+            <div class="btn-group me-2">
+                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Usuario", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
             </div>
+
+        </div>
     </div>
     <div class="container-fluid">
 
@@ -57,11 +59,11 @@
             <thead>
                 <tr>
                     <th scope="col">@Html.DisplayNameFor(model => model.First().Id)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.First().Nombre)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.First().Apellido)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.First().Credencial.Mail)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.First().Activo)</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col">@Traducciones["Nombre"].Texto</th>
+                    <th scope="col">@Traducciones["Apellido"].Texto</th>
+                    <th scope="col">@Traducciones["Email"].Texto</th>
+                    <th scope="col">@Traducciones["Activo"].Texto</th>
+                    <th scope="col">@Traducciones["Acciones"].Texto</th>
 
                 </tr>
             </thead>

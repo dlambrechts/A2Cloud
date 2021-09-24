@@ -58,6 +58,7 @@ namespace UI.Controllers
         // GET: Usuario/Details/5
         public ActionResult Details(int id)
         {
+            if (Session["IdUsuario"] == null) return RedirectToAction("Index", "Login");
             UsuarioBE user = new UsuarioBE();
             user.Id = id;
             user=bllU.ObtenerUno(user);
@@ -109,7 +110,7 @@ namespace UI.Controllers
         // GET: Usuario/Edit/5
         public ActionResult Edit(int id)
         {
-
+            if (Session["IdUsuario"] == null) return RedirectToAction("Index", "Login");
             UsuarioBE us = new UsuarioBE();
             us.Id = id;
             us=bllU.ObtenerUno(us);
