@@ -39,7 +39,7 @@ namespace UI.Controllers
         public void ConfigurarIdioma()
         {
             IdiomaBLL bllIdioma = new IdiomaBLL();
-            Session["Idiomas"] = bllIdioma.ObtenerIdiomas();
+            Session["Idiomas"] = bllIdioma.ObtenerIdiomas().Where(I=>I.PorcentajeTraducido==100);
 
             UsuarioBE user = new UsuarioBE();
             user.Id = Convert.ToInt32(Session["IdUsuario"]);
@@ -49,12 +49,7 @@ namespace UI.Controllers
             Session["Traducciones"] = bllIdioma.ObtenerTraduccionesDic(user.Idioma);
 
 
-            //if (Session["IdUsuario"] == null || Session["IdiomaSelected"] == null)
-            //{
-            //    IdiomaBE IdiomaDefecto = bllIdioma.ObtenerIdiomaPorDefecto();
-            //    Session["IdiomaSelected"] = IdiomaDefecto;
-            //    Session["Traducciones"] = bllIdioma.ObtenerTraduccionesDic(IdiomaDefecto);
-            //}
+
 
 
         }

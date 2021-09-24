@@ -15,7 +15,16 @@ namespace BLL
         public List<IdiomaBE> ObtenerIdiomas()
 
         {
-            return mppIdioma.ObtenerIdiomas();
+            List<IdiomaBE> Idiomas = new List<IdiomaBE>();
+            Idiomas= mppIdioma.ObtenerIdiomas();
+
+            foreach (IdiomaBE item in Idiomas)
+            {
+                item.PorcentajeTraducido = CalcularPorcentajeTraducido(item);
+
+            }
+
+            return Idiomas;
         }
 
         public IdiomaBE ObtenerIdiomaPorDefecto()
@@ -24,6 +33,8 @@ namespace BLL
             IdiomaBE Idioma = new IdiomaBE();
 
             Idioma = mppIdioma.ObtenerIdiomas().First(x => x.PorDefecto == true);
+
+
 
             return Idioma;
         }
@@ -81,6 +92,23 @@ namespace BLL
         {
 
             mppIdioma.GuardarTraduccion(traduccion);
+        }
+
+        public int CalcularPorcentajeTraducido(IdiomaBE Idioma)
+        {
+            int Etiquetas = ObtenerEtiquetas().Count;
+            int Traducciones = 0;
+            if (ObtenerTraduccionesDic(Idioma) != null) 
+            
+            { 
+
+              Traducciones = ObtenerTraduccionesDic(Idioma).Count;
+            }
+
+            int Porcentaje = (Traducciones * 100) / Etiquetas; 
+
+            return Porcentaje;
+
         }
 
     }

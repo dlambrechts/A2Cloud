@@ -290,7 +290,7 @@ namespace UI.Controllers
 
             Dictionary<string, IdiomaTraduccionBE> Traducciones = bllId.ObtenerTraduccionesDic(Idioma);
 
-            if (Session["IdUsuario"] != null) // Si está logueado cambio el idioma del usuario en la  base
+            if (Session["IdUsuario"] != null) // Si está logueado, cambio el idioma del usuario 
             {
                 UsuarioBE user = new UsuarioBE();
                 user.Id = Convert.ToInt32(Session["IdUsuario"]);
@@ -299,11 +299,8 @@ namespace UI.Controllers
                 bllUs.Editar(user);
                
             }
-
-            int TraduccionesNecesarias = bllId.ObtenerEtiquetas().Count;
+      
             Session["Traducciones"] = Traducciones;
-
-
               
             Session["IdiomaSelected"] = Idioma;
             return Json("Success", JsonRequestBehavior.AllowGet);

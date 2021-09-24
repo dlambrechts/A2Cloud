@@ -8,34 +8,41 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BE
 {
-    public class IdiomaBE:EntityBE
+    public class IdiomaBE : EntityBE
     {
         public IdiomaBE() { }
 
-        public IdiomaBE(string _descripcion) 
+        public IdiomaBE(string _descripcion)
         {
-            
+
         }
 
         private string descripcion;
         [Required(ErrorMessage = "La descripción es obligatoria")]
         [DisplayName("Descripción")]
-        public string Descripcion 
-        { 
+        public string Descripcion
+        {
             get { return descripcion; }
             set { descripcion = value; }
         }
 
         private bool porDefecto;
 
-        public bool PorDefecto 
-        
-        { 
+        public bool PorDefecto
+
+        {
             get { return porDefecto; }
             set { porDefecto = value; }
         }
 
+        private int porcentajeTraducido;
 
+        public int PorcentajeTraducido 
+            
+        {
+            get { return porcentajeTraducido; }
+            set { porcentajeTraducido = value; }
+        }
 
 
     }

@@ -56,6 +56,7 @@
                         <th scope="col">@Html.DisplayNameFor(model => model.First().PorDefecto)</th>
                         <th scope="col">@Html.DisplayNameFor(model => model.First().FechaCreacion)</th>
                         <th scope="col">@Html.DisplayNameFor(model => model.First().FechaModificacion)</th>
+                        <th scope="col">% Traducido</th>
                         <th scope="col">Acciones</th>
 
                     </tr>
@@ -70,6 +71,7 @@
                         <td>@Html.DisplayFor(model => item.PorDefecto)</td>
                         <td>@Html.DisplayFor(model => item.FechaCreacion)</td>
                         <td>@Html.DisplayFor(model => item.FechaModificacion)</td>
+                        <td>@Html.DisplayFor(model => item.PorcentajeTraducido) %</td>
 
                         <td>
                             <a href="@Url.Action("Edit", "Idioma", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
