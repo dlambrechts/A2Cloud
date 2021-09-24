@@ -3,88 +3,111 @@
     Layout = null;
 }
 
+@{
+    var Idioma = (BE.IdiomaBE)Session["IdiomaSelected"];
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+}
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>A2Cloud - Login</title>
-
+    <!-- Bootstrap CSS -->
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
 
-
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @@media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
-
-    <link href="~/Content/login.css" rel="stylesheet">
 </head>
+<body>
+    <!-- As a heading -->
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">A2Cloud</span>
+            <div class="d-flex">
+                @Html.DropDownList("Idiomas", new SelectList((System.Collections.IEnumerable)Session["Idiomas"], "Id", "Descripcion"), new { @id = "selIdioma", @class = "form-control me-2", @onchange = "CambiarIdioma();" })
+        </div>
+            </div>
+        
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <div class="login-form bg-light mt-4 p-4">
 
-<body class="text-center">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="row g-3">
+                            <div class="col-12 text-center">
+                                <div> <img class="mb-4" src="~/Content/img/Logo.png" alt="" width="191" height="109"></div>
+                                <h2 class="fw-normal" style="color:#148AB6">A2Cloud</h2>
+                                <h4>@if (Traducciones.ContainsKey("Bienvenido"))  {@Traducciones["Bienvenido"].Texto;}</h4>
+                            </div>
+                            @if (ViewBag.Resultado != null)
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>No se pudo iniciar sesión: </strong>@ViewBag.Resultado
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+                            <div>
+                                <label>@if (Traducciones.ContainsKey("Usuario")){@Traducciones["Usuario"].Texto;}</label>
+                                @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                            </div>
+                            <div class="col-12">
+                                <label>@if (Traducciones.ContainsKey("Contraseña")){@Traducciones["Contraseña"].Texto;}</label>
+                                @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe"> Remember me</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-dark float-end">@if (Traducciones.ContainsKey("Login")){@Traducciones["Login"].Texto;
+                            }</button>
+                            </div>
+                        </div>
+                    }
 
-
-    <main class="form-signin">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-        <form>
-            @if (ViewBag.Resultado != null)
-            {
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>No se pudo iniciar sesión: </strong>@ViewBag.Resultado
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <hr class="mt-4">
+                    <div class="col-12">
+                        <p class="text-center mb-0">Have not account yet? <a href="#">Signup</a></p>
+                    </div>
                 </div>
-            }
-
-            <img class="mb-4" src="~/Content/img/Logo.png" alt="" width="191" height="109">
-            <h2 class="fw-normal" style="color:#148AB6" >A2Cloud</h2>
-            <h1 class="h3 mb-3 fw-normal">Iniciar sesión</h1>
-
-            <div class="form-floating">
-
-                @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control", required = "required", @placeholder = "name@example.com" } })
-
             </div>
-            <div class="form-floating">
-
-                @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-
-            </div>
-
-            <div class="checkbox mb-3">
-                <label>
-                    <a href="#">Recuperar contraseña</a>
-                </label>
-            </div>
-
-
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
-            <p class="mt-5 mb-3 text-muted">&copy; A2Cloud - 2021</p>
-
-
-        </form>
-        }
-    </main>
+        </div>
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-
-
 </body>
 </html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#selIdioma').val(@Idioma.Id);
+
+    });
+
+    function CambiarIdioma() {
+        var selValue = { id: $('#selIdioma').val() };
+        $.ajax({
+            url: "/Login/CambiarIdioma",
+            type: "get",
+            dataType: "json",
+            data: selValue,
+            success: function (data) {
+                if (data == 'Success') {
+                    window.location.reload();
+                }
+                else {
+                    //
+                }
+
+            }
+        });
+    };
+
+</script>

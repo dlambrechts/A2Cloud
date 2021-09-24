@@ -88,9 +88,10 @@
                             </button>
                             <div class="collapse" id="licencias-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="#" class="link-dark rounded">Productos de Software</a></li>
-                                    <li><a href="#" class="link-dark rounded">Contratos de Licencia</a></li>
-                                    <li><a href="#" class="link-dark rounded">Asignación de Licencias</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("ProductosDeSoftware")){@Traducciones["ProductosDeSoftware"].Texto;}</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("ContratosDeLicencia")){@Traducciones["ContratosDeLicencia"].Texto;}</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("AsignacionDeLicencias")){@Traducciones["AsignacionDeLicencias"].Texto;}</a></li>
+
 
                                 </ul>
                             </div>
@@ -101,9 +102,9 @@
                             </button>
                             <div class="collapse" id="org-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="#" class="link-dark rounded">Configurar</a></li>
-                                    <li><a href="#" class="link-dark rounded">Colaboradores</a></li>
-                                    <li><a href="#" class="link-dark rounded">Departamentos</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("Configurar")){@Traducciones["Configurar"].Texto;}</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("Colaboradores")){@Traducciones["Colaboradores"].Texto;}</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("Departamentos")){@Traducciones["Departamentos"].Texto;}</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -113,7 +114,7 @@
                             </button>
                             <div class="collapse" id="presup-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="#" class="link-dark rounded">Estimación de Presupuesto</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("EstimacionDePresupuesto")){@Traducciones["EstimacionDePresupuesto"].Texto;}</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -123,9 +124,9 @@
                             </button>
                             <div class="collapse" id="int-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="#" class="link-dark rounded">Análisis de Activos Ociosos</a></li>
-                                    <li><a href="#" class="link-dark rounded">Análisis de Colaborador Vs Recursos</a></li>
-                                    <li><a href="#" class="link-dark rounded">Optimización de Asignaciones</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("AnalisisDeActivosOciosos")){@Traducciones["AnalisisDeActivosOciosos"].Texto;}</a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("AnalisisColaboradorVsRecursos")){@Traducciones["AnalisisColaboradorVsRecursos"].Texto;}  </a></li>
+                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("OptimizacionDeAsignaciones")){@Traducciones["OptimizacionDeAsignaciones"].Texto;}</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -133,7 +134,7 @@
                         <li class="border-top my-3"></li>
                         <li class="mb-1">
                             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-                                Gestión de Usuarios
+                               @if (Traducciones.ContainsKey("GestionDeUsuarios")){@Traducciones["GestionDeUsuarios"].Texto;}
                             </button>
                             <div class="collapse" id="account-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -141,21 +142,21 @@
                                     @{ if (Permisos.Exists(per => per.ToString() == "GestionUsuarios"))
 
                                         {
-                                            <li>@Html.ActionLink("Usuarios", "Index", "Usuario", null, new { @class = "link-dark rounded", @id = "Usuarios" })</li>
+                                            <li>@Html.ActionLink(Traducciones["Usuarios"].Texto, "Index", "Usuario", null, new { @class = "link-dark rounded", @id = "Usuarios" })</li>
                                         }
                                     }
 
                                     @{ if (Permisos.Exists(per => per.ToString() == "GestionPerfilUsuario"))
 
                                         {
-                                            <li>@Html.ActionLink("Grupos de Permisos", "GrupoPermisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Grupos" })</li>
+                                            <li>@Html.ActionLink(Traducciones["GruposDePermisos"].Texto, "GrupoPermisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Grupos" })</li>
                                         }
                                     }
 
                                     @{ if (Permisos.Exists(per => per.ToString() == "GestionPerfilUsuario"))
 
                                         {
-                                            <li>@Html.ActionLink("Permisos del Sistema", "Permisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Permisos" })</li>
+                                            <li>@Html.ActionLink(Traducciones["PermisosDelSistema"].Texto, "Permisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Permisos" })</li>
                                         }
                                     }
 
@@ -167,23 +168,23 @@
                         </li>
                         <li class="mb-1">
                             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#idioma-collapse" aria-expanded="false">
-                                Gestión de Idiomas
+                                @if (Traducciones.ContainsKey("GestionDeIdiomas")){@Traducciones["GestionDeIdiomas"].Texto;}
                             </button>
                             <div class="collapse" id="idioma-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li>@Html.ActionLink("Idiomas", "index", "Idioma", null, new { @class = "link-dark rounded", @id = "Idioma" })</li>
+                                    <li>@Html.ActionLink(Traducciones["Idiomas"].Texto, "index", "Idioma", null, new { @class = "link-dark rounded", @id = "Idioma" })</li>
 
                                 </ul>
                             </div>
                         </li>
                         <li class="mb-1">
                             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#db-collapse" aria-expanded="false">
-                                Gestión de Base de Datos
+                                 @if (Traducciones.ContainsKey("GestionBaseDeDatos")){@Traducciones["GestionBaseDeDatos"].Texto;}
                             </button>
                             <div class="collapse" id="db-collapse">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li>@Html.ActionLink("Copias de Seguridad", "Backup", "Db", null, new { @class = "link-dark rounded", @id = "CopiasSeg" })</li>
-                                    <li>@Html.ActionLink("Verificación de Integridad", "Integridad", "Db", null, new { @class = "link-dark rounded", @id = "IntegridadDb" })</li>
+                                    <li>@Html.ActionLink(Traducciones["CopiasDeSeguridad"].Texto, "Backup", "Db", null, new { @class = "link-dark rounded", @id = "CopiasSeg" })</li>
+                                    <li>@Html.ActionLink(Traducciones["VerificacionDeIntegridad"].Texto, "Integridad", "Db", null, new { @class = "link-dark rounded", @id = "IntegridadDb" })</li>
                                 </ul>
                             </div>
                         </li>
@@ -192,12 +193,12 @@
                             {
                                 <li class="mb-1">
                                     <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#bit-collapse" aria-expanded="false">
-                                        Bitácora
+                                       @if (Traducciones.ContainsKey("Bitacora")){@Traducciones["Bitacora"].Texto;}
                                     </button>
                                     <div class="collapse" id="bit-collapse">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 
-                                            <li>@Html.ActionLink("Bitácora", "Index", "Bitacora", null, new { @class = "link-dark rounded", @id = "Bitacora" })</li>
+                                            <li>@Html.ActionLink(Traducciones["Bitacora"].Texto, "Index", "Bitacora", null, new { @class = "link-dark rounded", @id = "Bitacora" })</li>
 
 
 

@@ -14,6 +14,8 @@ namespace UI.Controllers
         UsuarioBLL bllUser = new UsuarioBLL();
         PerfilBLL bllPer = new PerfilBLL();
         BitacoraBLL bllBit = new BitacoraBLL();
+        IdiomaBLL bllIdioma = new IdiomaBLL();
+       
         UsuarioBE user;
         // GET: Login
         public ActionResult Index()
@@ -22,11 +24,33 @@ namespace UI.Controllers
 
             if (Session["IdUsuario"] == null)
              {
+                IdiomaBE Idioma = new IdiomaBE();
+                if (Session["IdiomaLogin"] == null)
+
+                {
+                    Idioma = bllIdioma.ObtenerIdiomaPorDefecto();
+                }
+
+                else Idioma.Id = Convert.ToInt32(Session["IdiomaLogin"]);
+
+                ConfigurarIdioma(Idioma);
+
                 return View();
               }
             else { return RedirectToAction("Index", "Home"); }
         }
 
+        public ActionResult CambiarIdioma(int id)
+        {
+
+            IdiomaBE Idioma = new IdiomaBE();
+            Idioma.Id = id;
+            Idioma = bllIdioma.ObtenerUno(Idioma);
+            ConfigurarIdioma(Idioma);
+
+            Session["IdiomaLogin"] = Idioma.Id.ToString();
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
 
 
         // POST: Login/Index
@@ -180,9 +204,6 @@ namespace UI.Controllers
         public ActionResult Logout()
         {
 
-
-
-
             // Registrar en Bitácora
             CredencialBE cre = new CredencialBE();
             UsuarioBE user = new UsuarioBE(cre);
@@ -198,7 +219,18 @@ namespace UI.Controllers
 
         }
 
+        public void ConfigurarIdioma(IdiomaBE Idioma)  // Se carga el Idioma por defecto para el login
+        {
 
+
+            Session["Idiomas"] = bllIdioma.ObtenerIdiomas().Where(i=>i.PorcentajeTraducido==100);
+
+            Session["IdiomaSelected"] = Idioma;
+
+            Session["Traducciones"] = bllIdioma.ObtenerTraduccionesDic(Idioma);
+
+
+        }
 
 
 

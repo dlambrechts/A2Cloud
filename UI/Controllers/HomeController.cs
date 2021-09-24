@@ -36,7 +36,7 @@ namespace UI.Controllers
             return View();
         }
 
-        public void ConfigurarIdioma()
+        public void ConfigurarIdioma()  // Se carga el Idioma del Usuario
         {
             IdiomaBLL bllIdioma = new IdiomaBLL();
             Session["Idiomas"] = bllIdioma.ObtenerIdiomas().Where(I=>I.PorcentajeTraducido==100);
@@ -47,9 +47,6 @@ namespace UI.Controllers
 
             Session["IdiomaSelected"] = user.Idioma;
             Session["Traducciones"] = bllIdioma.ObtenerTraduccionesDic(user.Idioma);
-
-
-
 
 
         }
