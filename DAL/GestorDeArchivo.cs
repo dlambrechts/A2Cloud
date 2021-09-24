@@ -15,7 +15,8 @@ namespace DAL
         
         {
 
-            DirectoryInfo Carpeta = new DirectoryInfo(path);
+            DirectoryInfo Carpeta = new DirectoryInfo(path);            
+            Carpeta.Create();  // Si el directorio no existe, lo creo
             FileInfo[] Backups = Carpeta.GetFiles("*.bak");
 
             return Backups;
