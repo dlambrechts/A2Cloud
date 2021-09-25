@@ -27,6 +27,7 @@ namespace BLL
         public void GuardarFamilia(PerfilFamiliaBE Fam)
 
         {
+            Fam.FechaModificacion = DateTime.Now;
             mppPerfil.GuardarFamilia(Fam);
         }
 
@@ -44,6 +45,11 @@ namespace BLL
 
         }
 
+        public bool FamiliaVerificarUso(PerfilFamiliaBE fam)
+        {
+
+            return mppPerfil.FamiliaVerificarUso(fam);
+        }
 
         public PerfilFamiliaBE CompletarFamilia(PerfilFamiliaBE fam)
 
@@ -61,18 +67,21 @@ namespace BLL
         public void CrearFamilia(PerfilFamiliaBE fam)
         {
 
+            fam.FechaCreacion = DateTime.Now;
             mppPerfil.CrearFamilia(fam);
         }
 
         public void EditarFamilia(PerfilFamiliaBE fam)
         
         {
+            fam.FechaModificacion = DateTime.Now;
             mppPerfil.EditarFamilia(fam);
         }
 
         public void EliminarFamilia(PerfilFamiliaBE fam)
 
         {
+            fam.FechaModificacion = DateTime.Now;
             mppPerfil.EliminarFamilia(fam);
         }
 

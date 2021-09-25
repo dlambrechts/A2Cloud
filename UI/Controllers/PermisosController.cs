@@ -48,6 +48,10 @@ namespace UI.Controllers
         {
             if (Session["IdUsuario"] != null)
             {
+                ViewBag.EliminadoOk = TempData["EliminadoOk"] as string;
+                ViewBag.EliminadoNoOk = TempData["EliminadoNoOk"] as string;
+                ViewBag.CreadoOk = TempData["CreadoOk"] as string;
+
                 List<PerfilFamiliaBE> lista = perBLL.ObtenerFamilias() as List<PerfilFamiliaBE>;
 
                 if (Dato_Buscar != null) 
@@ -84,8 +88,10 @@ namespace UI.Controllers
         {
             try
             {
+                fam.UsuarioCreacion = new UsuarioBE();
+                fam.UsuarioCreacion.Id=Convert.ToInt32(Session["IdUsuario"]);
                 perBLL.CrearFamilia(fam);
-
+                TempData["CreadoOk"] = "Creado";
                 return RedirectToAction("GrupoPermisos");
             }
             catch
@@ -128,7 +134,8 @@ namespace UI.Controllers
         {
             try
             {
-                
+                familia.UsuarioModificacion = new UsuarioBE();
+                familia.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
                 perBLL.EditarFamilia(familia);
                             
             
@@ -159,6 +166,8 @@ namespace UI.Controllers
                 comp.Id = Item;
                 familia.QuitarHijo(comp);
 
+                familia.UsuarioModificacion = new UsuarioBE();
+                familia.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
                 perBLL.GuardarFamilia(familia);
 
                 return Json(new { status = "Success" }); 
@@ -198,8 +207,10 @@ namespace UI.Controllers
                 else { comp = new PerfilPatenteBE(); comp.Id = Item; }
 
                 
-                familia.AgregarHijo(comp);               
+                familia.AgregarHijo(comp);
 
+                familia.UsuarioModificacion = new UsuarioBE();
+                familia.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
                 perBLL.GuardarFamilia(familia);
 
                 return Json(new { success = true });
@@ -213,9 +224,22 @@ namespace UI.Controllers
         // GET: Permisos/Delete/5
         public ActionResult Delete(int id)
         {
+            if(Session["IdUsuario"]==null) return RedirectToAction("Index", "Login");
+
+
             PerfilFamiliaBE famDel = new PerfilFamiliaBE();
-            famDel.Id = id;           
-            return View(famDel);
+            famDel.Id = id;
+            famDel = perBLL.ObtenerFamiliaPorId(famDel);
+
+            if (perBLL.FamiliaVerificarUso(famDel) == true)
+            {
+                TempData["EliminadoNoOk"] = "NoEliminado";
+                return RedirectToAction("GrupoPermisos");
+
+            }
+
+            else { return View(famDel); }
+            
         }
 
         // POST: Permisos/Delete/5
@@ -226,12 +250,16 @@ namespace UI.Controllers
             {
                 PerfilFamiliaBE famDel = new PerfilFamiliaBE();
                 famDel.Id = id;
-                perBLL.EliminarFamilia(famDel);
+                famDel.UsuarioModificacion = new UsuarioBE();
+                famDel.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
 
+
+                perBLL.EliminarFamilia(famDel);
+                TempData["EliminadoOk"] = "Eliminado";
 
                 return RedirectToAction("GrupoPermisos");
             }
-            catch
+            catch 
             {
                 return View();
             }

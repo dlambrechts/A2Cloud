@@ -3,25 +3,26 @@
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Common
 @{
-    ViewBag.Title = "Permisos del Sistema";
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["PermisosDelSistema"].Texto;
 }
 
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Permisos del Sistema</h1>
+        <h1 class="h2">@Traducciones["PermisosDelSistema"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 @using (Html.BeginForm())
                 {
                     <div class="btn-group me-2">
                         <span>
-                            Buscar @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
+                            @Traducciones["Buscar"].Texto @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
 
                         </span>
                     </div>
                 }
-                <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary"> @Traducciones["Exportar"].Texto</button>
             </div>
 
         </div>
@@ -33,8 +34,8 @@
             <thead>
                 <tr>
                     <th scope="col">@Html.DisplayNameFor(model => model.First().Id)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.First().Permiso)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.First().Descripcion)</th>
+                    <th scope="col"> @Traducciones["Permiso"].Texto</th>
+                    <th scope="col"> @Traducciones["Descripcion"].Texto</th>
 
 
                 </tr>

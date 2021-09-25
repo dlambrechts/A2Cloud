@@ -4,38 +4,64 @@
 @using X.PagedList.Mvc.Common
 
 @{
-    ViewBag.Title = "Grupos de Permisos";
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["GruposDePermisos"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Grupos de Permisos</h1>
+        <h1 class="h2">@Traducciones["GruposDePermisos"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             @using (Html.BeginForm())
             {
                 <div class="btn-group me-2">
                     <span>
-                        Buscar @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
+                        @Traducciones["Buscar"].Texto @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
 
                     </span>
                 </div>
             }
             <div class="btn-group me-2">
-                <a>@Html.ActionLink("Nuevo", "CrearGrupo", "Permisos", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "CrearGrupo", "Permisos", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
             </div>
 
         </div>
     </div>
     <div class="container-fluid">
 
+        @if (ViewBag.CreadoOk != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Correcto:</strong> El Grupo fue Creado
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (ViewBag.EliminadoOk != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Correcto:</strong> El Grupo fue Eliminado
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (ViewBag.EliminadoNoOk != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Operacion no Permitida:</strong> El Grupo no puede ser Eliminado ya que se encuentra en uso.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
         <table class="table table-hover">
             <thead>
                 <tr>
                     <th scope="col">@Html.DisplayNameFor(model => model.First().Id)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.First().Descripcion)</th>
+                    <th scope="col">@Traducciones["Descripcion"].Texto</th>
+                    <th scope="col">@Traducciones["FechaCreacion"].Texto</th>
+                    <th scope="col">@Traducciones["FechaModificacion"].Texto</th>
 
-                    <th scope="col">Acciones</th>
+                    <th scope="col">@Traducciones["Acciones"].Texto</th>
 
                 </tr>
             </thead>
@@ -46,6 +72,8 @@
                     <tr>
                         <th scope="row">@Html.DisplayFor(model => item.Id)</th>
                         <td>@Html.DisplayFor(model => item.Descripcion)</td>
+                        <td>@Html.DisplayFor(model => item.FechaCreacion)</td>
+                        <td>@Html.DisplayFor(model => item.FechaModificacion)</td>
 
                         <td>
                             <a href="@Url.Action("EditarGrupo", "Permisos", new {id=item.Id })"><i class="fa fa-gear"></i></a>&ensp;&ensp;

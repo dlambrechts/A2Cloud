@@ -43,12 +43,12 @@ namespace MPP
         }
 
 
-        public PerfilFamiliaBE ObtenerFamiliaPorId(PerfilFamiliaBE fam)
+        public PerfilFamiliaBE ObtenerFamiliaPorId(PerfilFamiliaBE oFamilia)
 
         {
 
             Hashtable Param = new Hashtable();
-            Param.Add("@Id", fam.Id);
+            Param.Add("@Id", oFamilia.Id);
             DataSet DS = new DataSet();
             DS = AccesoDB.LeerDatos("PerfilFamiliaObtenerPorId", Param);
 
@@ -57,11 +57,20 @@ namespace MPP
             {
                 foreach (DataRow Item in DS.Tables[0].Rows)
                 {
-                    fam.Descripcion = Item["Descripcion"].ToString().Trim();
+     
+                    oFamilia.Descripcion = Item["Descripcion"].ToString().Trim();
+                    oFamilia.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]);
+                    oFamilia.UsuarioCreacion = new UsuarioBE();
+                    if ((Item["UsuarioCreacion"]) != DBNull.Value) { oFamilia.UsuarioCreacion.Id = Convert.ToInt32(Item["UsuarioCreacion"]); }
+                    if ((Item["FechaCreacion"]) != DBNull.Value) { oFamilia.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
+
+                    oFamilia.UsuarioModificacion = new UsuarioBE();
+                    if ((Item["UsuarioModificacion"]) != DBNull.Value) { oFamilia.UsuarioModificacion.Id = Convert.ToInt32(Item["UsuarioModificacion"]); }
+                    if ((Item["FechaModificacion"]) != DBNull.Value) { oFamilia.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]); }
                 }
             }
 
-            return fam;
+            return oFamilia;
 
 
         }
@@ -78,8 +87,17 @@ namespace MPP
                 {
                     PerfilFamiliaBE oFamilia = new PerfilFamiliaBE();
 
-                    oFamilia.Id = Convert.ToInt32(Item[0]);
-                    oFamilia.Descripcion = Item[1].ToString().Trim();
+                    oFamilia.Id = Convert.ToInt32(Item["Id"]);
+                    oFamilia.Descripcion = Item["Descripcion"].ToString().Trim();
+                    oFamilia.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]);
+                    oFamilia.UsuarioCreacion = new UsuarioBE();
+                    if ((Item["UsuarioCreacion"]) != DBNull.Value) { oFamilia.UsuarioCreacion.Id = Convert.ToInt32(Item["UsuarioCreacion"]); }
+                    if ((Item["FechaCreacion"]) != DBNull.Value) { oFamilia.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
+                   
+                    oFamilia.UsuarioModificacion = new UsuarioBE();
+                    if ((Item["UsuarioModificacion"]) != DBNull.Value) { oFamilia.UsuarioModificacion.Id = Convert.ToInt32(Item["UsuarioModificacion"]); }
+                    if ((Item["FechaModificacion"]) != DBNull.Value) { oFamilia.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]); }
+
 
                     ListaFamilias.Add(oFamilia);
                 }
@@ -104,6 +122,8 @@ namespace MPP
             string ConsultaAdd = "PerfilFamiliaGuardar"; // Luego guardo la familia actualizada
             Hashtable ParametrosAdd = new Hashtable();
             ParametrosAdd.Add("IdPadre", Fam.Id);
+            ParametrosAdd.Add("FechaModificacion", Fam.FechaModificacion);
+            ParametrosAdd.Add("UsuarioModificacion", Fam.UsuarioModificacion.Id);
 
             foreach (var item in Fam.Hijos)
             {
@@ -213,6 +233,8 @@ namespace MPP
 
                 Parametros.Add("Id", fam.Id);
                 Parametros.Add("Descripcion", fam.Descripcion);
+                Parametros.Add("FechaModificacion", fam.FechaModificacion);
+                Parametros.Add("UsuarioModificacion", fam.UsuarioModificacion.Id);
 
                 string Consulta = "PerfilFamiliaEditar";
                 AccesoDB.Escribir(Consulta, Parametros);
@@ -227,7 +249,11 @@ namespace MPP
             string ConsultaDel = "PerfilFamiliaEliminarComponentes"; // Primero borro los componentes
             Hashtable ParametrosDel = new Hashtable();
             ParametrosDel.Add("Id", fam.Id);
+
             AccesoDB.Escribir(ConsultaDel, ParametrosDel);
+
+            ParametrosDel.Add("FechaModificacion", fam.FechaModificacion);
+            ParametrosDel.Add("UsuarioModificacion", fam.UsuarioModificacion.Id);
 
             string Consulta = "PerfilFamiliaEliminar";
             AccesoDB.Escribir(Consulta, ParametrosDel);
@@ -239,6 +265,8 @@ namespace MPP
             Hashtable Parametros = new Hashtable();
 
             Parametros.Add("Descripcion", fam.Descripcion);
+            Parametros.Add("FechaCreacion", fam.FechaCreacion);
+            Parametros.Add("UsuarioCreacion", fam.UsuarioCreacion.Id);
 
             string Consulta = "PerfilFamiliaInsertar";
             AccesoDB.Escribir(Consulta, Parametros);
@@ -275,7 +303,31 @@ namespace MPP
             return resultado;
         }
 
-      
+        public bool FamiliaVerificarUso(PerfilFamiliaBE fam) 
+        
+        {
+            Hashtable Parametros = new Hashtable();
+
+            Parametros.Add("Id", fam.Id);
+
+            DataSet DS = new DataSet();
+            DS = AccesoDB.LeerDatos("PerfilFamiliaVerificarUso", Parametros);
+
+            bool resultado = false;
+
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+
+                resultado = true;
+
+            }
+            else
+            {
+                return resultado;
+            }
+
+            return resultado;
+        }
 
         public void CargarPerfilUsuario(UsuarioBE Us)
 

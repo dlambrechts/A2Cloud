@@ -1,26 +1,27 @@
 ﻿@model BE.PerfilFamiliaBE
 
 @{
-    ViewBag.Title = "Eliminar Grupo";
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["EliminarGrupo"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Eliminar Grupo</h1>
+        <h1 class="h2">@Traducciones["EliminarGrupo"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a> @Html.ActionLink("Volver", "GrupoPermisos", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <a> @Html.ActionLink(@Traducciones["Volver"].Texto, "GrupoPermisos", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
                
             </div>
 
         </div>
     </div>
-    <div class="alert alert-danger" role="alert">
-        Está seguro que desea eliminar el Grupo?
-    </div>
-    <div>
 
+    <div class="container-fluid">
 
+        <div class="alert alert-danger" role="alert" style="max-width:350px">
+            ¿@Traducciones["EliminarGrupo"].Texto @Html.DisplayFor(model => model.Descripcion)?
+        </div>
         <dl class="dl-horizontal">
 
             <dt>
@@ -31,22 +32,39 @@
                 @Html.DisplayFor(model => model.Id)
             </dd>
 
+
             <dt>
-                @Html.DisplayNameFor(model => model.Descripcion)
+                @Traducciones["Descripcion"].Texto
             </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.Descripcion)
             </dd>
 
-        </dl>
+            <dt>
+                @Traducciones["FechaCreacion"].Texto
+            </dt>
 
+            <dd>
+                @Html.DisplayFor(model => model.FechaCreacion)
+            </dd>
+
+            <dt>
+                @Traducciones["FechaModificacion"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaModificacion)
+            </dd>
+
+        </dl>
+        <br />
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                <input type="submit" value="Eliminar" class="btn btn-danger" />
+                <input type="submit" value="@Traducciones["Eliminar"].Texto" class="btn btn-danger" />
 
             </div>
         }
