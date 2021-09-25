@@ -4,25 +4,26 @@
 @using X.PagedList.Mvc.Common
 
     @{
-        ViewBag.Title = "Idiomas";
+        Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+        ViewBag.Title = Traducciones["Idiomas"].Texto;
     }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Gestión de Idiomas</h1>
+            <h1 class="h2">@Traducciones["GestionDeIdiomas"].Texto</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
                     @using (Html.BeginForm())
                     {
                         <div class="btn-group me-2">
                             <span>
-                                Buscar @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off",@autofocus=""})
+                                @Traducciones["Buscar"].Texto @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
 
                             </span>
                         </div>
                     }
-                    <a>@Html.ActionLink("Nuevo", "Create", "Idioma", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+                    <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Idioma", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
                 </div>
 
             </div>
@@ -52,12 +53,12 @@
                 <thead>
                     <tr>
                         <th scope="col">@Html.DisplayNameFor(model => model.First().Id)</th>
-                        <th scope="col">@Html.DisplayNameFor(model => model.First().Descripcion)</th>
-                        <th scope="col">@Html.DisplayNameFor(model => model.First().PorDefecto)</th>
-                        <th scope="col">@Html.DisplayNameFor(model => model.First().FechaCreacion)</th>
-                        <th scope="col">@Html.DisplayNameFor(model => model.First().FechaModificacion)</th>
-                        <th scope="col">% Traducido</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">@Traducciones["Descripcion"].Texto</th>
+                        <th scope="col">@Traducciones["PorDefecto"].Texto</th>
+                        <th scope="col">@Traducciones["FechaCreacion"].Texto</th>
+                        <th scope="col">@Traducciones["FechaModificacion"].Texto</th>
+                        <th scope="col">@Traducciones["Traducido"].Texto</th>
+                        <th scope="col">@Traducciones["Acciones"].Texto</th>
 
                     </tr>
                 </thead>
