@@ -1,15 +1,16 @@
 ﻿@model BE.IdiomaBE
 
 @{
-    ViewBag.Title = "Editar Idioma";
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["EditarIdioma"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Editar Idioma @Html.DisplayFor(model => model.Descripcion)</h1>
+        <h1 class="h2">@Traducciones["EditarIdioma"].Texto@Html.DisplayFor(model => model.Descripcion)</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a>@Html.ActionLink("Volver", "Index", "Idioma", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <a>@Html.ActionLink(Traducciones["Volver"].Texto, "Index", "Idioma", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
             </div>
 
         </div>
@@ -38,7 +39,7 @@
             <br />
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label class="control-label col-md-2"> @Traducciones["Descripcion"].Texto</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
@@ -50,7 +51,7 @@
             {
                 <fieldset disabled>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.PorDefecto, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-md-2"> @Traducciones["PorDefecto"].Texto</label>
                         <div class="col-md-10">
                             <div class="checkbox">
 
@@ -65,7 +66,7 @@
             {
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.PorDefecto, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2"> @Traducciones["PorDefecto"].Texto</label>
                     <div class="col-md-10">
                         <div class="checkbox">
 
@@ -80,7 +81,7 @@
             <br />
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                    <input type="submit" value=" @Traducciones["Guardar"].Texto" class="btn btn-primary" />
                 </div>
             </div>
         </div>

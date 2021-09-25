@@ -268,6 +268,9 @@ namespace UI.Controllers
                     traduccion.Idioma.Id = Idioma;
                     traduccion.Etiqueta.Id = Etiqueta;
                     traduccion.Texto = Traduccion;
+                    traduccion.UsuarioCreacion = new UsuarioBE();
+                    traduccion.UsuarioCreacion.Id=Convert.ToInt32(Session["IdUsuario"]);
+
                     bllId.GuardarTraduccion(traduccion);
 
                     return Json(new { success = true }, JsonRequestBehavior.AllowGet);

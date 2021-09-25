@@ -90,7 +90,7 @@ namespace BLL
 
         public void GuardarTraduccion(IdiomaTraduccionBE traduccion)
         {
-
+            traduccion.FechaCreacion = DateTime.Now;
             mppIdioma.GuardarTraduccion(traduccion);
         }
 

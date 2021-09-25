@@ -242,6 +242,8 @@ namespace MPP
                 Parametros.Add("@Idioma", traduccion.Idioma.Id);
                 Parametros.Add("@Etiqueta", traduccion.Etiqueta.Id);
                 Parametros.Add("@Traduccion", traduccion.Texto);
+                Parametros.Add("@UsuarioCreacion", traduccion.UsuarioCreacion.Id);
+                Parametros.Add("@FechaCreacion", traduccion.FechaCreacion);    
 
                 AccesoDB.Escribir(Consulta, Parametros);
             }
