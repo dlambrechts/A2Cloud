@@ -15,8 +15,15 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">@Traducciones["Bitacora"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
+            @using (Html.BeginForm())
+            {
+                @Html.TextBox("FechaDesde", ViewBag.FechaDesde as string, new { @class = "datepicker", @autocomplete = "off" });
+                @Html.TextBox("FechaHasta", ViewBag.FechaHasta as string, new { @class = "datepicker" , @autocomplete = "off" });
+                <input type="submit" value="Find" />
 
-        </div>
+            }
+             
+            </div>
     </div>
 
     <div class="container-fluid">
@@ -50,7 +57,7 @@
             </tbody>
         </table>
         <div class="pagination">
-            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }),
+            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, FechaDesde=ViewBag.FechaDesde, FechaHasta=ViewBag.FechaHasta }),
             new PagedListRenderOptions
             {
                 DisplayLinkToIndividualPages = true,
@@ -66,7 +73,18 @@
 
 
 </main>
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 @section scripts{
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "dd-mm-yy",
+                changemonth: true,
+                changeyear: true
+            });
+        });
+    </script>
     <script>
         $(function () {
             $('ul.pagination > li > a').addClass('page-link');
@@ -80,4 +98,5 @@
             document.getElementById('Bitacora').className = 'btn-activo';
         };
     </script>
+
 }

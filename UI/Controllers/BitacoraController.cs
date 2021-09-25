@@ -14,14 +14,24 @@ namespace UI.Controllers
 
         BitacoraBLL bllBit = new BitacoraBLL();
         // GET: Bitacora
-        public ActionResult Index(int? pagina)
+        public ActionResult Index(int? pagina,string FechaDesde, string FechaHasta)
         {
             if (Session["IdUsuario"] != null)
             {
-               List<BitacoraBE> Registros = bllBit.ListarTodos();
+                List<BitacoraBE> Registros = bllBit.ListarTodos();
 
                 int RegistrosPorPagina = 15;
                 int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
+
+
+                ViewBag.FechaDesde = FechaDesde;
+                ViewBag.FechaHasta = FechaHasta;
+                if (FechaDesde != null && FechaHasta != null)
+                {
+                    Registros = Registros.Where(reg => reg.FechaCreacion >= Convert.ToDateTime(FechaDesde)).ToList();
+                    Registros = Registros.Where(reg => reg.FechaCreacion <= Convert.ToDateTime(FechaHasta)).ToList();
+                }
+
 
                 return View(Registros.ToPagedList(Indice, RegistrosPorPagina));
             }
