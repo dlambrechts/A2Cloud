@@ -1,11 +1,14 @@
 ﻿@model BE.BackupBE
-
+@{
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["RestaurarDb"].Texto;
+}
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Restaurar Base de Datos</h1>
+        <h1 class="h2">@Traducciones["RestaurarDb"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a>@Html.ActionLink("Volver", "Backup", "Db", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Backup", "Db", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
 
             </div>
         </div>
@@ -13,14 +16,14 @@
 
     <div class="container-fluid">
         <div class="alert alert-danger" role="alert" style="max-width:400px;">
-            Está seguro que desea restaurar la Base de Datos?
+            @Traducciones["ConfirmarRestaurarDb"].Texto
         </div>
         <div>
 
 
             <dl class="dl-horizontal">
                 <dt>
-                    @Html.DisplayNameFor(model => model.FechaCreacion)
+                    @Traducciones["FechaCreacion"].Texto
                 </dt>
 
                 <dd>
@@ -29,7 +32,7 @@
 
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Nombre)
+                    @Traducciones["Nombre"].Texto
                 </dt>
 
                 <dd>
@@ -43,7 +46,7 @@
                 @Html.AntiForgeryToken()
                 <br />
                 <div class="form-actions no-color">
-                    <input type="submit" value="Restaurar" class="btn btn-danger" />
+                    <input type="submit" value="@Traducciones["Restaurar"].Texto" class="btn btn-danger" />
 
                 </div>
             }
