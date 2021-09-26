@@ -51,14 +51,13 @@
                 @if (Session["NombreCompleto"] != null)
                 {@Session["NombreCompleto"].ToString()}
             </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Cambiar Contraseña</a></li>
+            <ul class="dropdown-menu dropdown-menu-end">
+
+                <li><a class="dropdown-item" href="@Url.Action("CambiarContraseña", "Usuario", new {id=Session["IdUsuario"]})">@Traducciones["CambiarContraseña"].Texto</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li>@Html.ActionLink("Cerrar Sesión", "Logout", "Login", null, new { @class = "dropdown-item" })</li>
+                <li>@Html.ActionLink(@Traducciones["CerrarSesion"].Texto, "Logout", "Login", null, new { @class = "dropdown-item" })</li>
 
             </ul>
-
-
 
         </div>
     </header>

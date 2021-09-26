@@ -205,8 +205,8 @@ namespace UI.Controllers
         {
 
             // Registrar en Bitácora
-            CredencialBE cre = new CredencialBE();
-            UsuarioBE user = new UsuarioBE(cre);
+
+            UsuarioBE user = new UsuarioBE();
             user.Id = Convert.ToInt32(Session["IdUsuario"]);            
             user.Credencial.Mail = Convert.ToString(Session["Mail"]);
             BitacoraBE registro = new BitacoraBE(user);

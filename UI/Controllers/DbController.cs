@@ -32,8 +32,8 @@ namespace UI.Controllers
             try
             {
                 
-                CredencialBE cred = new CredencialBE();
-                UsuarioBE user = new UsuarioBE(cred);
+      
+                UsuarioBE user = new UsuarioBE();
 
                 user.Id = Convert.ToInt32(Session["IdUsuario"]);
                 user.Credencial.Mail = Session["Mail"].ToString();
@@ -109,8 +109,8 @@ namespace UI.Controllers
             try
             {             
 
-                CredencialBE cre = new CredencialBE();
-                UsuarioBE user = new UsuarioBE(cre);
+                
+                UsuarioBE user = new UsuarioBE();
                 user.Id = Convert.ToInt32(Session["IdUsuario"]);
                 user.Credencial.Mail = Session["Mail"].ToString();
 

@@ -25,6 +25,7 @@ namespace MPP
             Parametros.Add("@Mail", Usuario.Credencial.Mail);
             Parametros.Add("@Idioma", Usuario.Idioma.Id);
             Parametros.Add("@Contraseña", Usuario.Credencial.Contraseña);
+            Parametros.Add("@UsuarioCreacion", Usuario.UsuarioCreacion.Id);
             Parametros.Add("@FechaCreacion", Usuario.FechaCreacion);
             Parametros.Add("@Dvh", Usuario.DigitoHorizontal);
 
@@ -42,9 +43,26 @@ namespace MPP
             Parametros.Add("@Apellido", Usuario.Apellido);
             Parametros.Add("@Mail", Usuario.Credencial.Mail);
             Parametros.Add("@Idioma", Usuario.Idioma.Id);
+            Parametros.Add("@UsuarioModificacion", Usuario.UsuarioModificacion.Id);
             Parametros.Add("@FechaModificacion", Usuario.FechaModificacion);
             Parametros.Add("@Activo", Usuario.Activo);
             Parametros.Add("@Dvh", Usuario.DigitoHorizontal);
+
+            Acceso nAcceso = new Acceso();
+
+            nAcceso.Escribir(Consulta, Parametros);
+        }
+
+        public void CambiarContraseña(UsuarioBE Usuario)
+
+        {
+            string Consulta = "UsuarioCambiarContraseña";
+            Hashtable Parametros = new Hashtable();
+
+            Parametros.Add("@Usuario", Usuario.Id);
+            Parametros.Add("@Contraseña", Usuario.Credencial.Contraseña);
+            Parametros.Add("@UsuarioModificacion", Usuario.UsuarioModificacion.Id);
+            Parametros.Add("@FechaModificacion", Usuario.FechaModificacion);
 
             Acceso nAcceso = new Acceso();
 

@@ -64,7 +64,7 @@ namespace BE
             set { activo = value; }
         }
 
-        public UsuarioBE() { permisos = new List<PerfilComponenteBE>(); }
+        public UsuarioBE() { permisos = new List<PerfilComponenteBE>(); credencial = new CredencialBE(); }
 
         public UsuarioBE(CredencialBE cred) {
            
@@ -85,5 +85,7 @@ namespace BE
         public List<PerfilComponenteBE> Permisos { get { return permisos; } }
         public void AgregarPermiso(PerfilComponenteBE Perm) { permisos.Add(Perm); }
         public void QuitarPermiso(PerfilComponenteBE Perm) { permisos.Remove(permisos.Where(permisos => permisos.Id == Perm.Id).First()); }
+
+   
     }
 }

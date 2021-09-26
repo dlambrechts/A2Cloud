@@ -13,23 +13,38 @@ namespace UI.Controllers
     {
 
         BitacoraBLL bllBit = new BitacoraBLL();
+        UsuarioBLL bllUs = new UsuarioBLL();
         // GET: Bitacora
-        public ActionResult Index(int? pagina,string FechaDesde, string FechaHasta)
+        public ActionResult Index(int? pagina, string Usuario, string FechaDesde, string FechaHasta)
         {
             if (Session["IdUsuario"] != null)
             {
+
+                List<UsuarioBE> Usuarios = bllUs.ListarTodos();
+                UsuarioBE defecto = new UsuarioBE(); defecto.Id = 0; defecto.Credencial.Mail = "Todos";
+                Usuarios.Add(defecto);
+                Usuarios=Usuarios.OrderBy(user => user.Id).ToList();
+                ViewBag.Usuarios = Usuarios;
+
                 List<BitacoraBE> Registros = bllBit.ListarTodos();
 
                 int RegistrosPorPagina = 15;
                 int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
 
-
+                ViewBag.Usuario = Usuario;
                 ViewBag.FechaDesde = FechaDesde;
                 ViewBag.FechaHasta = FechaHasta;
-                if (FechaDesde != null && FechaHasta != null)
+
+                if (!String.IsNullOrEmpty(FechaDesde) && !String.IsNullOrEmpty(FechaHasta))
                 {
                     Registros = Registros.Where(reg => reg.FechaCreacion >= Convert.ToDateTime(FechaDesde)).ToList();
                     Registros = Registros.Where(reg => reg.FechaCreacion <= Convert.ToDateTime(FechaHasta)).ToList();
+                }
+
+                if (!String.IsNullOrEmpty(Usuario) && Convert.ToInt32(Usuario)!=0) 
+                
+                {
+                    Registros = Registros.Where(reg => reg.UsuarioCreacion.Id == Convert.ToInt32(Usuario)).ToList();
                 }
 
 

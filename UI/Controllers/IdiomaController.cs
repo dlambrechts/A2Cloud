@@ -293,12 +293,14 @@ namespace UI.Controllers
 
             Dictionary<string, IdiomaTraduccionBE> Traducciones = bllId.ObtenerTraduccionesDic(Idioma);
 
-            if (Session["IdUsuario"] != null) // Si está logueado, cambio el idioma del usuario 
+            if (Session["IdUsuario"] != null) // Si está logueado, cambio el idioma del usuario en la base para que lo mantenga
             {
                 UsuarioBE user = new UsuarioBE();
                 user.Id = Convert.ToInt32(Session["IdUsuario"]);
                 user = bllUs.ObtenerUno(user);
                 user.Idioma = Idioma;
+                user.UsuarioModificacion = new UsuarioBE();
+                user.UsuarioModificacion.Id = user.Id;
                 bllUs.Editar(user);
                
             }

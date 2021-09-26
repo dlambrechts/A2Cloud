@@ -17,13 +17,17 @@
         <div class="btn-toolbar mb-2 mb-md-0">
             @using (Html.BeginForm())
             {
+                <label>@Traducciones["Usuario"].Texto:</label>
+                @Html.DropDownList("Usuario", new SelectList(ViewBag.Usuarios, "Id", "Credencial.Mail"), new { @class = ""})
+                <label>@Traducciones["Desde"].Texto:</label>
                 @Html.TextBox("FechaDesde", ViewBag.FechaDesde as string, new { @class = "datepicker", @autocomplete = "off" });
-                @Html.TextBox("FechaHasta", ViewBag.FechaHasta as string, new { @class = "datepicker" , @autocomplete = "off" });
-                <input type="submit" value="Find" />
+                <label>@Traducciones["Hasta"].Texto:</label>
+                @Html.TextBox("FechaHasta", ViewBag.FechaHasta as string, new { @class = "datepicker", @autocomplete = "off" });
+                <input type="submit" value="@Traducciones["Filtrar"].Texto" />
 
             }
-             
-            </div>
+
+        </div>
     </div>
 
     <div class="container-fluid">
@@ -57,7 +61,7 @@
             </tbody>
         </table>
         <div class="pagination">
-            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, FechaDesde=ViewBag.FechaDesde, FechaHasta=ViewBag.FechaHasta }),
+            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina,Usuario=ViewBag.Usuario, FechaDesde=ViewBag.FechaDesde, FechaHasta=ViewBag.FechaHasta }),
             new PagedListRenderOptions
             {
                 DisplayLinkToIndividualPages = true,

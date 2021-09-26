@@ -15,7 +15,8 @@ namespace BLL
        
         public void Insertar(UsuarioBE usuario) 
         
-        {
+        {   
+            
             usuario.FechaCreacion = DateTime.Now;
             usuario.DigitoHorizontal = dvBLL.CalcularDigitoHorizontal(usuario);
 
@@ -60,6 +61,8 @@ namespace BLL
             dvBLL.ActualizarDigitoVertical(Dvv);
         }
 
+
+
         public void Eliminar(UsuarioBE usuario) 
         
         { 
@@ -90,6 +93,13 @@ namespace BLL
 
         {
             mppUsuario.GuardarPefil(Usuario);
+        }
+
+        public void CambiarContraseña(UsuarioBE Usuario)
+        {
+            Usuario.FechaModificacion = DateTime.Now;
+            mppUsuario.CambiarContraseña(Usuario);
+
         }
     }
 }

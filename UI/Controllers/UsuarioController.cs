@@ -83,10 +83,13 @@ namespace UI.Controllers
         {
             try
             {
-
-               if (ModelState.IsValid && bllU.ValidarExistencia(usuario.Credencial)==false)
+                ModelState.Remove("Idioma.Descripcion");
+                if (ModelState.IsValid && bllU.ValidarExistencia(usuario.Credencial)==false)
                     {
                         usuario.Credencial.Contraseña = Encriptado.Hash(usuario.Credencial.Contraseña);
+
+                        usuario.UsuarioCreacion = new UsuarioBE();
+                        usuario.UsuarioCreacion.Id = Convert.ToInt32(Session["IdUsuario"]);
                         bllU.Insertar(usuario);
                         TempData["Resultado"] = "Creado";
                         return RedirectToAction("Index");
@@ -134,6 +137,8 @@ namespace UI.Controllers
 
                 if (ModelState.IsValid)  // Falta validar que si cambia el mail, no exista
                     {
+                        usuario.UsuarioModificacion = new UsuarioBE();
+                        usuario.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
                         bllU.Editar(usuario);
                         TempData["Resultado"] = "Editado";
                         TempData["IdUsuario"] = usuario.Id.ToString();
@@ -184,6 +189,74 @@ namespace UI.Controllers
                 TempData["Mail"] = delU.Credencial.Mail;
                 return RedirectToAction("Index");
             }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: CambiarContraseña
+        public ActionResult CambiarContraseña(int id)
+        {
+            if (Session["IdUsuario"] == null) return RedirectToAction("Index", "Login");
+
+            UsuarioBE user = new UsuarioBE();
+            user.Id = id;
+            bllU.ObtenerUno(user);
+
+            ViewBag.Resultado = TempData["Resultado"] as string;
+
+            return View();
+                
+
+        }
+
+        // POST: Usuario/CambiarContraseña
+        [HttpPost]
+        public ActionResult CambiarContraseña(UsuarioBE usuario, FormCollection collection)
+        {
+            try
+            {
+                ModelState.Remove("Nombre");
+                ModelState.Remove("Credencial.Mail");
+                if (ModelState.IsValid)  
+                {
+
+                    string ContraseñaActual = Request.Form["ContraseñaActual"];
+                    string ContraseñaNueva = usuario.Credencial.Contraseña;
+
+                    usuario = bllU.ObtenerUno(usuario);
+
+                    if (usuario.Credencial.Contraseña.Equals(Encriptado.Hash(ContraseñaActual)))
+                        
+                    {
+                        usuario.Credencial.Contraseña = Encriptado.Hash(ContraseñaNueva);
+                        usuario.UsuarioModificacion = new UsuarioBE();
+                        usuario.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+                        bllU.CambiarContraseña(usuario);
+                        TempData["Resultado"] = "Ok";
+
+                        return RedirectToAction("CambiarContraseña");
+
+                    }
+
+                    else 
+                    
+                    {
+                        TempData["Resultado"] = "ContraseñaIncorrecta";
+                        return RedirectToAction("CambiarContraseña");
+                        
+                    }
+
+                    
+                }
+
+                else
+                {
+                    return View(usuario);
+                }
+             }
             catch
             {
                 return View();
