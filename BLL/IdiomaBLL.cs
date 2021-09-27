@@ -51,8 +51,9 @@ namespace BLL
         public IdiomaBE ObtenerUno(IdiomaBE idioma)
 
         {
-
-            return mppIdioma.ObtenerUno(idioma);
+            idioma= mppIdioma.ObtenerUno(idioma);
+            idioma.PorcentajeTraducido = CalcularPorcentajeTraducido(idioma);
+            return idioma; 
         }
 
         public void Editar(IdiomaBE idioma)

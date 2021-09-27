@@ -70,7 +70,7 @@ namespace UI.Controllers
         {
             if (Session["IdUsuario"] != null)
             {
-                ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
+                ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas().Where(Idioma=>Idioma.PorcentajeTraducido==100);
                 ViewBag.Resultado = TempData["Resultado"] as string;
                 return View();
             }
@@ -120,7 +120,7 @@ namespace UI.Controllers
 
 
             ViewBag.Resultado = TempData["Editado"] as string;
-            ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas();
+            ViewData["Idiomas"] = bllIdioma.ObtenerIdiomas().Where(Idioma => Idioma.PorcentajeTraducido == 100);
             return View(us);
         }
 

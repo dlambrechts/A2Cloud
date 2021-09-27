@@ -25,10 +25,12 @@
             <span class="navbar-brand mb-0 h1">A2Cloud</span>
             <div class="d-flex">
                 @Html.DropDownList("Idiomas", new SelectList((System.Collections.IEnumerable)Session["Idiomas"], "Id", "Descripcion"), new { @id = "selIdioma", @class = "form-control me-2", @onchange = "CambiarIdioma();" })
-        </div>
             </div>
-        
+        </div>
+
     </nav>
+    <br />
+    <br />
     <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4">
@@ -41,7 +43,9 @@
                             <div class="col-12 text-center">
                                 <div> <img class="mb-4" src="~/Content/img/Logo.png" alt="" width="191" height="109"></div>
                                 <h2 class="fw-normal" style="color:#148AB6">A2Cloud</h2>
-                                <h4>@if (Traducciones.ContainsKey("Bienvenido"))  {@Traducciones["Bienvenido"].Texto;}</h4>
+                                <h4>@if (Traducciones.ContainsKey("Bienvenido"))
+                                {@Traducciones["Bienvenido"].Texto;
+                            }</h4>
                             </div>
                             @if (ViewBag.Resultado != null)
                             {
@@ -51,29 +55,36 @@
                                 </div>
                             }
                             <div>
-                                <label>@if (Traducciones.ContainsKey("Usuario")){@Traducciones["Usuario"].Texto;}</label>
+                                <label>@if (Traducciones.ContainsKey("Usuario"))
+                                {@Traducciones["Usuario"].Texto;
+                            }</label>
                                 @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                             </div>
                             <div class="col-12">
-                                <label>@if (Traducciones.ContainsKey("Contraseña")){@Traducciones["Contraseña"].Texto;}</label>
+                                <label>@if (Traducciones.ContainsKey("Contraseña"))
+                                {@Traducciones["Contraseña"].Texto;
+                            }</label>
                                 @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                             </div>
                             <div class="col-12">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="rememberMe">
-                                    <label class="form-check-label" for="rememberMe"> Remember me</label>
+
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="btn btn-dark float-end">@if (Traducciones.ContainsKey("Login")){@Traducciones["Login"].Texto;
-                            }</button>
-                            </div>
+                                <button type="submit" class="btn btn-dark float-end">
+                                    @if (Traducciones.ContainsKey("Login"))
+                                    {@Traducciones["Login"].Texto;
+                                }
+                            </button>
                         </div>
-                    }
+                    </div>
+                }
 
                     <hr class="mt-4">
                     <div class="col-12">
-                        <p class="text-center mb-0">Have not account yet? <a href="#">Signup</a></p>
+                        <p class="text-center mb-0"><a href="#">Signup</a></p>
                     </div>
                 </div>
             </div>

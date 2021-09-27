@@ -7,7 +7,7 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">@Traducciones["EditarIdioma"].Texto@Html.DisplayFor(model => model.Descripcion)</h1>
+        <h1 class="h2">@Traducciones["EditarIdioma"].Texto @Html.DisplayFor(model => model.Descripcion)</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 <a>@Html.ActionLink(Traducciones["Volver"].Texto, "Index", "Idioma", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
@@ -39,7 +39,7 @@
             <br />
 
             <div class="form-group">
-                <label class="control-label col-md-2"> @Traducciones["Descripcion"].Texto</label>
+                <label class="control-label col-md-4"> @Traducciones["Descripcion"].Texto</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
@@ -47,11 +47,11 @@
             </div>
             <br />
 
-            @if (Model.PorDefecto == true)
+            @if (Model.PorDefecto == true || Model.PorcentajeTraducido!=100)
             {
                 <fieldset disabled>
                     <div class="form-group">
-                        <label class="control-label col-md-2"> @Traducciones["PorDefecto"].Texto</label>
+                        <label class="control-label col-md-4"> @Traducciones["PorDefecto"].Texto</label>
                         <div class="col-md-10">
                             <div class="checkbox">
 
@@ -62,11 +62,11 @@
                         </div>
                     </div>
                 </fieldset>}
-            @if (Model.PorDefecto == false)
+            @if (Model.PorDefecto == false && Model.PorcentajeTraducido == 100)
             {
 
                 <div class="form-group">
-                    <label class="control-label col-md-2"> @Traducciones["PorDefecto"].Texto</label>
+                    <label class="control-label col-md-4"> @Traducciones["PorDefecto"].Texto</label>
                     <div class="col-md-10">
                         <div class="checkbox">
 

@@ -29,8 +29,11 @@
             </div>
         </div>
         <div class="container-fluid">
-
-            @if (ViewBag.ResultadoOk != null )
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>@Traducciones["LeyendaIdiomasDisponibles"].Texto</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @if (ViewBag.ResultadoOk != null)
             {
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <strong>Correcto:</strong> @ViewBag.ResultadoOk
@@ -39,7 +42,7 @@
             }
 
 
-            @if (ViewBag.ResultadoNoOk != null )
+            @if (ViewBag.ResultadoNoOk != null)
             {
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>Error:</strong> @ViewBag.ResultadoNoOk
@@ -66,21 +69,21 @@
                     @foreach (var item in Model)
 
                     {
-                    <tr>
-                        <th scope="row">@Html.DisplayFor(model => item.Id)</th>
-                        <td>@Html.DisplayFor(model => item.Descripcion)</td>
-                        <td>@Html.DisplayFor(model => item.PorDefecto)</td>
-                        <td>@Html.DisplayFor(model => item.FechaCreacion)</td>
-                        <td>@Html.DisplayFor(model => item.FechaModificacion)</td>
-                        <td>@Html.DisplayFor(model => item.PorcentajeTraducido) %</td>
+                        <tr>
+                            <th scope="row">@Html.DisplayFor(model => item.Id)</th>
+                            <td>@Html.DisplayFor(model => item.Descripcion)</td>
+                            <td>@Html.DisplayFor(model => item.PorDefecto)</td>
+                            <td>@Html.DisplayFor(model => item.FechaCreacion)</td>
+                            <td>@Html.DisplayFor(model => item.FechaModificacion)</td>
+                            <td>@Html.DisplayFor(model => item.PorcentajeTraducido) %</td>
 
-                        <td>
-                            <a href="@Url.Action("Edit", "Idioma", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
-                            <a href="@Url.Action("Traduccion", "Idioma", new {id=item.Id })"><i class="fa fa-language"></i></a>&ensp;&ensp;
-                            <a href="@Url.Action("Delete", "Idioma", new {id=item.Id })"><i class="fa fa-trash"></i></a>&ensp;&ensp;
-                        </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Idioma", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
+                                <a href="@Url.Action("Traduccion", "Idioma", new {id=item.Id })"><i class="fa fa-language"></i></a>&ensp;&ensp;
+                                <a href="@Url.Action("Delete", "Idioma", new {id=item.Id })"><i class="fa fa-trash"></i></a>&ensp;&ensp;
+                            </td>
 
-                    </tr>
+                        </tr>
 
 
 
