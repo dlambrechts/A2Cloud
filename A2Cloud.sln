@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPP", "MPP\MPP.csproj", "{4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seguridad", "Seguridad\Seguridad.csproj", "{28F14EBA-2373-42C0-99D2-11D66584E177}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestorDeArchivo", "GestorDeArchivo\GestorDeArchivo.csproj", "{460E7B06-031E-4B38-A8A2-1E6419C5AB39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{28F14EBA-2373-42C0-99D2-11D66584E177}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28F14EBA-2373-42C0-99D2-11D66584E177}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28F14EBA-2373-42C0-99D2-11D66584E177}.Release|Any CPU.Build.0 = Release|Any CPU
+		{460E7B06-031E-4B38-A8A2-1E6419C5AB39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{460E7B06-031E-4B38-A8A2-1E6419C5AB39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{460E7B06-031E-4B38-A8A2-1E6419C5AB39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{460E7B06-031E-4B38-A8A2-1E6419C5AB39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

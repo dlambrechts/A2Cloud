@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,6 +58,10 @@
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{18c7b2d2-818d-4193-8acb-0ccd1d2729b4}</Project>
       <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GestorDeArchivo\GestorDeArchivo.csproj">
+      <Project>{460e7b06-031e-4b38-a8a2-1e6419c5ab39}</Project>
+      <Name>GestorDeArchivo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

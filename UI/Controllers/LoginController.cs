@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using BE;
 using BLL;
 using Seguridad;
-
+using GestorDeArchivo;
 namespace UI.Controllers
 {
     public class LoginController : Controller
@@ -32,6 +32,8 @@ namespace UI.Controllers
                 }
 
                 else Idioma.Id = Convert.ToInt32(Session["IdiomaLogin"]);
+
+                
 
                 ConfigurarIdioma(Idioma);
 
@@ -136,6 +138,8 @@ namespace UI.Controllers
                         {
                         // El usuario no existe
                         TempData["Resultado"] = "Usuario Inexistente";
+
+                        FileMananager.RegistrarError("Intento Fallido de inicio de sessión " + cred.Mail);
                         return RedirectToAction("Index");
                     }
                     }
@@ -222,11 +226,9 @@ namespace UI.Controllers
         public void ConfigurarIdioma(IdiomaBE Idioma)  // Se carga el Idioma por defecto para el login
         {
 
-
+            
             Session["Idiomas"] = bllIdioma.ObtenerIdiomas().Where(i=>i.PorcentajeTraducido==100);
-
             Session["IdiomaSelected"] = Idioma;
-
             Session["Traducciones"] = bllIdioma.ObtenerTraduccionesDic(Idioma);
 
 
