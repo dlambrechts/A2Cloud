@@ -53,7 +53,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
 
-                <li><a class="dropdown-item" href="@Url.Action("CambiarContraseña", "Usuario", new {id=Session["IdUsuario"]})">@Traducciones["CambiarContraseña"].Texto</a></li>
+                <li><a class="dropdown-item" href="@Url.Action("CambiarContraseña", "Usuario", new { id = Session["IdUsuario"] })">@Traducciones["CambiarContraseña"].Texto</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li>@Html.ActionLink(@Traducciones["CerrarSesion"].Texto, "Logout", "Login", null, new { @class = "dropdown-item" })</li>
 
@@ -68,142 +68,161 @@
                 <div class="flex-shrink-0 p-3 ">
 
                     <ul class="list-unstyled ps-0">
-                        <li class="mb-1">
-                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#activos-collapse" aria-expanded="false">
-                                @if (Traducciones.ContainsKey("GestionDeActivos")) {@Traducciones["GestionDeActivos"].Texto;}
-                            </button>
-                            <div class="collapse" id="activos-collapse">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("Activos")){@Traducciones["Activos"].Texto;}</a></li>
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("ComponentesDeHardware")){@Traducciones["ComponentesDeHardware"].Texto;}</a></li>
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("PerfilesDeHardware")){@Traducciones["PerfilesDeHardware"].Texto;}</a></li>
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("AsignacionDeActivos")){@Traducciones["AsignacionDeActivos"].Texto;}</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#licencias-collapse" aria-expanded="false">
-                                @Traducciones["GestionDeLicencias"].Texto
-                            </button>
-                            <div class="collapse" id="licencias-collapse">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("ProductosDeSoftware")){@Traducciones["ProductosDeSoftware"].Texto;}</a></li>
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("ContratosDeLicencia")){@Traducciones["ContratosDeLicencia"].Texto;}</a></li>
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("AsignacionDeLicencias")){@Traducciones["AsignacionDeLicencias"].Texto;}</a></li>
-
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#org-collapse" aria-expanded="false">
-                                @Traducciones["Organizacion"].Texto
-                            </button>
-                            <div class="collapse" id="org-collapse">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("Configurar")){@Traducciones["Configurar"].Texto;}</a></li>
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("Colaboradores")){@Traducciones["Colaboradores"].Texto;}</a></li>
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("Departamentos")){@Traducciones["Departamentos"].Texto;}</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#presup-collapse" aria-expanded="false">
-                                @Traducciones["Presupuesto"].Texto
-                            </button>
-                            <div class="collapse" id="presup-collapse">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("EstimacionDePresupuesto")){@Traducciones["EstimacionDePresupuesto"].Texto;}</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#int-collapse" aria-expanded="false">
-                                @Traducciones["GestionInteligenteActivos"].Texto
-                            </button>
-                            <div class="collapse" id="int-collapse">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("AnalisisDeActivosOciosos")){@Traducciones["AnalisisDeActivosOciosos"].Texto;}</a></li>
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("AnalisisColaboradorVsRecursos")){@Traducciones["AnalisisColaboradorVsRecursos"].Texto;}  </a></li>
-                                    <li><a href="#" class="link-dark rounded">@if (Traducciones.ContainsKey("OptimizacionDeAsignaciones")){@Traducciones["OptimizacionDeAsignaciones"].Texto;}</a></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="border-top my-3"></li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-                               @if (Traducciones.ContainsKey("GestionDeUsuarios")){@Traducciones["GestionDeUsuarios"].Texto;}
-                            </button>
-                            <div class="collapse" id="account-collapse">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-
-                                    @{ if (Permisos.Exists(per => per.ToString() == "GestionUsuarios"))
-
-                                        {
-                                            <li>@Html.ActionLink(Traducciones["Usuarios"].Texto, "Index", "Usuario", null, new { @class = "link-dark rounded", @id = "Usuarios" })</li>
-                                        }
-                                    }
-
-                                    @{ if (Permisos.Exists(per => per.ToString() == "GestionPerfilUsuario"))
-
-                                        {
-                                            <li>@Html.ActionLink(Traducciones["GruposDePermisos"].Texto, "GrupoPermisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Grupos" })</li>
-                                        }
-                                    }
-
-                                    @{ if (Permisos.Exists(per => per.ToString() == "GestionPerfilUsuario"))
-
-                                        {
-                                            <li>@Html.ActionLink(Traducciones["PermisosDelSistema"].Texto, "Permisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Permisos" })</li>
-                                        }
-                                    }
-
-
-
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#idioma-collapse" aria-expanded="false">
-                                @if (Traducciones.ContainsKey("GestionDeIdiomas")){@Traducciones["GestionDeIdiomas"].Texto;}
-                            </button>
-                            <div class="collapse" id="idioma-collapse">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li>@Html.ActionLink(Traducciones["Idiomas"].Texto, "index", "Idioma", null, new { @class = "link-dark rounded", @id = "Idioma" })</li>
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#db-collapse" aria-expanded="false">
-                                 @if (Traducciones.ContainsKey("GestionBaseDeDatos")){@Traducciones["GestionBaseDeDatos"].Texto;}
-                            </button>
-                            <div class="collapse" id="db-collapse">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li>@Html.ActionLink(Traducciones["CopiasDeSeguridad"].Texto, "Backup", "Db", null, new { @class = "link-dark rounded", @id = "CopiasSeg" })</li>
-                                    <li>@Html.ActionLink(Traducciones["VerificacionDeIntegridad"].Texto, "Integridad", "Db", null, new { @class = "link-dark rounded", @id = "IntegridadDb" })</li>
-                                </ul>
-                            </div>
-                        </li>
-                        @{ if (Permisos.Exists(per => per.ToString() == "Bitacora"))
+                        @{ if (Permisos.Exists(per => per.ToString() == "GestionDeActivos"))
 
                             {
                                 <li class="mb-1">
-                                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#bit-collapse" aria-expanded="false">
-                                       @if (Traducciones.ContainsKey("Bitacora")){@Traducciones["Bitacora"].Texto;}
+                                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#activos-collapse" aria-expanded="false">
+                                        @Traducciones["GestionDeActivos"].Texto
                                     </button>
-                                    <div class="collapse" id="bit-collapse">
+                                    <div class="collapse" id="activos-collapse">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-
-                                            <li>@Html.ActionLink(Traducciones["Bitacora"].Texto, "Index", "Bitacora", null, new { @class = "link-dark rounded", @id = "Bitacora" })</li>
-
+                                            <li><a href="#" class="link-dark rounded">@Traducciones["Activos"].Texto</a></li>
+                                            <li><a href="#" class="link-dark rounded">@Traducciones["ComponentesDeHardware"].Texto</a></li>
+                                            <li><a href="#" class="link-dark rounded">@Traducciones["PerfilesDeHardware"].Texto</a></li>
+                                            <li><a href="#" class="link-dark rounded">@Traducciones["AsignacionDeActivos"].Texto</a></li>
                                         </ul>
                                     </div>
                                 </li>
                             } }
-                    </ul>
+                            @{ if (Permisos.Exists(per => per.ToString() == "GestionDeLicencias"))
+
+                                {
+                                    <li class="mb-1">
+                                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#licencias-collapse" aria-expanded="false">
+                                            @Traducciones["GestionDeLicencias"].Texto
+                                        </button>
+                                        <div class="collapse" id="licencias-collapse">
+                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                <li><a href="#" class="link-dark rounded">@Traducciones["ProductosDeSoftware"].Texto</a></li>
+                                                <li><a href="#" class="link-dark rounded">@Traducciones["ContratosDeLicencia"].Texto</a></li>
+                                                <li><a href="#" class="link-dark rounded">@Traducciones["AsignacionDeLicencias"].Texto</a></li>
+
+
+                                            </ul>
+                                        </div>
+                                    </li>
+                                } }
+                                @{ if (Permisos.Exists(per => per.ToString() == "GestionDeOrganizacion"))
+
+                                    {
+                                        <li class="mb-1">
+                                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#org-collapse" aria-expanded="false">
+                                                @Traducciones["Organizacion"].Texto
+                                            </button>
+                                            <div class="collapse" id="org-collapse">
+                                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                    <li><a href="#" class="link-dark rounded">@Traducciones["Configurar"].Texto</a></li>
+                                                    <li><a href="#" class="link-dark rounded">@Traducciones["Colaboradores"].Texto</a></li>
+                                                    <li><a href="#" class="link-dark rounded">@Traducciones["Departamentos"].Texto</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    } }
+                                    @{ if (Permisos.Exists(per => per.ToString() == "GestionDePresupuesto"))
+
+                                        {
+                                            <li class="mb-1">
+                                                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#presup-collapse" aria-expanded="false">
+                                                    @Traducciones["Presupuesto"].Texto
+                                                </button>
+                                                <div class="collapse" id="presup-collapse">
+                                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                        <li><a href="#" class="link-dark rounded">@Traducciones["EstimacionDePresupuesto"].Texto</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        } }
+                                        @{ if (Permisos.Exists(per => per.ToString() == "GestionInteligenteDeActivos"))
+
+                                            {
+                                                <li class="mb-1">
+                                                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#int-collapse" aria-expanded="false">
+                                                        @Traducciones["GestionInteligenteActivos"].Texto
+                                                    </button>
+                                                    <div class="collapse" id="int-collapse">
+                                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                            <li><a href="#" class="link-dark rounded">@Traducciones["AnalisisDeActivosOciosos"].Texto</a></li>
+                                                            <li><a href="#" class="link-dark rounded">@Traducciones["AnalisisColaboradorVsRecursos"].Texto  </a></li>
+                                                            <li><a href="#" class="link-dark rounded">@Traducciones["OptimizacionDeAsignaciones"].Texto</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            } }
+                                            <li class="border-top my-3"></li>
+                                            @{ if (Permisos.Exists(per => per.ToString() == "GestionDeUsuarios"))
+
+                                                {
+                                                    <li class="mb-1">
+                                                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                                                            @Traducciones["GestionDeUsuarios"].Texto
+                                                        </button>
+                                                        <div class="collapse" id="account-collapse">
+                                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+
+
+                                                                <li>@Html.ActionLink(Traducciones["Usuarios"].Texto, "Index", "Usuario", null, new { @class = "link-dark rounded", @id = "Usuarios" })</li>
+
+                                                                <li>@Html.ActionLink(Traducciones["GruposDePermisos"].Texto, "GrupoPermisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Grupos" })</li>
+
+
+                                                                <li>@Html.ActionLink(Traducciones["PermisosDelSistema"].Texto, "Permisos", "Permisos", null, new { @class = "link-dark rounded", @id = "Permisos" })</li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                } }
+                                                @{ if (Permisos.Exists(per => per.ToString() == "GestionDeIdiomas"))
+
+                                                    {
+                                                        <li class="mb-1">
+                                                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#idioma-collapse" aria-expanded="false">
+                                                                @Traducciones["GestionDeIdiomas"].Texto
+
+                                                            </button>
+                                                            <div class="collapse" id="idioma-collapse">
+                                                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                                    <li>@Html.ActionLink(Traducciones["Idiomas"].Texto, "index", "Idioma", null, new { @class = "link-dark rounded", @id = "Idioma" })</li>
+
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                    } }
+                                                    @{ if (Permisos.Exists(per => per.ToString() == "GestionDeBaseDeDatos"))
+
+                                                        {
+                                                            <li class="mb-1">
+                                                                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#db-collapse" aria-expanded="false">
+                                                                @Traducciones["GestionBaseDeDatos"].Texto
+                                                                
+                                                                </button>
+                                                                <div class="collapse" id="db-collapse">
+                                                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                                        <li>@Html.ActionLink(Traducciones["CopiasDeSeguridad"].Texto, "Backup", "Db", null, new { @class = "link-dark rounded", @id = "CopiasSeg" })</li>
+                                                                        <li>@Html.ActionLink(Traducciones["VerificacionDeIntegridad"].Texto, "Integridad", "Db", null, new { @class = "link-dark rounded", @id = "IntegridadDb" })</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+                                                            } }
+                                                            @{ if (Permisos.Exists(per => per.ToString() == "GestionDeBitacora"))
+
+                                                                {
+                                                                    <li class="mb-1">
+                                                                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#bit-collapse" aria-expanded="false">
+                                                                     
+                                                                           @Traducciones["Bitacora"].Texto
+                                                                     
+                                                                        </button>
+                                                                        <div class="collapse" id="bit-collapse">
+                                                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+
+                                                                                <li>@Html.ActionLink(Traducciones["Bitacora"].Texto, "Index", "Bitacora", null, new { @class = "link-dark rounded", @id = "Bitacora" })</li>
+
+                                                                            </ul>
+                                                                        </div>
+                                                                    </li>
+                                                                } }
+                                                        </ul>
                 </div>
             </nav>
 

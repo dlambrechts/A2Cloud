@@ -44,5 +44,11 @@
     <Compile Include="Acceso.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GestorDeArchivo\GestorDeArchivo.csproj">
+      <Project>{460e7b06-031e-4b38-a8a2-1e6419c5ab39}</Project>
+      <Name>GestorDeArchivo</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

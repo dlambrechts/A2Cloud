@@ -7,6 +7,7 @@ using System.Data;
 using System.Collections;
 using DAL;
 using BE;
+using GestorDeArchivo;
 
 namespace MPP
 {
@@ -81,33 +82,38 @@ namespace MPP
             DataSet DS = new DataSet();
             DS = AccesoDB.LeerDatos("PerfilFamiliaListar", null);
 
-            if (DS.Tables[0].Rows.Count > 0)
+            try
             {
-                foreach (DataRow Item in DS.Tables[0].Rows)
+
+                if (DS.Tables[0].Rows.Count > 0)
                 {
-                    PerfilFamiliaBE oFamilia = new PerfilFamiliaBE();
+                    foreach (DataRow Item in DS.Tables[0].Rows)
+                    {
+                        PerfilFamiliaBE oFamilia = new PerfilFamiliaBE();
 
-                    oFamilia.Id = Convert.ToInt32(Item["Id"]);
-                    oFamilia.Descripcion = Item["Descripcion"].ToString().Trim();
-                    oFamilia.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]);
-                    oFamilia.UsuarioCreacion = new UsuarioBE();
-                    if ((Item["UsuarioCreacion"]) != DBNull.Value) { oFamilia.UsuarioCreacion.Id = Convert.ToInt32(Item["UsuarioCreacion"]); }
-                    if ((Item["FechaCreacion"]) != DBNull.Value) { oFamilia.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
-                   
-                    oFamilia.UsuarioModificacion = new UsuarioBE();
-                    if ((Item["UsuarioModificacion"]) != DBNull.Value) { oFamilia.UsuarioModificacion.Id = Convert.ToInt32(Item["UsuarioModificacion"]); }
-                    if ((Item["FechaModificacion"]) != DBNull.Value) { oFamilia.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]); }
+                        oFamilia.Id = Convert.ToInt32(Item["Id"]);
+                        oFamilia.Descripcion = Item["Descripcion"].ToString().Trim();
+                        oFamilia.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]);
+                        oFamilia.UsuarioCreacion = new UsuarioBE();
+                        if ((Item["UsuarioCreacion"]) != DBNull.Value) { oFamilia.UsuarioCreacion.Id = Convert.ToInt32(Item["UsuarioCreacion"]); }
+                        if ((Item["FechaCreacion"]) != DBNull.Value) { oFamilia.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
+
+                        oFamilia.UsuarioModificacion = new UsuarioBE();
+                        if ((Item["UsuarioModificacion"]) != DBNull.Value) { oFamilia.UsuarioModificacion.Id = Convert.ToInt32(Item["UsuarioModificacion"]); }
+                        if ((Item["FechaModificacion"]) != DBNull.Value) { oFamilia.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]); }
 
 
-                    ListaFamilias.Add(oFamilia);
+                        ListaFamilias.Add(oFamilia);
+                    }
+
+                    return ListaFamilias;
+                }
+                else
+                {
+                    return ListaFamilias;
                 }
 
-                return ListaFamilias;
-            }
-            else
-            {
-                return null;
-            }
+            } catch (Exception ex) { FileMananager.RegistrarError(ex.Message); return null; }
         }
 
         public void GuardarFamilia(PerfilFamiliaBE Fam)

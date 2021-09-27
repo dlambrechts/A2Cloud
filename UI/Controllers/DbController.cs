@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using X.PagedList;
 using BE;
 using BLL;
+using GestorDeArchivo;
 
 namespace UI.Controllers
 {
@@ -48,8 +49,9 @@ namespace UI.Controllers
                 else return Json(new { success = false }, JsonRequestBehavior.AllowGet);
 
             }
-            catch 
+            catch (Exception ex)
             {
+                FileMananager.RegistrarError(ex.Message);
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -60,6 +62,7 @@ namespace UI.Controllers
         {
             if (Session["IdUsuario"] != null)
             {
+                try { 
                 ViewBag.Resultado = TempData["Resultado"] as string;
                 ViewBag.Fecha = TempData["FechaBack"] as string;
 
@@ -84,6 +87,14 @@ namespace UI.Controllers
                 int RegistrosPorPagina = 10;
                 int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
                 return View(lista.ToPagedList(Indice, RegistrosPorPagina));
+
+                } 
+                catch (Exception ex) 
+                { 
+                    FileMananager.RegistrarError(ex.Message);
+                    return RedirectToAction("Index", "Login");
+                }
+
             }
             else { return RedirectToAction("Index", "Login"); }
         }

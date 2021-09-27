@@ -7,6 +7,7 @@ using System.Collections;
 using System.Data;
 using DAL;
 using BE;
+using GestorDeArchivo;
 
 namespace MPP
 {
@@ -17,6 +18,7 @@ namespace MPP
         public int Insertar(UsuarioBE Usuario)
 
         {
+            try { 
             string Consulta = "UsuarioInsertar";
             Hashtable Parametros = new Hashtable();
 
@@ -30,32 +32,52 @@ namespace MPP
             Parametros.Add("@Dvh", Usuario.DigitoHorizontal);
 
             return AccesoDB.Escribir(Consulta, Parametros);
+
+            }
+            catch(Exception ex)
+
+            {
+
+                FileMananager.RegistrarError(ex.Message);
+                return -1;
+            }
         }
 
         public void Editar(UsuarioBE Usuario)
 
         {
-            string Consulta = "UsuarioEditar";
-            Hashtable Parametros = new Hashtable();
+            try
+            {
+                string Consulta = "UsuarioEditar";
+                Hashtable Parametros = new Hashtable();
 
-            Parametros.Add("@Id", Usuario.Id);
-            Parametros.Add("@Nombre", Usuario.Nombre);
-            Parametros.Add("@Apellido", Usuario.Apellido);
-            Parametros.Add("@Mail", Usuario.Credencial.Mail);
-            Parametros.Add("@Idioma", Usuario.Idioma.Id);
-            Parametros.Add("@UsuarioModificacion", Usuario.UsuarioModificacion.Id);
-            Parametros.Add("@FechaModificacion", Usuario.FechaModificacion);
-            Parametros.Add("@Activo", Usuario.Activo);
-            Parametros.Add("@Dvh", Usuario.DigitoHorizontal);
+                Parametros.Add("@Id", Usuario.Id);
+                Parametros.Add("@Nombre", Usuario.Nombre);
+                Parametros.Add("@Apellido", Usuario.Apellido);
+                Parametros.Add("@Mail", Usuario.Credencial.Mail);
+                Parametros.Add("@Idioma", Usuario.Idioma.Id);
+                Parametros.Add("@UsuarioModificacion", Usuario.UsuarioModificacion.Id);
+                Parametros.Add("@FechaModificacion", Usuario.FechaModificacion);
+                Parametros.Add("@Activo", Usuario.Activo);
+                Parametros.Add("@Dvh", Usuario.DigitoHorizontal);
 
-            Acceso nAcceso = new Acceso();
+                Acceso nAcceso = new Acceso();
 
-            nAcceso.Escribir(Consulta, Parametros);
+                nAcceso.Escribir(Consulta, Parametros);
+
+            }
+
+            catch (Exception ex)
+
+            {
+                FileMananager.RegistrarError(ex.Message);            
+            }
         }
 
         public void CambiarContraseña(UsuarioBE Usuario)
 
         {
+            try { 
             string Consulta = "UsuarioCambiarContraseña";
             Hashtable Parametros = new Hashtable();
 
@@ -67,13 +89,22 @@ namespace MPP
             Acceso nAcceso = new Acceso();
 
             nAcceso.Escribir(Consulta, Parametros);
+
         }
+
+            catch (Exception ex)
+
+            {
+                FileMananager.RegistrarError(ex.Message);            
+            }
+}
 
 
 
         public List<UsuarioBE> ListarUsuarios()
 
         {
+            try { 
             List<UsuarioBE> ListaUsuarios = new List<UsuarioBE>();
 
             Acceso AccesoDB = new Acceso();
@@ -105,11 +136,20 @@ namespace MPP
             {
                 return null;
             }
+
+            }
+            catch (Exception ex)
+
+            {
+                FileMananager.RegistrarError(ex.Message);
+                return null;
+            }
         }
 
         public bool ValidarExistencia(CredencialBE cred)
 
         {
+
             Hashtable Param = new Hashtable();
             Param.Add("@Mail", cred.Mail);
             DataSet DS = new DataSet();

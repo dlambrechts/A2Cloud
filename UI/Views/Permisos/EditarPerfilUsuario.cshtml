@@ -33,13 +33,13 @@
                 <div class="col-4">
 
 
-                    <div class="input-group" style="max-width: 400px;">
+                    <div class="input-group" style="max-width: 500px;">
                         <span class="input-group-text">@Traducciones["Grupos"].Texto</span>
                         @Html.DropDownList("Grupos", new SelectList(ViewBag.Familias, "Id", "Descripcion"), new { @class = "form-select", @Id = "GruposSel" })
                     <button class="btn btn-outline-secondary" type="button" onclick="ConfirmAgragarGrupo()">@Traducciones["Agregar"].Texto</button>
                     </div>
                     <br />
-                    <div class="input-group" style="max-width: 400px;">
+                    <div class="input-group" style="max-width: 500px;">
                         <span class="input-group-text">@Traducciones["Permisos"].Texto</span>
                         @Html.DropDownList("Grupos", new SelectList(ViewBag.Permisos, "Id", "Descripcion"), new { @class = "form-select", @Id = "PermisoSel" })
                     <button class="btn btn-outline-secondary" type="button" onclick="ConfirmAgragarPermiso()">@Traducciones["Agregar"].Texto</button>
@@ -52,7 +52,7 @@
 
 
 
-                    <ul class="list-group" style="max-width: 400px;">
+                    <ul class="list-group" style="max-width: 500px;">
                         <li class="list-group-item list-group-item-dark" aria-current="true">@Traducciones["PermisosDelUsuario"].Texto</li>
                         @foreach (var item in Model.Permisos)
                         {

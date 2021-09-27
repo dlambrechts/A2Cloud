@@ -24,19 +24,28 @@ namespace MPP
         {
             List<BackupBE> lista = new List<BackupBE>();
 
-            FileInfo[] contenido = Ges.ListarBackups(CarpetaBackups);
-
-            foreach(FileInfo archivo in contenido)
-            
+            try
             {
-                BackupBE bak = new BackupBE();
-                bak.Nombre = archivo.Name;
-                bak.FechaCreacion = archivo.CreationTime;
 
-                lista.Add(bak);
+                FileInfo[] contenido = Ges.ListarBackups(CarpetaBackups);
+
+                foreach (FileInfo archivo in contenido)
+
+                {
+                    BackupBE bak = new BackupBE();
+                    bak.Nombre = archivo.Name;
+                    bak.FechaCreacion = archivo.CreationTime;
+
+                    lista.Add(bak);
+                }
+
+                lista = lista.OrderByDescending(l => l.FechaCreacion).ToList();
             }
+            catch (Exception ex)
 
-            lista = lista.OrderByDescending(l => l.FechaCreacion).ToList();
+            {
+                FileMananager.RegistrarError(ex.Message);
+            }
 
             return lista;
 
@@ -45,31 +54,52 @@ namespace MPP
         public void NuevoBackup(BackupBE back)
 
         {
+            try
+            {
+                DateTime Fecha = DateTime.Now;
+                string Path = CarpetaBackups + back.Nombre + ".bak";
 
-            DateTime Fecha = DateTime.Now;
-            string Path = CarpetaBackups+back.Nombre+ ".bak";
+                string Query = "BACKUP DATABASE " + DB + " TO DISK ='" + HttpContext.Current.Server.MapPath(Path) + "'";
 
-            string Query = "BACKUP DATABASE " + DB + " TO DISK ='" + HttpContext.Current.Server.MapPath(Path) + "'";
+                Acceso AccesoDB = new Acceso();
+                AccesoDB.QueryBackup(Query);
 
-            Acceso AccesoDB = new Acceso();
-            AccesoDB.QueryBackup(Query);
+            }
+
+            catch (Exception ex)
+            {
+                FileMananager.RegistrarError(ex.Message);
+
+            }
 
         }
 
         public void EliminarBackup(BackupBE back)
 
         {
+            try
+            {
+                Ges.EliminarBackup(CarpetaBackups, back.Nombre);
+            }
 
-            Ges.EliminarBackup(CarpetaBackups, back.Nombre);
-
+            catch (Exception ex){ FileMananager.RegistrarError(ex.Message); }
         }
 
         public void RestaurarDb(BackupBE back)
 
         {
-            string Query = " ALTER DATABASE " + DB + " SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE " + DB + " RESTORE DATABASE " + DB + "  FROM DISK ='" + HttpContext.Current.Server.MapPath(CarpetaBackups + back.Nombre) + "'";
-            Acceso AccesoDB = new Acceso();
-            AccesoDB.QueryBackup(Query);
+            try
+            {
+                string Query = " ALTER DATABASE " + DB + " SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE " + DB + " RESTORE DATABASE " + DB + "  FROM DISK ='" + HttpContext.Current.Server.MapPath(CarpetaBackups + back.Nombre) + "'";
+                Acceso AccesoDB = new Acceso();
+                AccesoDB.QueryBackup(Query);
+            }
+
+            catch (Exception ex)
+            {
+
+                FileMananager.RegistrarError(ex.Message);
+            }
         }
 
 

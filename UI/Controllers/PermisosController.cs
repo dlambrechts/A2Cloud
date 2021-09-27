@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using X.PagedList;
 using BLL;
 using BE;
+using GestorDeArchivo;
 
 
 namespace UI.Controllers
@@ -52,23 +53,32 @@ namespace UI.Controllers
                 ViewBag.EliminadoNoOk = TempData["EliminadoNoOk"] as string;
                 ViewBag.CreadoOk = TempData["CreadoOk"] as string;
 
-                List<PerfilFamiliaBE> lista = perBLL.ObtenerFamilias() as List<PerfilFamiliaBE>;
+                try {
+                    List<PerfilFamiliaBE> lista = perBLL.ObtenerFamilias() as List<PerfilFamiliaBE>;
 
-                if (Dato_Buscar != null) 
-                    {pagina = 1;}
-                else  { Dato_Buscar = Valor_Filtro;  }
+                    if (Dato_Buscar != null)
+                    { pagina = 1; }
+                    else { Dato_Buscar = Valor_Filtro; }
 
-                ViewBag.ValorFiltro = Dato_Buscar;
+                    ViewBag.ValorFiltro = Dato_Buscar;
 
-                if (!String.IsNullOrEmpty(Dato_Buscar))
+                    if (!String.IsNullOrEmpty(Dato_Buscar))
+                    {
+                        lista = lista.Where(u => u.Descripcion.ToUpper().Contains(Dato_Buscar.ToUpper())).ToList();
+                    }
+
+                    int RegistrosPorPagina = 10;
+                    int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
+
+                    return View(lista.ToPagedList(Indice, RegistrosPorPagina));
+
+                } catch (Exception ex) 
+                
                 {
-                    lista = lista.Where(u => u.Descripcion.ToUpper().Contains(Dato_Buscar.ToUpper())).ToList();
+                    FileMananager.RegistrarError(ex.Message);
+                    return RedirectToAction("Index", "Login");
+                    
                 }
-
-                int RegistrosPorPagina = 10;
-                int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
-
-                return View(lista.ToPagedList(Indice, RegistrosPorPagina));
             }
 
             else { return RedirectToAction("Index", "Login"); }

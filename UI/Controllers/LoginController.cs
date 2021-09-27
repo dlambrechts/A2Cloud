@@ -39,12 +39,13 @@ namespace UI.Controllers
 
                 return View();
               }
+
             else { return RedirectToAction("Index", "Home"); }
         }
 
         public ActionResult CambiarIdioma(int id)
         {
-
+            try { 
             IdiomaBE Idioma = new IdiomaBE();
             Idioma.Id = id;
             Idioma = bllIdioma.ObtenerUno(Idioma);
@@ -52,6 +53,13 @@ namespace UI.Controllers
 
             Session["IdiomaLogin"] = Idioma.Id.ToString();
             return Json("Success", JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                FileMananager.RegistrarError(ex.Message);
+                return RedirectToAction("Index", "Login");
+            }
         }
 
 
@@ -146,9 +154,11 @@ namespace UI.Controllers
                     return View("Index");
 
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return View();
+
+                FileMananager.RegistrarError(ex.Message);
+                return View();
                 }
 
          }
@@ -156,6 +166,8 @@ namespace UI.Controllers
             public List<string> CargarRoles() 
         
         {
+  
+
             bllPer.CargarPerfilUsuario(user);
 
             List<PerfilPatenteBE> Permisos = new List<PerfilPatenteBE>(bllPer.ObtenerPatentes());
@@ -171,6 +183,9 @@ namespace UI.Controllers
             }
 
             return PermisoDeSesion;
+            
+
+
          }
 
         bool isInRole(PerfilComponenteBE Comp, string Permiso, bool existe)
@@ -208,6 +223,7 @@ namespace UI.Controllers
         public ActionResult Logout()
         {
 
+            try { 
             // Registrar en Bitácora
 
             UsuarioBE user = new UsuarioBE();
@@ -216,6 +232,10 @@ namespace UI.Controllers
             BitacoraBE registro = new BitacoraBE(user);
             registro.Detalle = "El Usuario " + user.Credencial.Mail + " cerró sesión";
             bllBit.Registrar(registro);
+
+            }
+
+            catch(Exception ex) { FileMananager.RegistrarError(ex.Message); }
 
             Session.Abandon();
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Collections;
+using GestorDeArchivo;
 
 namespace DAL
 {
@@ -81,6 +82,7 @@ namespace DAL
             catch (Exception ex)
             {               
                 Transaccion.Rollback();
+                FileMananager.RegistrarError(ex.Message);
                 return -1;
             }
 
@@ -108,7 +110,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-         
+                FileMananager.RegistrarError(ex.Message);
             }
             finally
             {
