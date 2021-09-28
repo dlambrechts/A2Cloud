@@ -22,6 +22,7 @@
     <!-- As a heading -->
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
+
             <a class="navbar-brand mb-0 h1" href="@Url.Action("index", "Login")">A2Cloud</a>
             <div class="d-flex">
                 @Html.DropDownList("Idiomas", new SelectList((System.Collections.IEnumerable)Session["Idiomas"], "Id", "Descripcion"), new { @id = "selIdioma", @class = "form-control me-2", @onchange = "CambiarIdioma();" })
@@ -43,47 +44,38 @@
                             <div class="col-12 text-center">
                                 <div> <img class="mb-4" src="~/Content/img/Logo.png" alt="" width="191" height="109"></div>
                                 <h2 class="fw-normal" style="color:#148AB6">A2Cloud</h2>
-                                <h4>@if (Traducciones.ContainsKey("Bienvenido"))
-                                {@Traducciones["Bienvenido"].Texto;
-                            }</h4>
-                            </div>
-                            @if (ViewBag.Resultado != null)
-                            {
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong>No se pudo iniciar sesión: </strong>@ViewBag.Resultado
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            }
-                            <div>
-                                <label>@if (Traducciones.ContainsKey("Usuario"))
-                                {@Traducciones["Usuario"].Texto;
-                            }</label>
-                                @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control", required = "required", @autofocus = "" } })
-                            </div>
-                            <div class="col-12">
-                                <label>@if (Traducciones.ContainsKey("Contraseña"))
-                                {@Traducciones["Contraseña"].Texto;
-                            }</label>
-                                @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                            </div>
-                            <div class="col-12">
-
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-dark float-end">
-                                    @if (Traducciones.ContainsKey("Login"))
-                                    {@Traducciones["Login"].Texto;
-                                }
-                            </button>
+                                <h4>
+                                    @Traducciones["RecuperarContraseña"].Texto
+                                
+                            </h4>
                         </div>
+                        @if (ViewBag.Resultado != null && ViewBag.Resultado=="UsuarioInexistente")
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Usuario Inexistente</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+                        <div>
+                            <label>
+                                @Traducciones["Email"].Texto
+                        
+                        </label>
+                        @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control", required = "required", @autofocus = "" } })
                     </div>
-                }
 
-                    <hr class="mt-4">
-                    <div class="col-12">
-                        <a class="text-lg-end mb-0" href="@Url.Action("RecuperarContraseña", "Login")">@Traducciones["RecuperarContraseña"].Texto</a>
+                <div class="col-12">
 
-                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-dark float-end">  @Traducciones["EnviarMail"].Texto            
+                    </button>
+                </div>
+            </div>
+        }
+
+
+
                 </div>
             </div>
         </div>

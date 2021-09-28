@@ -15,7 +15,7 @@ namespace UI.Controllers
         PerfilBLL bllPer = new PerfilBLL();
         BitacoraBLL bllBit = new BitacoraBLL();
         IdiomaBLL bllIdioma = new IdiomaBLL();
-       
+
         UsuarioBE user;
         // GET: Login
         public ActionResult Index()
@@ -23,7 +23,7 @@ namespace UI.Controllers
             ViewBag.Resultado = TempData["Resultado"] as string;
 
             if (Session["IdUsuario"] == null)
-             {
+            {
                 IdiomaBE Idioma = new IdiomaBE();
                 if (Session["IdiomaLogin"] == null)
 
@@ -33,26 +33,27 @@ namespace UI.Controllers
 
                 else Idioma.Id = Convert.ToInt32(Session["IdiomaLogin"]);
 
-                
+
 
                 ConfigurarIdioma(Idioma);
 
                 return View();
-              }
+            }
 
             else { return RedirectToAction("Index", "Home"); }
         }
 
         public ActionResult CambiarIdioma(int id)
         {
-            try { 
-            IdiomaBE Idioma = new IdiomaBE();
-            Idioma.Id = id;
-            Idioma = bllIdioma.ObtenerUno(Idioma);
-            ConfigurarIdioma(Idioma);
+            try
+            {
+                IdiomaBE Idioma = new IdiomaBE();
+                Idioma.Id = id;
+                Idioma = bllIdioma.ObtenerUno(Idioma);
+                ConfigurarIdioma(Idioma);
 
-            Session["IdiomaLogin"] = Idioma.Id.ToString();
-            return Json("Success", JsonRequestBehavior.AllowGet);
+                Session["IdiomaLogin"] = Idioma.Id.ToString();
+                return Json("Success", JsonRequestBehavior.AllowGet);
 
             }
             catch (Exception ex)
@@ -67,106 +68,106 @@ namespace UI.Controllers
         [HttpPost]
         public ActionResult Index(CredencialBE cred)
         {
-  
-                try
+
+            try
+            {
+
+                ModelState.Remove("Contraseña");
+                ModelState.Remove("ConfirmarCont");
+
+                if (ModelState.IsValid)
+
                 {
-
-                    ModelState.Remove("Contraseña");
-                    ModelState.Remove("ConfirmarCont");
-
-                    if (ModelState.IsValid)
+                    if (bllUser.ValidarExistencia(cred))
 
                     {
-                        if (bllUser.ValidarExistencia(cred))
+                        user = new UsuarioBE();
+
+                        user = bllUser.ObtenerPorMail(cred);
+
+                        if (user.Activo)
 
                         {
-                            user = new UsuarioBE();
+                            string ingresada = cred.Contraseña;
+                            string ingresadaEnc = Encriptado.Hash(cred.Contraseña);
 
-                            user = bllUser.ObtenerPorMail(cred);
+                            string contraseñaReal = user.Credencial.Contraseña;
 
-                            if (user.Activo)
+                            if (user.Credencial.Contraseña.Equals(Encriptado.Hash(cred.Contraseña)))
 
                             {
-                                string ingresada = cred.Contraseña;
-                                string ingresadaEnc = Encriptado.Hash(cred.Contraseña);
+                                bllUser.ReiniciarContador(user); // Reiniciar Contador
 
-                                string contraseñaReal = user.Credencial.Contraseña;
+                                // Iniciar Sesión
+                                Session["IdUsuario"] = user.Id.ToString();
+                                Session["NombreCompleto"] = user.Nombre.ToString() + " " + user.Apellido.ToString();
+                                Session["Mail"] = user.Credencial.Mail.ToString();
+                                Session["Permisos"] = CargarRoles();
 
-                                if (user.Credencial.Contraseña.Equals(Encriptado.Hash(cred.Contraseña)))
+                                // Registrar en Bitácora
+                                BitacoraBE registro = new BitacoraBE(user);
+                                registro.Detalle = "El Usuario " + user.Credencial.Mail + " inició sesión en el sistema";
+                                bllBit.Registrar(registro);
+
+                                return RedirectToAction("Index", "Home");
+                            }
+
+                            else
+                            {
+                                // Contraseña incorrecta
+                                // Intentos Fallidos +1
+                                bllUser.IncrementarIntentosFallidos(user);
+                                if (user.IntentosFallidos == 3)
 
                                 {
-                                    bllUser.ReiniciarContador(user); // Reiniciar Contador
-
-                                    // Iniciar Sesión
-                                    Session["IdUsuario"] = user.Id.ToString();
-                                    Session["NombreCompleto"] = user.Nombre.ToString() + " " + user.Apellido.ToString();
-                                    Session["Mail"] = user.Credencial.Mail.ToString();
-                                    Session["Permisos"] = CargarRoles();
-                                    
-                                    // Registrar en Bitácora
-                                    BitacoraBE registro = new BitacoraBE(user);
-                                    registro.Detalle = "El Usuario " + user.Credencial.Mail + " inició sesión en el sistema";
-                                    bllBit.Registrar(registro);
-
-                                    return RedirectToAction("Index", "Home");
-                                }
-
-                                else
-                                {
-                                    // Contraseña incorrecta
-                                    // Intentos Fallidos +1
-                                    bllUser.IncrementarIntentosFallidos(user);
-                                    if (user.IntentosFallidos == 3)
-
-                                    {
-                                     bllUser.BloquarUsuario(user);
+                                    bllUser.BloquarUsuario(user);
                                     // Registrar en Bitácora
                                     BitacoraBE registro = new BitacoraBE(user);
                                     registro.Detalle = "El Usuario " + user.Credencial.Mail + " fue bloqueado por exceder los intentos fallidos de inicio de sesión";
                                     bllBit.Registrar(registro);
                                 }
 
-                                     TempData["Resultado"] = "Contraseña Incorrecta";
-                                     return RedirectToAction("Index");
+                                TempData["Resultado"] = "Contraseña Incorrecta";
+                                return RedirectToAction("Index");
                             }
 
-                            }
-                            else
-                            {
+                        }
+                        else
+                        {
                             // El usuario está bloqueado
                             TempData["Resultado"] = "Usuario Bloqueado, comuniquese con el Administrador";
                             return RedirectToAction("Index");
 
                         }
 
-                        }
+                    }
 
-                        else
+                    else
 
-                        {
+                    {
                         // El usuario no existe
                         TempData["Resultado"] = "Usuario Inexistente";
 
                         FileMananager.RegistrarError("Intento Fallido de inicio de sessión " + cred.Mail);
                         return RedirectToAction("Index");
                     }
-                    }
-                    return View("Index");
-
                 }
-                catch (Exception ex)
-                {
+                return View("Index");
+
+            }
+            catch (Exception ex)
+            {
 
                 FileMananager.RegistrarError(ex.Message);
                 return View();
-                }
+            }
 
-         }
+        }
 
-            public List<string> CargarRoles() 
-        
+        public List<string> CargarRoles()
+
         {
-  
+
 
             bllPer.CargarPerfilUsuario(user);
 
@@ -176,21 +177,21 @@ namespace UI.Controllers
 
             foreach (PerfilPatenteBE item in Permisos)
 
-            
+
             {
-                if (IsInRole(item.Permiso)) { PermisoDeSesion.Add(item.Permiso); } 
-            
+                if (IsInRole(item.Permiso)) { PermisoDeSesion.Add(item.Permiso); }
+
             }
 
             return PermisoDeSesion;
-            
 
 
-         }
+
+        }
 
         bool isInRole(PerfilComponenteBE Comp, string Permiso, bool existe)
         {
-            if (Comp.Permiso==Permiso)
+            if (Comp.Permiso == Permiso)
                 existe = true;
             else
             {
@@ -208,7 +209,7 @@ namespace UI.Controllers
             bool existe = false;
             foreach (var item in user.Permisos)
             {
-                if (item.Permiso==Permiso)
+                if (item.Permiso == Permiso)
                     return true;
                 else
                 {
@@ -223,19 +224,26 @@ namespace UI.Controllers
         public ActionResult Logout()
         {
 
-            try { 
-            // Registrar en Bitácora
+            try
+            {
+                // Registrar en Bitácora
 
-            UsuarioBE user = new UsuarioBE();
-            user.Id = Convert.ToInt32(Session["IdUsuario"]);            
-            user.Credencial.Mail = Convert.ToString(Session["Mail"]);
-            BitacoraBE registro = new BitacoraBE(user);
-            registro.Detalle = "El Usuario " + user.Credencial.Mail + " cerró sesión";
-            bllBit.Registrar(registro);
+                UsuarioBE user = new UsuarioBE();
+                user.Id = Convert.ToInt32(Session["IdUsuario"]);
+                user.Credencial.Mail = Convert.ToString(Session["Mail"]);
+                BitacoraBE registro = new BitacoraBE(user);
+                registro.Detalle = "El Usuario " + user.Credencial.Mail + " cerró sesión";
+                bllBit.Registrar(registro);
 
             }
 
-            catch(Exception ex) { FileMananager.RegistrarError(ex.Message); }
+            catch (Exception ex)
+
+            {
+
+                FileMananager.RegistrarError(ex.Message);
+
+            }
 
             Session.Abandon();
 
@@ -246,16 +254,48 @@ namespace UI.Controllers
         public void ConfigurarIdioma(IdiomaBE Idioma)  // Se carga el Idioma por defecto para el login
         {
 
-            
-            Session["Idiomas"] = bllIdioma.ObtenerIdiomas().Where(i=>i.PorcentajeTraducido==100);
+
+            Session["Idiomas"] = bllIdioma.ObtenerIdiomas().Where(i => i.PorcentajeTraducido == 100);
             Session["IdiomaSelected"] = Idioma;
             Session["Traducciones"] = bllIdioma.ObtenerTraduccionesDic(Idioma);
 
 
         }
 
+        public ActionResult RecuperarContraseña()
+        {
+            ViewBag.Resultado = TempData["Resultado"] as string;
 
 
 
+            return View();
+        }
+
+        // POST: Login/Index
+        [HttpPost]
+        public ActionResult RecuperarContraseña(CredencialBE cred)
+        {
+
+            if (bllUser.ValidarExistencia(cred))
+
+            {
+                user = new UsuarioBE();
+                user = bllUser.ObtenerPorMail(cred);
+                user.UsuarioModificacion = user;
+                bllUser.RecuperarContraseña(user);
+
+                return RedirectToAction("Index");
+
+
+            }
+
+            else 
+            
+            {
+                TempData["Resultado"] = "UsuarioInexistente";
+                return RedirectToAction("RecuperarContraseña");
+            }
+
+        }
     }
 }

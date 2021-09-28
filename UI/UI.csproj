@@ -303,6 +303,7 @@
     <Content Include="Views\Idioma\Traduccion.cshtml" />
     <Content Include="Views\Idioma\Delete.cshtml" />
     <Content Include="Views\Usuario\CambiarContraseña.cshtml" />
+    <Content Include="Views\Login\RecuperarContraseña.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
