@@ -58,7 +58,7 @@
                                 <label>@if (Traducciones.ContainsKey("Usuario"))
                                 {@Traducciones["Usuario"].Texto;
                             }</label>
-                                @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control", required = "required", @autofocus = "" } })
                             </div>
                             <div class="col-12">
                                 <label>@if (Traducciones.ContainsKey("Contraseña"))
@@ -67,10 +67,7 @@
                                 @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                             </div>
                             <div class="col-12">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="rememberMe">
 
-                                </div>
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-dark float-end">
@@ -84,7 +81,7 @@
 
                     <hr class="mt-4">
                     <div class="col-12">
-                        <p class="text-center mb-0"><a href="#">Signup</a></p>
+                        <p class="text-center mb-0"><a href="#">@Traducciones["RecuperarContraseña"].Texto</a></p>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BLL;
 using BE;
+using GestorDeArchivo;
 
 namespace UI.Controllers
 {
@@ -22,32 +23,28 @@ namespace UI.Controllers
             else { return RedirectToAction("Index", "Login"); }
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
 
         public void ConfigurarIdioma()  // Se carga el Idioma del Usuario
         {
-            IdiomaBLL bllIdioma = new IdiomaBLL();
-            Session["Idiomas"] = bllIdioma.ObtenerIdiomas().Where(I=>I.PorcentajeTraducido==100);
+            try
+            {
+                IdiomaBLL bllIdioma = new IdiomaBLL();
+                Session["Idiomas"] = bllIdioma.ObtenerIdiomas().Where(I => I.PorcentajeTraducido == 100);
 
-            UsuarioBE user = new UsuarioBE();
-            user.Id = Convert.ToInt32(Session["IdUsuario"]);
-            user = bllUusuario.ObtenerUno(user);
+                UsuarioBE user = new UsuarioBE();
+                user.Id = Convert.ToInt32(Session["IdUsuario"]);
+                user = bllUusuario.ObtenerUno(user);
 
-            Session["IdiomaSelected"] = user.Idioma;
-            Session["Traducciones"] = bllIdioma.ObtenerTraduccionesDic(user.Idioma);
+                Session["IdiomaSelected"] = user.Idioma;
+                Session["Traducciones"] = bllIdioma.ObtenerTraduccionesDic(user.Idioma);
+            }
 
+            catch (Exception ex) 
+            
+            {
+                FileMananager.RegistrarError(ex.Message);
+            }
 
         }
     }
