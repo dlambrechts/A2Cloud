@@ -78,7 +78,8 @@
                                     </button>
                                     <div class="collapse" id="activos-collapse">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                            <li><a href="#" class="link-dark rounded">@Traducciones["Activos"].Texto</a></li>
+                                           
+                                            <li>@Html.ActionLink(Traducciones["Activos"].Texto, "Index", "Activo", null, new { @class = "link-dark rounded", @id = "Activos" })</li>
                                             <li><a href="#" class="link-dark rounded">@Traducciones["ComponentesDeHardware"].Texto</a></li>
                                             <li><a href="#" class="link-dark rounded">@Traducciones["PerfilesDeHardware"].Texto</a></li>
                                             <li><a href="#" class="link-dark rounded">@Traducciones["AsignacionDeActivos"].Texto</a></li>

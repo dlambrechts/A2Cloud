@@ -89,7 +89,6 @@ namespace MPP
                         if ((Item["FechaCreacion"]) != DBNull.Value) { marca.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                         if ((Item["FechaModificacion"]) != DBNull.Value) marca.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
 
-
                         Lista.Add(marca);
                     }
 

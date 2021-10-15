@@ -132,6 +132,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ActivoController.cs" />
     <Compile Include="Controllers\BitacoraController.cs" />
     <Compile Include="Controllers\DbController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -302,6 +303,8 @@
     <Content Include="Views\Idioma\Delete.cshtml" />
     <Content Include="Views\Usuario\CambiarContraseña.cshtml" />
     <Content Include="Views\Login\RecuperarContraseña.cshtml" />
+    <Content Include="Views\Activo\Index.cshtml" />
+    <Content Include="Views\Activo\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

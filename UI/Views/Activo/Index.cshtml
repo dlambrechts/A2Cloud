@@ -1,0 +1,85 @@
+﻿@model IEnumerable<BE.ActivoBE>
+
+
+@{
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["Idiomas"].Texto;
+}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@Traducciones["Activos"].Texto</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                @using (Html.BeginForm())
+                {
+                    <div class="btn-group me-2">
+                        <span>
+                            @Traducciones["Buscar"].Texto @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
+
+                        </span>
+                    </div>
+                }
+                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Activo", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-fluid">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaCreacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaModificacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaCompra)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Modelo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CicloDeVida)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCreacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaModificacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCompra)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Modelo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CicloDeVida)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+</main>
