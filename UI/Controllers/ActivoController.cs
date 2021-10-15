@@ -11,6 +11,7 @@ namespace UI.Controllers
     public class ActivoController : Controller
     {
         ActivoBLL bllActivo = new ActivoBLL();
+        MarcaBLL bllMarca = new MarcaBLL();
 
 
         // GET: Activo
@@ -35,6 +36,8 @@ namespace UI.Controllers
         public ActionResult Create()
         {
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            ViewData["Marcas"] = bllMarca.Listar();
 
             return View();
         }

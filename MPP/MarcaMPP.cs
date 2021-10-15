@@ -96,7 +96,7 @@ namespace MPP
                 }
                 else
                 {
-                    return null;
+                    return Lista;
                 }
 
             }
