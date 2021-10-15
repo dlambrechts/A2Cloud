@@ -42,10 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivoMPP.cs" />
     <Compile Include="BackupMPP.cs" />
     <Compile Include="BitacoraMPP.cs" />
     <Compile Include="DigitoVerificadorMPP.cs" />
     <Compile Include="IdiomaMPP.cs" />
+    <Compile Include="MarcaMPP.cs" />
     <Compile Include="PerfilMPP.cs" />
     <Compile Include="UsuarioMPP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
