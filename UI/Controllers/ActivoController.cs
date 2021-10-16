@@ -81,10 +81,8 @@ namespace UI.Controllers
             if (Session["IdUsuario"] == null) return RedirectToAction("Index", "Login");
             ActivoBE Activo = new ActivoBE();
             Activo.Id = id;
-            Activo = bllActivo.ObtenerUno(us);
-
-
-            
+            Activo = bllActivo.ObtenerPorId(Activo);
+           
 
             return View(Activo);
         }

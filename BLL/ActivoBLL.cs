@@ -27,6 +27,12 @@ namespace BLL
 
         }
 
+        public ActivoBE ObtenerPorId (ActivoBE Activo) 
+        
+        {
+           return mppActivo.ObtenerPorId(Activo);
+        }
+
         public List<ActivoTipoBE> ListarTipos() 
         
         {
