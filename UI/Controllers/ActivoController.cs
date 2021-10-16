@@ -38,19 +38,36 @@ namespace UI.Controllers
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
             ViewData["Marcas"] = bllMarca.Listar();
+            ViewData["Tipos"] = bllActivo.ListarTipos();
+
+
 
             return View();
         }
 
         // POST: Activo/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(ActivoBE Activo)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    Activo.UsuarioCreacion = new UsuarioBE();
+                    Activo.UsuarioCreacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+                    Activo.Tipo = bllActivo.ObtenerTipoPorId(Activo.Tipo);
 
-                return RedirectToAction("Index");
+                    bllActivo.Insertar(Activo);
+
+                    return RedirectToAction("Index");
+                }
+
+                else
+                {
+                    ViewData["Marcas"] = bllMarca.Listar();
+                    ViewData["Tipos"] = bllActivo.ListarTipos();
+                    return View("Create", Activo); 
+                }
             }
             catch
             {
@@ -61,7 +78,15 @@ namespace UI.Controllers
         // GET: Activo/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            if (Session["IdUsuario"] == null) return RedirectToAction("Index", "Login");
+            ActivoBE Activo = new ActivoBE();
+            Activo.Id = id;
+            Activo = bllActivo.ObtenerUno(us);
+
+
+            
+
+            return View(Activo);
         }
 
         // POST: Activo/Edit/5

@@ -2,12 +2,12 @@
 
 @{
     Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
-    ViewBag.Title = Traducciones["NuevoUsuario"].Texto;
+    ViewBag.Title = Traducciones["NuevoDispositivo"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">@Traducciones["NuevoUsuario"].Texto</h1>
+        <h1 class="h2">@Traducciones["NuevoDispositivo"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
@@ -24,20 +24,21 @@
         </div>
     }
 
-    <div class="container-fluid">
+<div class="container-fluid pull-left" style="max-width:1024px">
 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row gy-2 gx-3 align-items-center">
 
 
-            <div class="form-group col-sm-4">
-                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+            <div class=" col-auto">
+
+                <div class=" input-group col-md-10">
+                    <span class="input-group-text">Nombre</span>
                     @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
                     @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
 
@@ -45,56 +46,130 @@
                 </div>
             </div>
 
-            <div class="form-group col-sm-4">
-                <label class="control-label col-md-4"> Marca</label>
-                <div class="col-md-10">
+            <div class="col-auto">
+
+                <div class="input-group col-md-10">
+                    <span class="input-group-text">Marca</span>
                     @Html.DropDownListFor(model => model.Marca.Id, new SelectList((System.Collections.IEnumerable)ViewData["Marcas"], "Id", "Descripcion"), new { @class = "form-control" })
 
                 </div>
             </div>
 
-            <div class="form-group col-sm-4">
-                @Html.LabelFor(model => model.Modelo, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+            <div class="col-auto ">
+                <div class="input-group col-md-10">
+                    <span class="input-group-text">Modelo</span>
                     @Html.EditorFor(model => model.Modelo, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Modelo, "", new { @class = "text-danger" })
                 </div>
             </div>
 
 
-            <div class="form-group col-sm-4">
-                @Html.LabelFor(model => model.FechaCompra, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.FechaCompra, new { htmlAttributes = new { @class = "form-control datepicker" } })
+            <div class="col-auto ">
+                <div class="input-group col-md-10">
+                    <span class="input-group-text">Fecha de Compra</span>
+                    @Html.EditorFor(model => model.FechaCompra, new { htmlAttributes = new { @class = "form-control datepicker", @autocomplete = "off" } })
                     @Html.ValidationMessageFor(model => model.FechaCompra, "", new { @class = "text-danger" })
                 </div>
             </div>
 
+            <div class="col-auto ">
+                <div class="input-group col-md-10">
+                    <span class="input-group-text">Tipo de Dispositivo</span>
+                    @Html.DropDownListFor(model => model.Tipo.Id, new SelectList((System.Collections.IEnumerable)ViewData["Tipos"], "Id", "Descripcion"), new { @class = "form-control" })
 
-            <div class="form-group col-sm-4">
-                @Html.LabelFor(model => model.CicloDeVida, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CicloDeVida, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+
+            <div class="col-auto ">
+                <div class="input-group col-md-10">
+                    <span class="input-group-text">Ciclo de Vida</span>
+                    @Html.EditorFor(model => model.CicloDeVida, new { htmlAttributes = new { @class = "form-control",@Value="1" } })
+                    <span class="input-group-text">Años</span>
                     @Html.ValidationMessageFor(model => model.CicloDeVida, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+        <br />
+        // Componentes de PC
+        <div class="row gy-2 gx-3 align-items-center" id="cmp-pc">
+            <div class="col-auto ">
+                <div class="input-group col-md-10">
+                    <span class="input-group-text">Modelo de Procesador</span>
+                    @Html.EditorFor(model => model.ModeloProcesador, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ModeloProcesador, "", new { @class = "text-danger" })
                 </div>
             </div>
+
+            <div class="col-auto ">
+                <div class="input-group col-md-10">
+                    <span class="input-group-text">Frecuencia del Procesador</span>
+                    @Html.EditorFor(model => model.FrecuenciaProcesador, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
+                    <span class="input-group-text">Ghz</span>
+                    @Html.ValidationMessageFor(model => model.FrecuenciaProcesador, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-auto ">
+                <div class="input-group col-md-10">
+                    <span class="input-group-text">Núcleos del Procesador</span>
+                    @Html.EditorFor(model => model.NucleosProcesador, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
+                    @Html.ValidationMessageFor(model => model.NucleosProcesador, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-auto ">
+                <div class="input-group col-md-10">
+                    <span class="input-group-text">Memoria RAM</span>
+                    @Html.EditorFor(model => model.MemoriaRam, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
+                    <span class="input-group-text">Gb</span>
+                    @Html.ValidationMessageFor(model => model.MemoriaRam, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-auto ">
+                <div class="input-group col-md-10">
+                    <span class="input-group-text">Tamaño Disco</span>
+                    @Html.EditorFor(model => model.TamañoDisco, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
+                    <span class="input-group-text">Gb</span>
+                    @Html.ValidationMessageFor(model => model.TamañoDisco, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-auto ">
+                <div class="input-group col-md-10">
+                    <span class="input-group-text">Memoria de Video</span>
+                    @Html.EditorFor(model => model.MemoriaVideo, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
+                    @Html.ValidationMessageFor(model => model.MemoriaVideo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-auto ">
+                @Html.LabelFor(model => model.AceleradoraGrafica, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.AceleradoraGrafica, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AceleradoraGrafica, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
         </div>
-        }
+        <br />
+        <div class="col-md-6">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="@Traducciones["Crear"].Texto" class="btn btn-primary" />
+            </div>
+        </div>
 
+    }
 
+</div>
 
 
 </main>
 <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 @section scripts {
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-    <script>
+    @*<script>
         $(document).ready(function () {
             $(".datepicker").datepicker({
                 dateFormat: "dd-mm-yy",
@@ -102,7 +177,7 @@
                 changeyear: true
             });
         });
-    </script>
+    </script>*@
     <script>
         $(function () {
             $('ul.pagination > li > a').addClass('page-link');
@@ -115,4 +190,18 @@
             document.getElementById('Activos').className = 'btn-activo';
         };
     </script>
+
+    <script>
+        $("#Tipo_Id").change(function () {
+
+            if ($('#Tipo_Id').val() == "1" || $('#Tipo_Id').val() == "2" ) {
+                $('#cmp-pc').show("slow");
+   
+            }
+            else {
+                $('#cmp-pc').hide("slow");
+            }
+        });
+    </script>
 }
+

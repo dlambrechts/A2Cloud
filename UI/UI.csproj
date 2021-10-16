@@ -305,6 +305,7 @@
     <Content Include="Views\Login\RecuperarContraseña.cshtml" />
     <Content Include="Views\Activo\Index.cshtml" />
     <Content Include="Views\Activo\Create.cshtml" />
+    <Content Include="Views\Activo\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,5 +15,8 @@ namespace BE
             get { return descripcion; }
             set { descripcion = value; }
         }
+        
+        private bool arquitecturaPc;
+        public bool ArquitecturaPc { get => arquitecturaPc; set => arquitecturaPc = value; }
     }
 }
