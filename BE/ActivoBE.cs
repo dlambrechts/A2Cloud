@@ -87,7 +87,7 @@ namespace BE
         
         private string modeloProcesador;
 
-        [Required(ErrorMessage = "El nombre es obligatorio")]
+        [Required(ErrorMessage = "El modelo es obligatorio")]
         public string ModeloProcesador { get => modeloProcesador; set => modeloProcesador = value; }
 
         private decimal frecuenciaProcesador;

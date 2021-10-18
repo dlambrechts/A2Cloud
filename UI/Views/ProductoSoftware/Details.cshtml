@@ -1,13 +1,13 @@
-﻿@model BE.MarcaBE
+﻿@model BE.ProductoSoftwareBE
 
 @{
     Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
-    ViewBag.Title = Traducciones["Marca"].Texto;
+    ViewBag.Title = Traducciones["ProductoSoftware"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">@Traducciones["Marca"].Texto</h1>
+        <h1 class="h2">@Traducciones["ProductoSoftware"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
         </div>
@@ -15,12 +15,27 @@
 
     <div>
         <dl class="dl-horizontal">
+
             <dt>
                 Id
             </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt>
+                @Traducciones["Descripcion"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+            <dt>
+                @Traducciones["Marca"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Marca.Descripcion)
             </dd>
             <dt>
                 @Traducciones["FechaCreacion"].Texto
@@ -38,22 +53,17 @@
                 @Html.DisplayFor(model => model.FechaModificacion)
             </dd>
 
-            <dt>
-                @Traducciones["Descripcion"].Texto
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Descripcion)
-            </dd>
 
         </dl>
     </div>
     </main>
 
-<script>
 
-    window.onload = function () {
-        document.getElementById('activos-collapse').className = 'show';
-        document.getElementById('Marcas').className = 'btn-activo';
-    };
-</script>
+    <script>
+
+        window.onload = function () {
+            document.getElementById('licencias-collapse').className = 'show';
+            document.getElementById('ProdSoft').className = 'btn-activo';
+        };
+    </script>

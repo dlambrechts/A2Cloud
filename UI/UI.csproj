@@ -315,6 +315,8 @@
     <Content Include="Views\Marca\Details.cshtml" />
     <Content Include="Views\ProductoSoftware\Index.cshtml" />
     <Content Include="Views\ProductoSoftware\Create.cshtml" />
+    <Content Include="Views\ProductoSoftware\Edit.cshtml" />
+    <Content Include="Views\ProductoSoftware\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

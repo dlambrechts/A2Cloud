@@ -12,6 +12,7 @@ namespace UI.Controllers
     public class ProductoSoftwareController : Controller
     {
         ProductoSoftwareBLL bllSoft = new ProductoSoftwareBLL();
+        MarcaBLL bllMarca = new MarcaBLL();
         // GET: ProductoSoftware
         public ActionResult Index(int? pagina, string Dato_Buscar, string Valor_Filtro)
         {
@@ -45,45 +46,98 @@ namespace UI.Controllers
         }
             // GET: ProductoSoftware/Details/5
             public ActionResult Details(int id)
+
         {
-            return View();
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            ProductoSoftwareBE soft = new ProductoSoftwareBE();
+            soft.Id = id;
+            soft=bllSoft.ObtenerUno(soft);
+
+            return View(soft);
         }
 
         // GET: ProductoSoftware/Create
         public ActionResult Create()
         {
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            ViewData["Marcas"] = bllMarca.Listar();
             return View();
         }
 
         // POST: ProductoSoftware/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(ProductoSoftwareBE Soft)
         {
             try
             {
-                // TODO: Add insert logic here
+                ModelState.Remove("Marca.Descripcion");
+                if (ModelState.IsValid)
+                {
+                    Soft.UsuarioCreacion = new UsuarioBE();
+                    Soft.UsuarioCreacion.Id = Convert.ToInt32(Session["IdUsuario"]);
 
-                return RedirectToAction("Index");
+
+                    bllSoft.Insertar(Soft);
+                    TempData["CreadoOk"] = "Creado";
+
+                    return RedirectToAction("Index");
+                }
+
+                else
+                {
+                    ViewData["Marcas"] = bllMarca.Listar();
+
+                    return View("Create", Soft);
+                }
             }
             catch
             {
                 return View();
             }
         }
+
 
         // GET: ProductoSoftware/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            if (Session["IdUsuario"] == null) return RedirectToAction("Index", "Login");
+            ProductoSoftwareBE Soft = new ProductoSoftwareBE();
+            Soft.Id = id;
+            Soft = bllSoft.ObtenerUno(Soft);
+
+            ViewData["Marcas"] = bllMarca.Listar();
+
+            return View(Soft);
         }
 
         // POST: ProductoSoftware/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(ProductoSoftwareBE Soft)
         {
             try
             {
-                // TODO: Add update logic here
+      
+              
+                ModelState.Remove("Marca.Descripcion");
+
+                if (ModelState.IsValid)
+                {
+                    Soft.UsuarioModificacion = new UsuarioBE();
+                    Soft.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+                    TempData["EditadoOk"] = "Editado";
+                    bllSoft.Editar(Soft);
+                }
+
+                else
+
+                {
+                    ViewData["Marcas"] = bllMarca.Listar();
+                    return View("Edit", Soft);
+
+                }
 
                 return RedirectToAction("Index");
             }
@@ -91,27 +145,28 @@ namespace UI.Controllers
             {
                 return View();
             }
-        }
-
-        // GET: ProductoSoftware/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
         }
 
         // POST: ProductoSoftware/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public JsonResult Delete(int id)
         {
             try
-            {
-                // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
             {
-                return View();
+                ProductoSoftwareBE Soft = new ProductoSoftwareBE();
+                Soft.Id = id;
+                Soft.UsuarioModificacion = new UsuarioBE();
+                Soft.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+                bllSoft.Eliminar(Soft);
+                return Json(new { success = true });
+
+            }
+
+            catch
+
+            {
+                return Json(new { success = false });
             }
         }
     }
