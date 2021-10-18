@@ -56,6 +56,7 @@
     <Compile Include="PerfilFamiliaBE.cs" />
     <Compile Include="PerfilPatenteBE.cs" />
     <Compile Include="ActivoTipoBE.cs" />
+    <Compile Include="ProductoSoftwareBE.cs" />
     <Compile Include="UsuarioBE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

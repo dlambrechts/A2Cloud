@@ -50,6 +50,7 @@
     <Compile Include="IdiomaBLL.cs" />
     <Compile Include="MarcaBLL.cs" />
     <Compile Include="PerfilBLL.cs" />
+    <Compile Include="ProductoSoftwareBLL.cs" />
     <Compile Include="UsuarioBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

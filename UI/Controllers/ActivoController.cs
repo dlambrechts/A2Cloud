@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BLL;
 using BE;
+using X.PagedList;
 
 namespace UI.Controllers
 {
@@ -15,15 +16,37 @@ namespace UI.Controllers
 
 
         // GET: Activo
-        public ActionResult Index() 
+        public ActionResult Index(int? pagina, string Dato_Buscar, string Valor_Filtro) 
         {
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            ViewBag.EliminadoOk = TempData["EliminadoOk"] as string;
+            ViewBag.EditadoOk = TempData["EditadoOk"] as string;
+            ViewBag.CreadoOk = TempData["CreadoOk"] as string;
 
             List<ActivoBE> Lista = new List<ActivoBE>();
 
             Lista = bllActivo.Listar();
 
-            return View(Lista);
+            if (Dato_Buscar != null)
+            { pagina = 1; }
+            else { Dato_Buscar = Valor_Filtro; }
+
+            ViewBag.ValorFiltro = Dato_Buscar;
+
+            if (!String.IsNullOrEmpty(Dato_Buscar))
+            {
+                Lista = Lista.Where(u => u.Nombre.ToUpper().Contains(Dato_Buscar.ToUpper())
+                     || u.Marca.Descripcion.ToUpper().Contains(Dato_Buscar.ToUpper())
+                     || u.Modelo.ToUpper().Contains(Dato_Buscar.ToUpper())
+                     || u.Marca.Descripcion.ToUpper().Contains(Dato_Buscar.ToUpper())
+                    ).ToList();
+            }
+
+            int RegistrosPorPagina = 10;
+            int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
+
+            return View(Lista.ToPagedList(Indice, RegistrosPorPagina));
         }
 
         // GET: Activo/Details/5
@@ -56,13 +79,18 @@ namespace UI.Controllers
         {
             try
             {
+                Activo.Tipo = bllActivo.ObtenerTipoPorId(Activo.Tipo);
+                if (Activo.Tipo.ArquitecturaPc == false) { ModelState.Remove("ModeloProcesador"); }
+
+                ModelState.Remove("Marca.Descripcion");
                 if (ModelState.IsValid)
                 {
                     Activo.UsuarioCreacion = new UsuarioBE();
                     Activo.UsuarioCreacion.Id = Convert.ToInt32(Session["IdUsuario"]);
-                    Activo.Tipo = bllActivo.ObtenerTipoPorId(Activo.Tipo);
+                    
 
                     bllActivo.Insertar(Activo);
+                    TempData["CreadoOk"] = "Creado";
 
                     return RedirectToAction("Index");
                 }
@@ -99,12 +127,17 @@ namespace UI.Controllers
         {
             try
             {
+                Activo.Tipo = bllActivo.ObtenerTipoPorId(Activo.Tipo);
+                if (Activo.Tipo.ArquitecturaPc == false) { ModelState.Remove("ModeloProcesador"); }
+
+                ModelState.Remove("Marca.Descripcion");
 
                 if (ModelState.IsValid)
                 {
                     Activo.UsuarioModificacion = new UsuarioBE();
                     Activo.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
 
+                    TempData["EditadoOk"] = "Editado";
                     bllActivo.Editar(Activo);
                 }
 

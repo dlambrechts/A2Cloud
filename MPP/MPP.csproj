@@ -49,6 +49,7 @@
     <Compile Include="IdiomaMPP.cs" />
     <Compile Include="MarcaMPP.cs" />
     <Compile Include="PerfilMPP.cs" />
+    <Compile Include="ProductoSoftwareMPP.cs" />
     <Compile Include="UsuarioMPP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

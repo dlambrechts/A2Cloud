@@ -1,17 +1,16 @@
-﻿
-@model X.PagedList.PagedList<BE.ActivoBE>
+﻿@model X.PagedList.PagedList<BE.MarcaBE>
 
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Common
 
 @{
     Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
-    ViewBag.Title = Traducciones["Dispositivos"].Texto;
+    ViewBag.Title = Traducciones["Marcas"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">@Traducciones["Dispositivos"].Texto</h1>
+        <h1 class="h2">@Traducciones["Marcas"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 @using (Html.BeginForm())
@@ -23,7 +22,7 @@
                         </span>
                     </div>
                 }
-                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Activo", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Marca", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
                 <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
             </div>
 
@@ -34,79 +33,59 @@
         @if (ViewBag.CreadoOk != null)
         {
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>@Traducciones["Correcto"].Texto:</strong> @Traducciones["DispositivoCreado"].Texto
+                <strong>@Traducciones["Correcto"].Texto:</strong> @Traducciones["MarcaCreada"].Texto
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
         @if (ViewBag.EditadoOk != null)
         {
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Correcto:</strong> @Traducciones["DispositivoEditado"].Texto
+                <strong>Correcto:</strong> @Traducciones["MarcaEditada"].Texto
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
 
-
-
-        <table class="table table-hover">
+        <table class=" table table-hover">
             <thead>
                 <tr>
                     <th>
                         Id
                     </th>
                     <th>
-                        @Traducciones["Tipo"].Texto
+                        @Traducciones["Descripcion"].Texto
                     </th>
                     <th>
-                        @Traducciones["Marca"].Texto
+                        @Traducciones["FechaCreacion"].Texto
                     </th>
                     <th>
-                        @Traducciones["Modelo"].Texto
-                    </th>
-                    <th>
-                        @Traducciones["Nombre"].Texto
-                    </th>
-                    <th>
-                        @Traducciones["FechaCompra"].Texto
-                    </th>
-
-                    <th>
-                        @Traducciones["CicloDeVida"].Texto
+                        @Traducciones["FechaModificacion"].Texto
                     </th>
                     <th></th>
                 </tr>
             </thead>
+
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Tipo.Descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Marca.Descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Modelo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaCompra)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CicloDeVida)
-                    </td>
-                    <td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaModificacion)
+            </td>
 
-                        <a href="@Url.Action("Details", "Activo", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
-                        <a href="@Url.Action("Edit", "Activo", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
-                        <a href="#" onclick="Confirmar('@item.Id','@item.Nombre')"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
+            <td>
+                <a href="@Url.Action("Details", "Marca", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
+                <a href="@Url.Action("Edit", "Marca", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
+                <a href="#" onclick="Confirmar('@item.Id','@item.Descripcion')"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
             }
 
         </table>
@@ -135,7 +114,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @Traducciones["ConfirmarEliminarDispositivo"].Texto <b id="nombre_act"></b> ?
+                @Traducciones["ConfirmarEliminarMarca"].Texto <b id="nombre_marca"></b> ?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> @Traducciones["Cancelar"].Texto</button>
@@ -145,34 +124,35 @@
     </div>
 </div>
 
+
 @*Para eliminar campo oculto para el Id*@
 
-<input type="hidden" id="IdActivo" />
+<input type="hidden" id="IdMarca" />
 
 <script>
 
     window.onload = function () {
         document.getElementById('activos-collapse').className = 'show';
-        document.getElementById('Activos').className = 'btn-activo';
+        document.getElementById('Marcas').className = 'btn-activo';
     };
 </script>
 
 <script>
     var Confirmar = function (id, nombre) {
 
-        $("#IdActivo").val(id);
-        $("#nombre_act").text(nombre);
+        $("#IdMarca").val(id);
+        $("#nombre_marca").text(nombre);
         $("#Confirmar").modal('show');
     }
 
     var Eliminar = function () {
 
-        var Id = $('#IdActivo').val();
+        var Id = $('#IdMarca').val();
 
         $.ajax({
 
             type: "POST",
-            url: "/Activo/Delete",
+            url: "/Marca/Delete",
             data: { id: Id },
             success: function (response) {
                 if (response.success) {

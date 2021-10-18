@@ -84,7 +84,10 @@ namespace BE
         [Range(0, 9999, ErrorMessage = "Ingrese un valor del 0 al 9999")]
         public int TamañoDisco { get => tamañoDisco; set => tamañoDisco = value; }
 
+        
         private string modeloProcesador;
+
+        [Required(ErrorMessage = "El nombre es obligatorio")]
         public string ModeloProcesador { get => modeloProcesador; set => modeloProcesador = value; }
 
         private decimal frecuenciaProcesador;
