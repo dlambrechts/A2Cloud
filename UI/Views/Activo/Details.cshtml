@@ -1,0 +1,138 @@
+﻿@model BE.ActivoBE
+
+@{
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["Dispositivo"].Texto;
+}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@Traducciones["Dispositivo"].Texto</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+        </div>
+    </div>
+
+    <div>
+        <dl class="dl-horizontal">
+
+            <dt>
+                Id
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+
+            <dt>
+                @Traducciones["Nombre"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+            <dt>
+                @Traducciones["FechaCreacion"].Texto
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FechaCreacion)
+            </dd>
+
+            <dt>
+                @Traducciones["FechaModificacion"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaModificacion)
+            </dd>
+
+            <dt>
+                @Traducciones["FechaCompra"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaCompra)
+            </dd>
+
+            <dt>
+                @Traducciones["Modelo"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Modelo)
+            </dd>
+
+            <dt>
+                @Traducciones["CicloDeVida"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CicloDeVida)
+            </dd>
+           
+            @if (Model.Tipo.ArquitecturaPc == true)
+            {
+        <dt>
+            @Traducciones["MemoriaRam"].Texto
+        </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MemoriaRam) gb
+            </dd>
+
+            <dt>
+                @Traducciones["TamañoDisco"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TamañoDisco) Gb
+            </dd>
+
+            <dt>
+                @Traducciones["ModeloProcesador"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ModeloProcesador)
+            </dd>
+
+            <dt>
+                @Traducciones["FrecuenciaProcesador"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FrecuenciaProcesador) Ghz
+            </dd>
+
+            <dt>
+                @Traducciones["NucleosProcesador"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NucleosProcesador)
+            </dd>
+
+            <dt>
+                @Traducciones["MemoriaVideo"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MemoriaVideo) GB
+            </dd>
+
+            <dt>
+                @Traducciones["AceleradoraGrafica"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AceleradoraGrafica)
+            </dd>
+            }
+        </dl>
+    </div>
+</main>
+<script>
+
+    window.onload = function () {
+        document.getElementById('activos-collapse').className = 'show';
+        document.getElementById('Activos').className = 'btn-activo';
+    };
+</script>

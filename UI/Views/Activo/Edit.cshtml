@@ -1,17 +1,14 @@
 ﻿@model BE.ActivoBE
 
-@{
-    ViewBag.Title = "Edit";
-}
 
 @{
     Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
-    ViewBag.Title = Traducciones["EditarUsuario"].Texto;
+    ViewBag.Title = Traducciones["EditarDispositivo"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">@Traducciones["NuevoDispositivo"].Texto</h1>
+        <h1 class="h2">@Traducciones["EditarDispositivo"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
@@ -24,103 +21,131 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-horizontal">
+            <div class="row gy-2 gx-3 align-items-center">
 
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.Id)
 
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+                <div class=" col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text">Id</span>
+                        @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
                         @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class=" col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["Nombre"].Texto</span>
                         @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FechaCompra, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.FechaCompra, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.FechaCompra, "", new { @class = "text-danger" })
+                <div class="col-auto">
+                    <div class="input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["Marca"].Texto</span>
+                        @Html.DropDownListFor(model => model.Marca.Id, new SelectList((System.Collections.IEnumerable)ViewData["Marcas"], "Id", "Descripcion", @Html.DisplayFor(model => model.Marca.Id)), new { @class = "form-control" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Modelo, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="col-auto">
+                    <div class="input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["Modelo"].Texto</span>
                         @Html.EditorFor(model => model.Modelo, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Modelo, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CicloDeVida, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="col-auto">
+                    <div class="input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["Tipo"].Texto</span>
+                        @Html.HiddenFor(model => model.Tipo.ArquitecturaPc)
+                        @Html.DropDownListFor(model => model.Tipo.Id, new SelectList((System.Collections.IEnumerable)ViewData["Tipos"], "Id", "Descripcion", @Html.DisplayFor(model => model.Tipo.Id)), new { @class = "form-control", disabled="disabled" })
+
+                    </div>
+                </div>
+
+                <div class=" col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["FechaCompra"].Texto</span>
+                        @Html.EditorFor(model => model.FechaCompra, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FechaCompra, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class=" col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["CicloDeVida"].Texto</span>
+
                         @Html.EditorFor(model => model.CicloDeVida, new { htmlAttributes = new { @class = "form-control" } })
+                    <span class="input-group-text">@Traducciones["Años"].Texto</span>
                         @Html.ValidationMessageFor(model => model.CicloDeVida, "", new { @class = "text-danger" })
+
                     </div>
                 </div>
+            </div><br />                
+           // Componentes de PC
+           if(Model.Tipo.ArquitecturaPc==true)
+            { 
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.MemoriaRam, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.MemoriaRam, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.MemoriaRam, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TamañoDisco, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.TamañoDisco, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.TamañoDisco, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ModeloProcesador, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+       <div class="row gy-2 gx-3 align-items-center" id="cmp-pc">
+        
+                <div class=" col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["ModeloProcesador"].Texto</span>
                         @Html.EditorFor(model => model.ModeloProcesador, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.ModeloProcesador, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FrecuenciaProcesador, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class=" col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["FrecuenciaProcesador"].Texto</span>
                         @Html.EditorFor(model => model.FrecuenciaProcesador, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-text">Ghz</span>
                         @Html.ValidationMessageFor(model => model.FrecuenciaProcesador, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NucleosProcesador, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class=" col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["NucleosProcesador"].Texto</span>
                         @Html.EditorFor(model => model.NucleosProcesador, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.NucleosProcesador, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.MemoriaVideo, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class=" col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["MemoriaRam"].Texto</span>
+                        @Html.EditorFor(model => model.MemoriaRam, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-text">Gb</span>
+                        @Html.ValidationMessageFor(model => model.MemoriaRam, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class=" col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["TamañoDisco"].Texto</span>
+                        @Html.EditorFor(model => model.TamañoDisco, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-text">Gb</span>
+                        @Html.ValidationMessageFor(model => model.TamañoDisco, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class=" col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["MemoriaVideo"].Texto</span>
                         @Html.EditorFor(model => model.MemoriaVideo, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-text">Gb</span>
                         @Html.ValidationMessageFor(model => model.MemoriaVideo, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.AceleradoraGrafica, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2">@Traducciones["AceleradoraGrafica"].Texto </label>
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.AceleradoraGrafica)
@@ -129,10 +154,13 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
-                    </div>
+
+        </div>
+        }
+            <br />
+            <div class="form-group col-sm-4">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="@Traducciones["Guardar"].Texto" class="btn btn-primary" />
                 </div>
             </div>
         }

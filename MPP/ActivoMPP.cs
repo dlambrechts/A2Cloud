@@ -32,7 +32,6 @@ namespace MPP
                 Parametros.Add("@FechaCreacion", Activo.FechaCreacion);
                 Parametros.Add("@Tipo", Activo.Tipo.Id);
 
-
                 return AccesoDB.Escribir(Consulta, Parametros);
 
             }
@@ -89,6 +88,7 @@ namespace MPP
 
             MarcaMPP mppMarca = new MarcaMPP();
 
+
             if (DS.Tables[0].Rows.Count > 0)
             {
                 foreach (DataRow Item in DS.Tables[0].Rows)
@@ -96,20 +96,23 @@ namespace MPP
                     Activo.Nombre = Item["Nombre"].ToString().Trim();
                     Activo.FechaCompra = Convert.ToDateTime(Item["FechaCompra"]);
                     Activo.Marca.Id = Convert.ToInt32(Item["Marca"]);
-                    Activo.Marca=mppMarca.ObtenerUno(Activo.Marca);
+                    Activo.Marca = mppMarca.ObtenerUno(Activo.Marca);
                     Activo.Modelo = Item["Modelo"].ToString().Trim();
                     Activo.CicloDeVida = Convert.ToInt32(Item["CicloDeVida"]);
+                    Activo.FechaCompra = Convert.ToDateTime(Item["FechaCompra"]);
+                    Activo.Tipo.Id = Convert.ToInt32(Item["Tipo"]);
+                    Activo.Tipo = ObtenerTipoPorId(Activo.Tipo);
 
-                    Activo.AceleradoraGrafica = Convert.ToBoolean(Item["AceleradoraGrafica"]);
-                    Activo.MemoriaRam = Convert.ToInt32(Item["MemoriaRam"]);
-                    Activo.TamañoDisco = Convert.ToInt32(Item["TamañoDisco"]);
+                    if ((Item["AceleradoraGrafica"]) != DBNull.Value) { Activo.AceleradoraGrafica = Convert.ToBoolean(Item["AceleradoraGrafica"]); }
+                    if ((Item["MemoriaRam"]) != DBNull.Value) { Activo.MemoriaRam = Convert.ToInt32(Item["MemoriaRam"]); }
+                    if ((Item["TamañoDisco"]) != DBNull.Value) { Activo.TamañoDisco = Convert.ToInt32(Item["TamañoDisco"]); }
                     Activo.ModeloProcesador = Item["ModeloProcesador"].ToString().Trim();
-                    Activo.NucleosProcesador = Convert.ToInt32(Item["NucleosProcesador"]);
-                    Activo.FrecuenciaProcesador = Convert.ToDecimal(Item["FrecuenciaProcesador"]);
-                    Activo.MemoriaVideo = Convert.ToInt32(Item["MemoriaVideo"]);
+                    if ((Item["NucleosProcesador"]) != DBNull.Value) { Activo.NucleosProcesador = Convert.ToInt32(Item["NucleosProcesador"]); }
+                    if ((Item["FrecuenciaProcesador"]) != DBNull.Value) { Activo.FrecuenciaProcesador = Convert.ToDecimal(Item["FrecuenciaProcesador"]); }
+                    if ((Item["MemoriaVideo"]) != DBNull.Value) { Activo.MemoriaVideo = Convert.ToInt32(Item["MemoriaVideo"]); }
 
                     if ((Item["FechaCreacion"]) != DBNull.Value) { Activo.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
-                    if ((Item["FechaModificacion"]) != DBNull.Value) Activo.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
+                    if ((Item["FechaModificacion"]) != DBNull.Value) { Activo.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]); }
 
                 }
             }
@@ -148,16 +151,6 @@ namespace MPP
                         Activo.Tipo.Id = Convert.ToInt32(Item["Tipo"]);
                         Activo.Tipo = ObtenerTipoPorId(Activo.Tipo);
 
-                        //if (Activo.Tipo.ArquitecturaPc == true) { 
-                        //Activo.ModeloProcesador = Item["ModeloProcesador"].ToString().Trim();
-                        //Activo.FrecuenciaProcesador = (float)Convert.ToDouble(Item["FrecuenciaProcesador"]);
-                        //Activo.NucleosProcesador = Convert.ToInt32(Item["NucleosProcesador"]);
-                        //Activo.MemoriaRam = (float)Convert.ToDouble(Item["MemoriaRam"]);
-                        //Activo.MemoriaVideo = (float)Convert.ToDouble(Item["MemoriaVideo"]);
-                        //Activo.TamañoDisco = Convert.ToInt32(Item["TamañoDisco"]);
-
-                        //}
-
                         if ((Item["FechaCreacion"]) != DBNull.Value) { Activo.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                         if ((Item["FechaModificacion"]) != DBNull.Value) Activo.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
 
@@ -177,6 +170,95 @@ namespace MPP
             {
                 FileMananager.RegistrarError(ex.Message);
                 return null;
+            }
+        }
+
+        public int Editar(ActivoBE Activo)
+
+        {
+            try
+            {
+                string Consulta = "ActivoEditar";
+                Hashtable Parametros = new Hashtable();
+
+                Parametros.Add("@Id", Activo.Id);
+                Parametros.Add("@Nombre", Activo.Nombre);
+                Parametros.Add("@FechaCompra", Activo.FechaCompra);
+                Parametros.Add("@Marca", Activo.Marca.Id);
+                Parametros.Add("@Modelo", Activo.Modelo);
+                Parametros.Add("@CicloDeVida", Activo.CicloDeVida);
+                Parametros.Add("@UsuarioModificacion", Activo.UsuarioModificacion.Id);
+                Parametros.Add("@FechaModificacion", Activo.FechaModificacion);
+
+
+                return AccesoDB.Escribir(Consulta, Parametros);
+
+            }
+            catch (Exception ex)
+
+            {
+                FileMananager.RegistrarError(ex.Message);
+                return -1;
+            }
+        }
+
+        public int EditarPc(ActivoBE Activo)
+
+        {
+            try
+            {
+                string Consulta = "ActivoPcEditar";
+                Hashtable Parametros = new Hashtable();
+
+                Parametros.Add("@Id", Activo.Id);
+                Parametros.Add("@Nombre", Activo.Nombre);
+                Parametros.Add("@FechaCompra", Activo.FechaCompra);
+                Parametros.Add("@Marca", Activo.Marca.Id);
+                Parametros.Add("@Modelo", Activo.Modelo);
+                Parametros.Add("@CicloDeVida", Activo.CicloDeVida);
+                Parametros.Add("@UsuarioModificacion", Activo.UsuarioModificacion.Id);
+                Parametros.Add("@FechaModificacion", Activo.FechaModificacion);
+
+                Parametros.Add("@ModeloProcesador", Activo.ModeloProcesador);
+                Parametros.Add("@FrecuenciaProcesador", Activo.FrecuenciaProcesador);
+                Parametros.Add("@NucleosProcesador", Activo.NucleosProcesador);
+                Parametros.Add("@MemoriaRam", Activo.MemoriaRam);
+                Parametros.Add("@MemoriaVideo", Activo.MemoriaVideo);
+                Parametros.Add("@AceleradoraGrafica", Activo.AceleradoraGrafica);
+                Parametros.Add("@TamañoDisco", Activo.TamañoDisco);
+
+
+                return AccesoDB.Escribir(Consulta, Parametros);
+
+            }
+            catch (Exception ex)
+
+            {
+                FileMananager.RegistrarError(ex.Message);
+                return -1;
+            }
+        }
+
+        public int Eliminar(ActivoBE Activo)
+
+        {
+            try
+            {
+                string Consulta = "ActivoEliminar";
+                Hashtable Parametros = new Hashtable();
+
+                Parametros.Add("@Id", Activo.Id);
+                Parametros.Add("@UsuarioModificacion", Activo.UsuarioModificacion.Id);
+                Parametros.Add("@FechaModificacion", Activo.FechaModificacion);
+
+                return AccesoDB.Escribir(Consulta, Parametros);
+
+            }
+            catch (Exception ex)
+
+            {
+                FileMananager.RegistrarError(ex.Message);
+                return -1;
             }
         }
 

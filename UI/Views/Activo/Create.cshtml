@@ -32,7 +32,7 @@
             <div class=" col-auto">
 
                 <div class=" input-group col-md-10">
-                    <span class="input-group-text">Nombre</span>
+                    <span class="input-group-text"> @Traducciones["Nombre"].Texto</span>
                     @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
                     @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
 
@@ -41,17 +41,15 @@
             </div>
 
             <div class="col-auto">
-
                 <div class="input-group col-md-10">
-                    <span class="input-group-text">Marca</span>
+                    <span class="input-group-text"> @Traducciones["Marca"].Texto</span>
                     @Html.DropDownListFor(model => model.Marca.Id, new SelectList((System.Collections.IEnumerable)ViewData["Marcas"], "Id", "Descripcion"), new { @class = "form-control" })
-
                 </div>
             </div>
 
             <div class="col-auto ">
                 <div class="input-group col-md-10">
-                    <span class="input-group-text">Modelo</span>
+                    <span class="input-group-text"> @Traducciones["Modelo"].Texto</span>
                     @Html.EditorFor(model => model.Modelo, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Modelo, "", new { @class = "text-danger" })
                 </div>
@@ -60,7 +58,7 @@
 
             <div class="col-auto ">
                 <div class="input-group col-md-10">
-                    <span class="input-group-text">Fecha de Compra</span>
+                    <span class="input-group-text"> @Traducciones["FechaCompra"].Texto</span>
                     @Html.EditorFor(model => model.FechaCompra, new { htmlAttributes = new { @class = "form-control datepicker", @autocomplete = "off" } })
                     @Html.ValidationMessageFor(model => model.FechaCompra, "", new { @class = "text-danger" })
                 </div>
@@ -68,7 +66,7 @@
 
             <div class="col-auto ">
                 <div class="input-group col-md-10">
-                    <span class="input-group-text">Tipo de Dispositivo</span>
+                    <span class="input-group-text"> @Traducciones["Tipo"].Texto</span>
                     @Html.DropDownListFor(model => model.Tipo.Id, new SelectList((System.Collections.IEnumerable)ViewData["Tipos"], "Id", "Descripcion"), new { @class = "form-control" })
 
                 </div>
@@ -77,9 +75,9 @@
 
             <div class="col-auto ">
                 <div class="input-group col-md-10">
-                    <span class="input-group-text">Ciclo de Vida</span>
+                    <span class="input-group-text"> @Traducciones["CicloDeVida"].Texto</span>
                     @Html.EditorFor(model => model.CicloDeVida, new { htmlAttributes = new { @class = "form-control",@Value="1" } })
-                    <span class="input-group-text">Años</span>
+                <span class="input-group-text"> @Traducciones["Años"].Texto</span>
                     @Html.ValidationMessageFor(model => model.CicloDeVida, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -89,7 +87,7 @@
         <div class="row gy-2 gx-3 align-items-center" id="cmp-pc">
             <div class="col-auto ">
                 <div class="input-group col-md-10">
-                    <span class="input-group-text">Modelo de Procesador</span>
+                    <span class="input-group-text"> @Traducciones["ModeloProcesador"].Texto</span>
                     @Html.EditorFor(model => model.ModeloProcesador, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.ModeloProcesador, "", new { @class = "text-danger" })
                 </div>
@@ -97,7 +95,7 @@
 
             <div class="col-auto ">
                 <div class="input-group col-md-10">
-                    <span class="input-group-text">Frecuencia del Procesador</span>
+                    <span class="input-group-text"> @Traducciones["FrecuenciaProcesador"].Texto</span>
                     @Html.EditorFor(model => model.FrecuenciaProcesador, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
                     <span class="input-group-text">Ghz</span>
                     @Html.ValidationMessageFor(model => model.FrecuenciaProcesador, "", new { @class = "text-danger" })
@@ -106,14 +104,14 @@
 
             <div class="col-auto ">
                 <div class="input-group col-md-10">
-                    <span class="input-group-text">Núcleos del Procesador</span>
+                    <span class="input-group-text"> @Traducciones["NucleosProcesador"].Texto</span>
                     @Html.EditorFor(model => model.NucleosProcesador, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
                     @Html.ValidationMessageFor(model => model.NucleosProcesador, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-auto ">
                 <div class="input-group col-md-10">
-                    <span class="input-group-text">Memoria RAM</span>
+                    <span class="input-group-text"> @Traducciones["MemoriaRam"].Texto</span>
                     @Html.EditorFor(model => model.MemoriaRam, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
                     <span class="input-group-text">Gb</span>
                     @Html.ValidationMessageFor(model => model.MemoriaRam, "", new { @class = "text-danger" })
@@ -122,7 +120,7 @@
 
             <div class="col-auto ">
                 <div class="input-group col-md-10">
-                    <span class="input-group-text">Tamaño Disco</span>
+                    <span class="input-group-text"> @Traducciones["TamañoDisco"].Texto</span>
                     @Html.EditorFor(model => model.TamañoDisco, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
                     <span class="input-group-text">Gb</span>
                     @Html.ValidationMessageFor(model => model.TamañoDisco, "", new { @class = "text-danger" })
@@ -131,14 +129,15 @@
 
             <div class="col-auto ">
                 <div class="input-group col-md-10">
-                    <span class="input-group-text">Memoria de Video</span>
+                    <span class="input-group-text"> @Traducciones["MemoriaVideo"].Texto</span>
                     @Html.EditorFor(model => model.MemoriaVideo, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
                     @Html.ValidationMessageFor(model => model.MemoriaVideo, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="col-auto ">
-                @Html.LabelFor(model => model.AceleradoraGrafica, htmlAttributes: new { @class = "control-label col-md-2" })
+ 
+                <label class="control-label col-md-2">@Traducciones["AceleradoraGrafica"].Texto</label>
                 <div class="col-md-10">
                     @Html.CheckBoxFor(model => model.AceleradoraGrafica, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.AceleradoraGrafica, "", new { @class = "text-danger" })

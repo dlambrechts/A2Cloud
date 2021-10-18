@@ -27,6 +27,21 @@ namespace BLL
 
         }
 
+        public void Editar (ActivoBE Activo) 
+        
+        {
+
+            Activo.FechaModificacion = DateTime.Now;
+
+            if (Activo.Tipo.ArquitecturaPc == true) 
+            
+            {
+                mppActivo.EditarPc(Activo);
+            }
+
+            else { mppActivo.Editar(Activo); }
+        }
+
         public ActivoBE ObtenerPorId (ActivoBE Activo) 
         
         {
@@ -49,6 +64,13 @@ namespace BLL
         
         {
             return mppActivo.Listar();
+        }
+
+        public int Eliminar(ActivoBE Activo)        
+        {
+            Activo.FechaModificacion = DateTime.Now;
+
+            return mppActivo.Eliminar(Activo);
         }
     }
 }
