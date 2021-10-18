@@ -140,6 +140,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
     <Compile Include="Controllers\PermisosController.cs" />
+    <Compile Include="Controllers\ProductoSoftwareController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -312,6 +313,8 @@
     <Content Include="Views\Marca\Create.cshtml" />
     <Content Include="Views\Marca\Edit.cshtml" />
     <Content Include="Views\Marca\Details.cshtml" />
+    <Content Include="Views\ProductoSoftware\Index.cshtml" />
+    <Content Include="Views\ProductoSoftware\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
