@@ -135,6 +135,7 @@
     <Compile Include="Controllers\ActivoController.cs" />
     <Compile Include="Controllers\BitacoraController.cs" />
     <Compile Include="Controllers\DbController.cs" />
+    <Compile Include="Controllers\DepartamentoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdiomaController.cs" />
     <Compile Include="Controllers\LicenciaController.cs" />
@@ -322,6 +323,10 @@
     <Content Include="Views\Licencia\Create.cshtml" />
     <Content Include="Views\Licencia\Edit.cshtml" />
     <Content Include="Views\Licencia\Details.cshtml" />
+    <Content Include="Views\Departamento\Index.cshtml" />
+    <Content Include="Views\Departamento\Create.cshtml" />
+    <Content Include="Views\Departamento\Details.cshtml" />
+    <Content Include="Views\Departamento\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

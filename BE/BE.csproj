@@ -47,6 +47,7 @@
     <Compile Include="BackupBE.cs" />
     <Compile Include="BitacoraBE.cs" />
     <Compile Include="CredencialBE.cs" />
+    <Compile Include="DepartamentoBE.cs" />
     <Compile Include="EntityBE.cs" />
     <Compile Include="IdiomaBE.cs" />
     <Compile Include="IdiomaEtiquetaBE.cs" />

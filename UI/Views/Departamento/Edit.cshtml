@@ -1,0 +1,68 @@
+﻿@model BE.DepartamentoBE
+
+@{
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["EditarDepartamento"].Texto;
+}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@Traducciones["EditarDepartamento"].Texto</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid pull-left" style="max-width:1024px">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row gy-2 gx-3 align-items-center">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+                <div class=" col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text">Id</span>
+                        @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class=" col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text">@Traducciones["Descripcion"].Texto</span>
+                        @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+                <br />
+                <div class="form-group col-sm-4">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="@Traducciones["Guardar"].Texto" class="btn btn-primary" />
+                    </div>
+                </div>
+
+
+
+            </div>
+        }
+    </div>
+</main>
+
+<script>
+
+        window.onload = function () {
+            document.getElementById('org-collapse').className = 'show';
+            document.getElementById('Departamento').className = 'btn-activo';
+        };
+</script>
+
