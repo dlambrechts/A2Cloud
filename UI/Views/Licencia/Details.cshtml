@@ -1,0 +1,100 @@
+﻿@model BE.LicenciaBE
+
+@{
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["Contrato"].Texto;
+}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@Traducciones["Contrato"].Texto</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+        </div>
+    </div>
+
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Id
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt>
+                @Traducciones["FechaCreacion"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaCreacion)
+            </dd>
+
+            <dt>
+                @Traducciones["FechaModificacion"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaModificacion)
+            </dd>
+
+            <dt>
+                @Traducciones["Descripcion"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+
+            <dt>
+                @Traducciones["ProductoSoftware"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Producto.Descripcion)
+            </dd>
+
+            <dt>
+                @Traducciones["FechaVigencia"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaVigencia)
+            </dd>
+
+            <dt>
+                @Traducciones["FechaFinalizacion"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaFinalizacion)
+            </dd>
+
+            <dt>
+                @Traducciones["Cantidad"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cantidad)
+            </dd>
+
+
+            <dt>
+                @Traducciones["ModalidadLicencia"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Modalidad.Descripcion)
+            </dd>
+
+            <dt>
+                @Traducciones["NumeroContrato"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NumeroContrato)
+            </dd>
+
+        </dl>
+    </div>
+    </main>
+

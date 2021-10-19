@@ -47,6 +47,7 @@
     <Compile Include="BitacoraMPP.cs" />
     <Compile Include="DigitoVerificadorMPP.cs" />
     <Compile Include="IdiomaMPP.cs" />
+    <Compile Include="LicenciaMPP.cs" />
     <Compile Include="MarcaMPP.cs" />
     <Compile Include="PerfilMPP.cs" />
     <Compile Include="ProductoSoftwareMPP.cs" />

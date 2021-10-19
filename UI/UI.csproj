@@ -137,6 +137,7 @@
     <Compile Include="Controllers\DbController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdiomaController.cs" />
+    <Compile Include="Controllers\LicenciaController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
     <Compile Include="Controllers\PermisosController.cs" />
@@ -317,6 +318,10 @@
     <Content Include="Views\ProductoSoftware\Create.cshtml" />
     <Content Include="Views\ProductoSoftware\Edit.cshtml" />
     <Content Include="Views\ProductoSoftware\Details.cshtml" />
+    <Content Include="Views\Licencia\Index.cshtml" />
+    <Content Include="Views\Licencia\Create.cshtml" />
+    <Content Include="Views\Licencia\Edit.cshtml" />
+    <Content Include="Views\Licencia\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

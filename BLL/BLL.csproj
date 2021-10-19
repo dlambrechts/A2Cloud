@@ -48,6 +48,7 @@
     <Compile Include="BitacoraBLL.cs" />
     <Compile Include="DigitoVerificadorBLL.cs" />
     <Compile Include="IdiomaBLL.cs" />
+    <Compile Include="LicenciaBLL.cs" />
     <Compile Include="MarcaBLL.cs" />
     <Compile Include="PerfilBLL.cs" />
     <Compile Include="ProductoSoftwareBLL.cs" />

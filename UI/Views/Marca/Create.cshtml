@@ -29,16 +29,11 @@
 
 
             <div class=" col-auto" style="max-width:450px">
-
                 <div class=" input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["Descripcion"].Texto</span>
                     @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
                     @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-
-
                 </div>
-
-
             </div>
 
             <br />

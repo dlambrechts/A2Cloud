@@ -80,8 +80,7 @@
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 
                                             <li>@Html.ActionLink(Traducciones["Activos"].Texto, "Index", "Activo", null, new { @class = "link-dark rounded", @id = "Activos" })</li>
-                                            <li>@Html.ActionLink(Traducciones["Marcas"].Texto, "Index", "Marca", null, new { @class = "link-dark rounded", @id = "Marcas" })</li>
-                                           
+                                            <li>@Html.ActionLink(Traducciones["Marcas"].Texto, "Index", "Marca", null, new { @class = "link-dark rounded", @id = "Marcas" })</li>                                          
                                             <li><a href="#" class="link-dark rounded">@Traducciones["PerfilesDeHardware"].Texto</a></li>
                                             <li><a href="#" class="link-dark rounded">@Traducciones["AsignacionDeActivos"].Texto</a></li>
                                         </ul>
@@ -98,7 +97,7 @@
                                         <div class="collapse" id="licencias-collapse">
                                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                                 <li>@Html.ActionLink(Traducciones["ProductosDeSoftware"].Texto, "Index", "ProductoSoftware", null, new { @class = "link-dark rounded", @id = "ProdSoft" })</li>
-                                                <li><a href="#" class="link-dark rounded">@Traducciones["ContratosDeLicencia"].Texto</a></li>
+                                                <li>@Html.ActionLink(Traducciones["ContratosDeLicencia"].Texto, "Index", "Licencia", null, new { @class = "link-dark rounded", @id = "Licencias" })</li>
                                                 <li><a href="#" class="link-dark rounded">@Traducciones["AsignacionDeLicencias"].Texto</a></li>
 
 
@@ -260,7 +259,7 @@
                     window.location.reload();
                 }
                 else {
-                    //
+         
                 }
 
             }
