@@ -72,8 +72,9 @@ namespace UI.Controllers
         {
             try
             {
-
+                ModelState.Remove("PerfilHardware.Descripcion");
                 ModelState.Remove("Departamento.Descripcion");
+
                 if (ModelState.IsValid)
                 {
                     Colaborador.UsuarioCreacion = new UsuarioBE();
@@ -108,6 +109,9 @@ namespace UI.Controllers
             Colaborador.Id = id;
             Colaborador = bllCol.ObtenerUno(Colaborador);
 
+            ViewData["Departamentos"] = bllDep.Listar();
+            ViewData["Perfiles"] = bllPerf.Listar();
+
             return View(Colaborador);
         }
 
@@ -117,7 +121,8 @@ namespace UI.Controllers
         {
             try
             {
-
+                ModelState.Remove("PerfilHardware.Descripcion");
+                ModelState.Remove("Departamento.Descripcion");
                 if (ModelState.IsValid)
                 {
                     Colaborador.UsuarioModificacion = new UsuarioBE();
@@ -130,6 +135,10 @@ namespace UI.Controllers
                 else
 
                 {
+
+                    ViewData["Departamentos"] = bllDep.Listar();
+                    ViewData["Perfiles"] = bllPerf.Listar();
+
                     return View("Edit", Colaborador);
 
                 }
@@ -143,24 +152,26 @@ namespace UI.Controllers
         }
 
         // GET: Colaborador/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Colaborador/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public JsonResult Delete(int id)
         {
             try
-            {
-                // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
             {
-                return View();
+                ColaboradorBE Colaborador = new ColaboradorBE();
+                Colaborador.Id = id;
+                Colaborador.UsuarioModificacion = new UsuarioBE();
+                Colaborador.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+                bllCol.Eliminar(Colaborador);
+
+                return Json(new { success = true });
+
+            }
+
+            catch
+
+            {
+                return Json(new { success = false });
             }
         }
     }

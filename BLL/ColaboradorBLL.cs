@@ -42,14 +42,14 @@ namespace BLL
             return mppColaborador.ObtenerUno(Colaborador);
         }
 
-        //public void Eliminar(ColaboradorBE Colaborador)
+        public void Eliminar(ColaboradorBE Colaborador)
 
-        //{
-        //    Colaborador.FechaModificacion = DateTime.Now;
+        {
+            Colaborador.FechaModificacion = DateTime.Now;
 
-        //    mppColaborador.Eliminar(Colaborador);
+            mppColaborador.Eliminar(Colaborador);
 
-        //}
+        }
 
     }
 }

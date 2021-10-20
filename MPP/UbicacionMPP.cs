@@ -34,7 +34,7 @@ namespace MPP
                     Ubicacion.Altura = Item["Altura"].ToString().Trim();
                     Ubicacion.CodigoPostal = Item["CodigoPostal"].ToString().Trim();
                     Ubicacion.Piso = Item["Piso"].ToString().Trim();
-                    Ubicacion.Departamento = Item["NumDepartamento"].ToString().Trim();
+                    Ubicacion.Departamento = Item["Departamento"].ToString().Trim();
 
 
                     if ((Item["FechaCreacion"]) != DBNull.Value) { Ubicacion.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }

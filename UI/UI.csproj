@@ -330,6 +330,7 @@
     <Content Include="Views\Departamento\Edit.cshtml" />
     <Content Include="Views\Colaborador\Index.cshtml" />
     <Content Include="Views\Colaborador\Create.cshtml" />
+    <Content Include="Views\Colaborador\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

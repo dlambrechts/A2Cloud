@@ -114,6 +114,7 @@ namespace MPP
 
             DepartamentoMPP mppDepartamento = new DepartamentoMPP();
             PerfilDeHardwareMPP mppPerfil = new PerfilDeHardwareMPP();
+            UbicacionMPP mppUbicacion = new UbicacionMPP();
 
 
             if (DS.Tables[0].Rows.Count > 0)
@@ -128,6 +129,9 @@ namespace MPP
                     Colaborador.Departamento = mppDepartamento.ObtenerUno(Colaborador.Departamento);
                     Colaborador.PerfilHardware.Id = Convert.ToInt32(Item["PerfilDeHardware"]);
                     Colaborador.PerfilHardware = mppPerfil.ObtenerUno(Colaborador.PerfilHardware);
+                    Colaborador.Ubicacion.Id = Convert.ToInt32(Item["Ubicacion"]);
+                    Colaborador.Ubicacion = mppUbicacion.ObtenerUno(Colaborador.Ubicacion);
+
 
                     if ((Item["FechaCreacion"]) != DBNull.Value) { Colaborador.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                     if ((Item["FechaModificacion"]) != DBNull.Value) Colaborador.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
@@ -161,9 +165,39 @@ namespace MPP
 
                 nAcceso.Escribir(Consulta, Parametros);
 
+                Colaborador.Ubicacion.UsuarioModificacion = new UsuarioBE();
+                Colaborador.Ubicacion.UsuarioModificacion.Id = Colaborador.UsuarioModificacion.Id;
+                Colaborador.Ubicacion.FechaModificacion = Colaborador.FechaModificacion;
+
                 UbicacionMPP mppUbicacion = new UbicacionMPP();
 
                 mppUbicacion.Editar(Colaborador.Ubicacion);
+
+            }
+
+            catch (Exception ex)
+
+            {
+                FileMananager.RegistrarError(ex.Message);
+            }
+        }
+
+        public void Eliminar(ColaboradorBE Colaborador)
+
+        {
+            try
+            {
+                string Consulta = "ColaboradorEliminar";
+                Hashtable Parametros = new Hashtable();
+
+                Parametros.Add("@Id", Colaborador.Id);
+                Parametros.Add("@FechaModificacion", Colaborador.FechaModificacion);
+                Parametros.Add("@UsuarioModificacion", Colaborador.UsuarioModificacion.Id);
+
+
+                Acceso nAcceso = new Acceso();
+
+                nAcceso.Escribir(Consulta, Parametros);
 
             }
 
