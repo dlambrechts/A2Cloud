@@ -1,0 +1,133 @@
+﻿@model BE.ColaboradorBE
+
+@{
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["Colaborador"].Texto;
+}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@Traducciones["Colaborador"].Texto</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+        </div>
+    </div>
+
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Id
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt>
+                @Traducciones["FechaCreacion"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaCreacion)
+            </dd>
+
+            <dt>
+                @Traducciones["FechaModificacion"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaModificacion)
+            </dd>
+
+            <dt>
+                @Traducciones["Nombre"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+
+            <dt>
+                @Traducciones["Apellido"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Apellido)
+            </dd>
+
+            <dt>
+                @Traducciones["Email"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Mail)
+            </dd>
+
+            <dt>
+                @Traducciones["Departamento"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Departamento.Descripcion)
+            </dd>
+
+            <dt>
+                @Traducciones["PerfilDeHardware"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PerfilHardware.Descripcion)
+            </dd>
+
+            <dt>
+                @Traducciones["Calle"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ubicacion.Calle)
+            </dd>
+
+            <dt>
+                @Traducciones["Altura"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ubicacion.Altura)
+            </dd>
+
+            <dt>
+                @Traducciones["CodigoPostal"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ubicacion.CodigoPostal)
+            </dd>
+
+            <dt>
+                @Traducciones["Piso"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ubicacion.Piso)
+            </dd>
+
+            <dt>
+                @Traducciones["NumeroDepartamento"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ubicacion.Departamento)
+            </dd>
+
+        </dl>
+    </div>
+</main>
+
+<script>
+
+    window.onload = function () {
+        document.getElementById('org-collapse').className = 'show';
+        document.getElementById('Colaborador').className = 'btn-activo';
+    };
+</script>
+
+

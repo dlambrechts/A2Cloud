@@ -51,7 +51,12 @@ namespace UI.Controllers
         // GET: Colaborador/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            ColaboradorBE Colaborador = new ColaboradorBE();
+            Colaborador.Id = id;
+            Colaborador = bllCol.ObtenerUno(Colaborador);
+            return View(Colaborador);
         }
 
         // GET: Colaborador/Create

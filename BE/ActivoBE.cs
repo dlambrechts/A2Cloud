@@ -65,8 +65,12 @@ namespace BE
             get { return cicloDeVida; }
             set { cicloDeVida = value; }
         }
-       
 
+        private DateTime finCicloDeVida;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime FinCicloDeVida { get => FechaCompra.AddYears(CicloDeVida); set => finCicloDeVida = value; }
         public ActivoBE()
         
         {
@@ -104,8 +108,6 @@ namespace BE
 
         private bool aceleradoraGrafica;
         public bool AceleradoraGrafica { get => aceleradoraGrafica; set => aceleradoraGrafica = value; }
-
-
-
+        
     }
 }
