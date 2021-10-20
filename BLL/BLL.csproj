@@ -46,12 +46,14 @@
     <Compile Include="ActivoBLL.cs" />
     <Compile Include="BackupBLL.cs" />
     <Compile Include="BitacoraBLL.cs" />
+    <Compile Include="ColaboradorBLL.cs" />
     <Compile Include="DepartamentoBLL.cs" />
     <Compile Include="DigitoVerificadorBLL.cs" />
     <Compile Include="IdiomaBLL.cs" />
     <Compile Include="LicenciaBLL.cs" />
     <Compile Include="MarcaBLL.cs" />
     <Compile Include="PerfilBLL.cs" />
+    <Compile Include="PerfilDeHardwareBLL.cs" />
     <Compile Include="ProductoSoftwareBLL.cs" />
     <Compile Include="UsuarioBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

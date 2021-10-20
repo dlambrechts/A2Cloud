@@ -46,6 +46,7 @@
     <Compile Include="ActivoBE.cs" />
     <Compile Include="BackupBE.cs" />
     <Compile Include="BitacoraBE.cs" />
+    <Compile Include="ColaboradorBE.cs" />
     <Compile Include="CredencialBE.cs" />
     <Compile Include="DepartamentoBE.cs" />
     <Compile Include="EntityBE.cs" />
@@ -56,10 +57,12 @@
     <Compile Include="LicenciaModalidadBE.cs" />
     <Compile Include="MarcaBE.cs" />
     <Compile Include="PerfilComponenteBE.cs" />
+    <Compile Include="PerfilDeHardwareBE.cs" />
     <Compile Include="PerfilFamiliaBE.cs" />
     <Compile Include="PerfilPatenteBE.cs" />
     <Compile Include="ActivoTipoBE.cs" />
     <Compile Include="ProductoSoftwareBE.cs" />
+    <Compile Include="UbicacionBE.cs" />
     <Compile Include="UsuarioBE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

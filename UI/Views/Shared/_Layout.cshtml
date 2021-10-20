@@ -115,7 +115,7 @@
                                             <div class="collapse" id="org-collapse">
                                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                                     <li><a href="#" class="link-dark rounded">@Traducciones["Configurar"].Texto</a></li>
-                                                    <li><a href="#" class="link-dark rounded">@Traducciones["Colaboradores"].Texto</a></li>
+                                                    <li>@Html.ActionLink(Traducciones["Colaboradores"].Texto, "Index", "Colaborador", null, new { @class = "link-dark rounded", @id = "Colaborador" })</li>
                                                     <li>@Html.ActionLink(Traducciones["Departamentos"].Texto, "Index", "Departamento", null, new { @class = "link-dark rounded", @id = "Departamento" })</li>
                                                 </ul>
                                             </div>
