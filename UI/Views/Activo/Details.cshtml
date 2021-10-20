@@ -67,64 +67,73 @@
             <dd>
                 @Html.DisplayFor(model => model.CicloDeVida)
             </dd>
-           
+
+            <dt>
+                @Traducciones["NumeroSerie"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NumeroSerie)
+            </dd>
+
+
             @if (Model.Tipo.ArquitecturaPc == true)
             {
-        <dt>
-            @Traducciones["MemoriaRam"].Texto
-        </dt>
+                <dt>
+                    @Traducciones["MemoriaRam"].Texto
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.MemoriaRam) gb
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.MemoriaRam) gb
+                </dd>
 
-            <dt>
-                @Traducciones["TamañoDisco"].Texto
-            </dt>
+                <dt>
+                    @Traducciones["TamañoDisco"].Texto
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.TamañoDisco) Gb
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.TamañoDisco) Gb
+                </dd>
 
-            <dt>
-                @Traducciones["ModeloProcesador"].Texto
-            </dt>
+                <dt>
+                    @Traducciones["ModeloProcesador"].Texto
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ModeloProcesador)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ModeloProcesador)
+                </dd>
 
-            <dt>
-                @Traducciones["FrecuenciaProcesador"].Texto
-            </dt>
+                <dt>
+                    @Traducciones["FrecuenciaProcesador"].Texto
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.FrecuenciaProcesador) Ghz
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.FrecuenciaProcesador) Ghz
+                </dd>
 
-            <dt>
-                @Traducciones["NucleosProcesador"].Texto
-            </dt>
+                <dt>
+                    @Traducciones["NucleosProcesador"].Texto
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.NucleosProcesador)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.NucleosProcesador)
+                </dd>
 
-            <dt>
-                @Traducciones["MemoriaVideo"].Texto
-            </dt>
+                <dt>
+                    @Traducciones["MemoriaVideo"].Texto
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.MemoriaVideo) GB
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.MemoriaVideo) GB
+                </dd>
 
-            <dt>
-                @Traducciones["AceleradoraGrafica"].Texto
-            </dt>
+                <dt>
+                    @Traducciones["AceleradoraGrafica"].Texto
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.AceleradoraGrafica)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.AceleradoraGrafica)
+                </dd>
             }
         </dl>
     </div>

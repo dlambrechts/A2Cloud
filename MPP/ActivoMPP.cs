@@ -31,6 +31,7 @@ namespace MPP
                 Parametros.Add("@UsuarioCreacion", Activo.UsuarioCreacion.Id);
                 Parametros.Add("@FechaCreacion", Activo.FechaCreacion);
                 Parametros.Add("@Tipo", Activo.Tipo.Id);
+                Parametros.Add("@NumeroSerie", Activo.NumeroSerie);
 
                 return AccesoDB.Escribir(Consulta, Parametros);
 
@@ -56,6 +57,7 @@ namespace MPP
                 Parametros.Add("@Marca", Activo.Marca.Id);
                 Parametros.Add("@Modelo", Activo.Modelo);
                 Parametros.Add("@CicloDeVida", Activo.CicloDeVida);
+                Parametros.Add("@NumeroSerie", Activo.NumeroSerie);
                 Parametros.Add("@UsuarioCreacion", Activo.UsuarioCreacion.Id);
                 Parametros.Add("@FechaCreacion", Activo.FechaCreacion);
                 Parametros.Add("@Tipo", Activo.Tipo.Id);
@@ -102,6 +104,7 @@ namespace MPP
                     Activo.FechaCompra = Convert.ToDateTime(Item["FechaCompra"]);
                     Activo.Tipo.Id = Convert.ToInt32(Item["Tipo"]);
                     Activo.Tipo = ObtenerTipoPorId(Activo.Tipo);
+                    Activo.NumeroSerie = Item["NumeroSerie"].ToString().Trim();
 
                     if ((Item["AceleradoraGrafica"]) != DBNull.Value) { Activo.AceleradoraGrafica = Convert.ToBoolean(Item["AceleradoraGrafica"]); }
                     if ((Item["MemoriaRam"]) != DBNull.Value) { Activo.MemoriaRam = Convert.ToInt32(Item["MemoriaRam"]); }
@@ -150,6 +153,7 @@ namespace MPP
                         Activo.CicloDeVida = Convert.ToInt32(Item["CicloDeVida"]);
                         Activo.Tipo.Id = Convert.ToInt32(Item["Tipo"]);
                         Activo.Tipo = ObtenerTipoPorId(Activo.Tipo);
+                        Activo.NumeroSerie = Item["NumeroSerie"].ToString().Trim();
 
                         if ((Item["FechaCreacion"]) != DBNull.Value) { Activo.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                         if ((Item["FechaModificacion"]) != DBNull.Value) Activo.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
@@ -189,7 +193,7 @@ namespace MPP
                 Parametros.Add("@CicloDeVida", Activo.CicloDeVida);
                 Parametros.Add("@UsuarioModificacion", Activo.UsuarioModificacion.Id);
                 Parametros.Add("@FechaModificacion", Activo.FechaModificacion);
-
+                Parametros.Add("@NumeroSerie", Activo.NumeroSerie);
 
                 return AccesoDB.Escribir(Consulta, Parametros);
 
@@ -218,6 +222,7 @@ namespace MPP
                 Parametros.Add("@CicloDeVida", Activo.CicloDeVida);
                 Parametros.Add("@UsuarioModificacion", Activo.UsuarioModificacion.Id);
                 Parametros.Add("@FechaModificacion", Activo.FechaModificacion);
+                Parametros.Add("@NumeroSerie", Activo.NumeroSerie);
 
                 Parametros.Add("@ModeloProcesador", Activo.ModeloProcesador);
                 Parametros.Add("@FrecuenciaProcesador", Activo.FrecuenciaProcesador);

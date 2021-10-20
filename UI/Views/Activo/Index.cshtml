@@ -73,40 +73,46 @@
                     <th>
                         @Traducciones["FinCicloVida"].Texto
                     </th>
+                    <th>
+                        @Traducciones["NumeroSerie"].Texto
+                    </th>
                     <th></th>
                 </tr>
             </thead>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Tipo.Descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Marca.Descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Modelo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaCompra)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FinCicloDeVida)
-                    </td>
-                    <td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marca.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCompra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinCicloDeVida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroSerie)
+            </td>
+            <td>
 
-                        <a href="@Url.Action("Details", "Activo", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
-                        <a href="@Url.Action("Edit", "Activo", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
-                        <a href="#" onclick="Confirmar('@item.Id','@item.Nombre')"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
+                <a href="@Url.Action("Details", "Activo", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
+                <a href="@Url.Action("Edit", "Activo", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
+                <a href="#" onclick="Confirmar('@item.Id','@item.Nombre')"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
             }
 
         </table>

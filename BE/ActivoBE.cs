@@ -56,6 +56,16 @@ namespace BE
             set { modelo = value; }
         }
 
+        private string numeroSerie;
+
+        public string NumeroSerie
+
+        {
+            get { return numeroSerie; }
+            set { numeroSerie = value; }
+        }
+
+
         private int cicloDeVida;
 
         [Range(1, 10, ErrorMessage = "Ingrese un valor del 1 al 10")]
