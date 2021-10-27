@@ -102,7 +102,44 @@
                     <!-- Card Body -->
                     <div class="card-body">
                         <div class="chart-pie pt-4 pb-2">
-                            <canvas id="myPieChart"></canvas>
+                            <canvas id="TipoDispositivo"></canvas>
+                        </div>
+                        <div class="mt-4 text-center small">
+                            <span class="mr-2">
+                                <i class="fa fa-circle" style="color:#1cc88a"></i> @Traducciones["Pc"].Texto
+                            </span>
+                            <span class="mr-2">
+                                <i class="fa fa-circle" style="color: #4e73df"></i> @Traducciones["Notebook"].Texto
+                            </span>
+                            <span class="mr-2">
+                                <i class="fa fa-circle" style="color: #b54040"></i> @Traducciones["Tablet"].Texto
+                            </span>
+                            <span class="mr-2">
+                                <i class="fa fa-circle" style="color: #edcd2c"></i> @Traducciones["Celular"].Texto
+                            </span>
+                            <span class="mr-2">
+                                <i class="fa fa-circle" style="color: #9650a5"></i> @Traducciones["Monitor"].Texto
+                            </span>
+                            <span class="mr-2">
+                                <i class="fa fa-circle" style="color: #109b0d"></i> @Traducciones["Impresora"].Texto
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico de Torta -->
+            <div class="col-xl-4 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Cabecera -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">@Traducciones["TiposDeDispositivos"].Texto</h6>
+
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie pt-4 pb-2">
+                            <canvas id="TipoDispositivosss"></canvas>
                         </div>
                         <div class="mt-4 text-center small">
                             <span class="mr-2">
@@ -119,18 +156,30 @@
                 </div>
             </div>
 
-            <!-- Area Chart -->
-            <div class="col-xl-8 col-lg-7">
+            <!-- Gráfico de Torta -->
+            <div class="col-xl-4 col-lg-5">
                 <div class="card shadow mb-4">
-                    <!-- Card Header - Dropdown -->
+                    <!-- Cabecera -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">@Traducciones["EvolucionDelPresupuesto"].Texto</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">@Traducciones["TiposDeDispositivos"].Texto</h6>
 
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
-                        <div class="chart-area" style=" position: relative; height: 14rem; width: 100%">
-                            <canvas id="myAreaChart"></canvas>
+                        <div class="chart-pie pt-4 pb-2">
+                            <canvas id="TipoDispositivosss"></canvas>
+                        </div>
+                        <div class="mt-4 text-center small">
+                            <span class="mr-2">
+                                <i class="fa fa-circle" ></i> @Traducciones["Pc"].Texto
+                            </span>
+                            <span class="mr-2">
+                                <i class="fa fa-circle text-success"></i> @Traducciones["Notebook"].Texto
+                            </span>
+                            <span class="mr-2">
+                                <i class="fa fa-circle text-info"></i> @Traducciones["Celular"].Texto
+                            </span>
+
                         </div>
                     </div>
                 </div>
@@ -145,7 +194,7 @@
             <!-- Content Column -->
             <div class="col-lg-6 mb-4">
 
-                <!-- Project Card Example -->
+                <!-- Estado General -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">@Traducciones["EstadoGeneral"].Texto</h6>
@@ -178,12 +227,24 @@
     </div>
     <!-- /.container-fluid -->
 
-    <script src="~/Scripts/chart.js"></script>
-    <script src="~/Scripts/chart-bar.js"></script>
-    <script src="~/Scripts/chart-area.js"></script>
-    <script src="~/Scripts/chart-pie.js"></script>
-
-    <script src="~/Scripts/datatables.js"></script>
 
 
 </main>
+
+
+@section scripts{
+
+
+    <script src="~/Scripts/chart.js"></script>
+    @*<script src="~/Scripts/chart-bar.js"></script>*@
+    <script src="~/Scripts/chart-area.js"></script>
+    <script src="~/Scripts/chart-pie.js"></script>
+
+    @*<script src="~/Scripts/datatables.js"></script>*@
+
+
+    <script>
+
+    </script>
+
+}

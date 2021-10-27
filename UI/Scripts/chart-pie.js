@@ -2,19 +2,32 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-// Pie Chart Example
-var ctx = document.getElementById("myPieChart");
-var myPieChart = new Chart(ctx, {
+jQuery.extend({
+    getValues: function (url) {
+        var result = null;
+        $.ajax({
+            url: url,
+            type: 'get',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                result = data;
+            }
+        });
+        return result;
+    }
+});
+
+
+// Pie Chart Dispositivos por Tipo
+var ctx = document.getElementById("TipoDispositivo");
+var dispData=$.getValues("/Home/TipoDispositivos")
+var TipoDispositivo = new Chart(ctx, {
     type: 'doughnut',
-    data: {
-        labels: ["PC", "Notebook", "Celular"],
-        datasets: [{
-            data: [55, 30, 15],
-            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-            hoverBorderColor: "rgba(234, 236, 244, 1)",
-        }],
-    },
+    data: dispData, 
+ 
+
     options: {
         maintainAspectRatio: false,
         tooltips: {
@@ -22,14 +35,17 @@ var myPieChart = new Chart(ctx, {
             bodyFontColor: "#858796",
             borderColor: '#dddfeb',
             borderWidth: 1,
-            xPadding: 15,
-            yPadding: 15,
-            displayColors: false,
+            xPadding: 5,
+            yPadding: 5,
+            displayColors: true,
             caretPadding: 10,
         },
         legend: {
             display: false
         },
-        cutoutPercentage: 80,
+        cutoutPercentage: 70,
     },
 });
+
+
+

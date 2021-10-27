@@ -12,6 +12,7 @@ namespace UI.Controllers
     public class HomeController : Controller
     {
         UsuarioBLL bllUusuario = new UsuarioBLL();
+        ActivoBLL bllActivo = new ActivoBLL();
         public ActionResult Index()
         {
             if (Session["IdUsuario"] != null) {
@@ -47,5 +48,53 @@ namespace UI.Controllers
             }
 
         }
+
+
+        
+        public JsonResult TipoDispositivos() 
+        
+        {
+            List<ActivoTipoBE> Tipos = new List<ActivoTipoBE>();
+            Tipos = bllActivo.ListarTipos();
+
+            Chart _chart = new Chart();
+
+            _chart.labels = Tipos.Select(x => x.Descripcion).ToArray();
+            _chart.datasets = new List<Datasets>();
+            _chart.datasets.Add(new Datasets()
+            {
+ 
+                data = Tipos.Select(x => x.Cantidad).ToArray(),
+                backgroundColor= new string[] { "#4e73df", "#1cc88a", "#9650a5", "#109b0d", "#edcd2c", "#b54040" },
+                
+                hoverBackgroundColor = new string[] { "#2e59d9", "#17a673", "#bc14e1", "#19eb82", "#faf86b", "#ef0606" },
+            });
+
+            return Json(_chart, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
+
+        public class Chart 
+        
+        { 
+            public string [] labels { get; set; }
+
+            public List<Datasets> datasets { get; set; }
+        }
+
+        public class Datasets { 
+        
+
+
+            public string[] backgroundColor { get; set; }
+            public string[] hoverBackgroundColor { get; set; }
+            public string[] hoverBorderColor { get; set; }
+
+            public int[] data { get; set; }
+        }
+
     }
 }
