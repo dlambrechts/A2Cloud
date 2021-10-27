@@ -72,5 +72,7 @@ namespace BLL
 
             return mppActivo.Eliminar(Activo);
         }
+
+
     }
 }

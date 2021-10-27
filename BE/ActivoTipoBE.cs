@@ -17,6 +17,10 @@ namespace BE
         }
         
         private bool arquitecturaPc;
-        public bool ArquitecturaPc { get => arquitecturaPc; set => arquitecturaPc = value; }
+        public bool ArquitecturaPc { get => arquitecturaPc; set => arquitecturaPc = value; }       
+
+        private int cantidad;
+        public int Cantidad { get => cantidad; set => cantidad = value; }
+
     }
 }

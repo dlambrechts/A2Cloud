@@ -315,6 +315,7 @@ namespace MPP
                         tipo.Id = Convert.ToInt32(Item["Id"]);
                         tipo.Descripcion = Item["Descripcion"].ToString().Trim();
                         tipo.ArquitecturaPc = Convert.ToBoolean(Item["ArquitecturaPc"]);
+                        tipo.Cantidad = Convert.ToInt32(Item["Cantidad"]);
 
                         Lista.Add(tipo);
                     }
