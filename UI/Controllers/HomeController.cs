@@ -65,9 +65,9 @@ namespace UI.Controllers
             {
  
                 data = Tipos.Select(x => x.Cantidad).ToArray(),
-                backgroundColor= new string[] { "#4e73df", "#1cc88a", "#9650a5", "#109b0d", "#edcd2c", "#b54040" },
+                backgroundColor= new string[] { "#4e73df", "#1cc88a", "#9650a5", "#109b0d", "#edcd2c", "#b54040", "#0000FF" },
                 
-                hoverBackgroundColor = new string[] { "#2e59d9", "#17a673", "#bc14e1", "#19eb82", "#faf86b", "#ef0606" },
+                hoverBackgroundColor = new string[] { "#2e59d9", "#17a673", "#bc14e1", "#19eb82", "#faf86b", "#ef0606", "#0000FF" },
             });
 
             return Json(_chart, JsonRequestBehavior.AllowGet);

@@ -33,7 +33,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">@Html.DisplayNameFor(model => model.First().Id)</th>
+
                     <th scope="col"> @Traducciones["Permiso"].Texto</th>
                     <th scope="col"> @Traducciones["Descripcion"].Texto</th>
 
@@ -45,7 +45,7 @@
 
                 {
                     <tr>
-                        <th scope="row">@Html.DisplayFor(model => item.Id)</th>
+
                         <td>@Html.DisplayFor(model => item.Permiso)</td>
                         <td>@Html.DisplayFor(model => item.Descripcion)</td>
 

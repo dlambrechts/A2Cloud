@@ -55,7 +55,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">@Html.DisplayNameFor(model => model.First().Id)</th>
+
                         <th scope="col">@Traducciones["Descripcion"].Texto</th>
                         <th scope="col">@Traducciones["PorDefecto"].Texto</th>
                         <th scope="col">@Traducciones["FechaCreacion"].Texto</th>
@@ -70,7 +70,7 @@
 
                     {
                         <tr>
-                            <th scope="row">@Html.DisplayFor(model => item.Id)</th>
+
                             <td>@Html.DisplayFor(model => item.Descripcion)</td>
                             <td>@Html.DisplayFor(model => item.PorDefecto)</td>
                             <td>@Html.DisplayFor(model => item.FechaCreacion)</td>
