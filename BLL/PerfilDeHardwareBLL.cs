@@ -22,5 +22,28 @@ namespace BLL
         {
             return mppPerfilDeHardware.ObtenerUno(PerfilDeHardware);
         }
+
+        public void Insertar(PerfilDeHardwareBE PerfilDeHardware)
+        {
+
+            PerfilDeHardware.FechaCreacion = DateTime.Now;
+            mppPerfilDeHardware.Insertar(PerfilDeHardware);
+        }
+
+        public void Editar(PerfilDeHardwareBE PerfilDeHardware)
+        {
+
+            PerfilDeHardware.FechaModificacion = DateTime.Now;
+            mppPerfilDeHardware.Editar(PerfilDeHardware);
+        }
+
+        public void Eliminar(PerfilDeHardwareBE PerfilDeHardware)
+        {
+
+            PerfilDeHardware.FechaModificacion = DateTime.Now;
+            mppPerfilDeHardware.Eliminar(PerfilDeHardware);
+        }
+
+
     }
 }

@@ -142,6 +142,7 @@
     <Compile Include="Controllers\LicenciaController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MarcaController.cs" />
+    <Compile Include="Controllers\PerfilHardwareController.cs" />
     <Compile Include="Controllers\PermisosController.cs" />
     <Compile Include="Controllers\ProductoSoftwareController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
@@ -332,6 +333,8 @@
     <Content Include="Views\Colaborador\Create.cshtml" />
     <Content Include="Views\Colaborador\Edit.cshtml" />
     <Content Include="Views\Colaborador\Details.cshtml" />
+    <Content Include="Views\PerfilHardware\Index.cshtml" />
+    <Content Include="Views\PerfilHardware\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
