@@ -16,6 +16,7 @@ namespace BE
         private decimal frecuenciaProcesadorMinima;
         private bool requiereAceleradoraGrafica;
         private int cantidadMonitores;
+        private ActivoTipoBE dispositivoPrincipal;
 
         public string Descripcion { get => descripcion; set => descripcion = value; }
         public int MemoriaRamMinima { get => memoriaRamMinima; set => memoriaRamMinima = value; }
@@ -25,5 +26,8 @@ namespace BE
         public decimal FrecuenciaProcesadorMinima { get => frecuenciaProcesadorMinima; set => frecuenciaProcesadorMinima = value; }
         public bool RequiereAceleradoraGrafica { get => requiereAceleradoraGrafica; set => requiereAceleradoraGrafica = value; }
         public int CantidadMonitores { get => cantidadMonitores; set => cantidadMonitores = value; }
+        public ActivoTipoBE DispositivoPrincipal { get => dispositivoPrincipal; set => dispositivoPrincipal = value; }
+
+        public PerfilDeHardwareBE() { dispositivoPrincipal = new ActivoTipoBE(); }
     }
 }

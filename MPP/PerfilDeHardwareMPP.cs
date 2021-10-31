@@ -33,6 +33,8 @@ namespace MPP
                 Parametros.Add("@FrecuenciaProcesadorMinima", PerfilDeHardware.FrecuenciaProcesadorMinima);
                 Parametros.Add("@RequiereAceleradoraGrafica", PerfilDeHardware.RequiereAceleradoraGrafica);
                 Parametros.Add("@CantidadMonitores", PerfilDeHardware.CantidadMonitores);
+                Parametros.Add("@DispositivoPrincipal", PerfilDeHardware.DispositivoPrincipal.Id);
+
                 Parametros.Add("@UsuarioCreacion", PerfilDeHardware.UsuarioCreacion.Id);
                 Parametros.Add("@FechaCreacion", PerfilDeHardware.FechaCreacion);
 
@@ -54,6 +56,7 @@ namespace MPP
             DataSet DS = new DataSet();
             DS = AccesoDB.LeerDatos("PerfilDeHardwareObtenerPorId", Param);
 
+            ActivoMPP mppActivo = new ActivoMPP();
 
             if (DS.Tables[0].Rows.Count > 0)
             {
@@ -67,6 +70,8 @@ namespace MPP
                     if ((Item["FrecuenciaProcesadorMinima"]) != DBNull.Value) { PerfilDeHardware.FrecuenciaProcesadorMinima = Convert.ToDecimal(Item["FrecuenciaProcesadorMinima"]); }
                     if ((Item["RequiereAceleradoraGrafica"]) != DBNull.Value) { PerfilDeHardware.RequiereAceleradoraGrafica = Convert.ToBoolean(Item["RequiereAceleradoraGrafica"]); }
                     if ((Item["CantidadMonitores"]) != DBNull.Value) { PerfilDeHardware.CantidadMonitores= Convert.ToInt32(Item["CantidadMonitores"]); }
+                    PerfilDeHardware.DispositivoPrincipal.Id = Convert.ToInt32(Item["DispositivoPrincipal"]);
+                    PerfilDeHardware.DispositivoPrincipal = mppActivo.ObtenerTipoPorId(PerfilDeHardware.DispositivoPrincipal);
 
                     if ((Item["FechaCreacion"]) != DBNull.Value) { PerfilDeHardware.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                     if ((Item["FechaModificacion"]) != DBNull.Value) PerfilDeHardware.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
@@ -90,11 +95,13 @@ namespace MPP
                 Parametros.Add("@Descripcion", PerfilDeHardware.Descripcion);
                 Parametros.Add("@MemoriaRamMinima", PerfilDeHardware.MemoriaRamMinima);
                 Parametros.Add("@AlmacenamientoMinimo", PerfilDeHardware.AlmecenamientoMinimo);
-                Parametros.Add("@NucleosProcesadorMimimo", PerfilDeHardware.NucleosProcesadorMinimo);
+                Parametros.Add("@NucleosProcesadorMinimo", PerfilDeHardware.NucleosProcesadorMinimo);
                 Parametros.Add("@MemoriaVideoMinima", PerfilDeHardware.MemoriaVideoMinima);
                 Parametros.Add("@FrecuenciaProcesadorMinima", PerfilDeHardware.FrecuenciaProcesadorMinima);
                 Parametros.Add("@RequiereAceleradoraGrafica", PerfilDeHardware.RequiereAceleradoraGrafica);
                 Parametros.Add("@CantidadMonitores", PerfilDeHardware.CantidadMonitores);
+                Parametros.Add("@DispositivoPrincipal", PerfilDeHardware.DispositivoPrincipal.Id);
+
                 Parametros.Add("@UsuarioModificacion", PerfilDeHardware.UsuarioModificacion.Id);
                 Parametros.Add("@FechaModificacion", PerfilDeHardware.FechaModificacion);
 
@@ -143,6 +150,8 @@ namespace MPP
                 DataSet DS = new DataSet();
                 DS = AccesoDB.LeerDatos("PerfilDeHardwareListar", null);
 
+                ActivoMPP mppActivo = new ActivoMPP();
+
                 if (DS.Tables[0].Rows.Count > 0)
                 {
                     foreach (DataRow Item in DS.Tables[0].Rows)
@@ -159,6 +168,9 @@ namespace MPP
                         if ((Item["FrecuenciaProcesadorMinima"]) != DBNull.Value) { PerfilDeHardware.FrecuenciaProcesadorMinima = Convert.ToDecimal(Item["FrecuenciaProcesadorMinima"]); }
                         if ((Item["RequiereAceleradoraGrafica"]) != DBNull.Value) { PerfilDeHardware.RequiereAceleradoraGrafica = Convert.ToBoolean(Item["RequiereAceleradoraGrafica"]); }
                         if ((Item["CantidadMonitores"]) != DBNull.Value) { PerfilDeHardware.CantidadMonitores = Convert.ToInt32(Item["CantidadMonitores"]); }
+                        PerfilDeHardware.DispositivoPrincipal.Id = Convert.ToInt32(Item["DispositivoPrincipal"]);
+                        PerfilDeHardware.DispositivoPrincipal = mppActivo.ObtenerTipoPorId(PerfilDeHardware.DispositivoPrincipal);
+
                         if ((Item["FechaCreacion"]) != DBNull.Value) { PerfilDeHardware.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                         if ((Item["FechaModificacion"]) != DBNull.Value) PerfilDeHardware.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
 

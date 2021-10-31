@@ -12,6 +12,7 @@ namespace UI.Controllers
     public class PerfilHardwareController : Controller
     {
         PerfilDeHardwareBLL bllPerfilDeHardware = new PerfilDeHardwareBLL();
+        ActivoBLL bllActivo = new ActivoBLL();
 
         // GET: PerfilDeHardware
         public ActionResult Index(int? pagina, string Dato_Buscar, string Valor_Filtro)
@@ -59,6 +60,7 @@ namespace UI.Controllers
         {
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
+            ViewData["Tipos"] = bllActivo.ListarTipos().Where(x=>x.ArquitecturaPc==true);
             return View();
         }
 
@@ -82,7 +84,7 @@ namespace UI.Controllers
 
                 else
                 {
-
+                    ViewData["Tipos"] = bllActivo.ListarTipos().Where(x => x.ArquitecturaPc == true);
                     return View("Create", PerfilDeHardware);
                 }
             }
@@ -101,6 +103,7 @@ namespace UI.Controllers
             PerfilDeHardware.Id = id;
             PerfilDeHardware = bllPerfilDeHardware.ObtenerUno(PerfilDeHardware);
 
+            ViewData["Tipos"] = bllActivo.ListarTipos().Where(x => x.ArquitecturaPc == true);
             return View(PerfilDeHardware);
         }
 
@@ -123,6 +126,7 @@ namespace UI.Controllers
                 else
 
                 {
+                    ViewData["Tipos"] = bllActivo.ListarTipos().Where(x => x.ArquitecturaPc == true);
                     return View("Edit", PerfilDeHardware);
 
                 }

@@ -53,6 +53,9 @@
                         @Traducciones["Descripcion"].Texto
                     </th>
                     <th>
+                        @Traducciones["DispositivoPrincipal"].Texto
+                    </th>
+                    <th>
                         @Traducciones["FechaCreacion"].Texto
                     </th>
                     <th>
@@ -64,24 +67,28 @@
 
             @foreach (var item in Model)
             {
-                <tr>
+        <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaCreacion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaModificacion)
-                    </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
 
-                    <td>
-                        <a href="@Url.Action("Details", "PerfilDardware", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
-                        <a href="@Url.Action("Edit", "PerfilHardware", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
-                        <a href="#" onclick="Confirmar('@item.Id','@item.Descripcion')"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DispositivoPrincipal.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaModificacion)
+            </td>
+
+            <td>
+                <a href="@Url.Action("Details", "PerfilDardware", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
+                <a href="@Url.Action("Edit", "PerfilHardware", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
+                <a href="#" onclick="Confirmar('@item.Id','@item.Descripcion')"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
             }
 
         </table>
@@ -148,7 +155,7 @@
         $.ajax({
 
             type: "POST",
-            url: "/PerfilDeHardware/Delete",
+            url: "/PerfilHardware/Delete",
             data: { id: Id },
             success: function (response) {
                 if (response.success) {
