@@ -1,0 +1,107 @@
+﻿@model BE.PerfilDeHardwareBE
+
+@{
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["PerfilDeHardware"].Texto;
+}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@Traducciones["PerfilDeHardware"].Texto</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+        </div>
+    </div>
+
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Id
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt>
+                @Traducciones["FechaCreacion"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaCreacion)
+            </dd>
+
+            <dt>
+                @Traducciones["FechaModificacion"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaModificacion)
+            </dd>
+
+            <dt>
+                @Traducciones["Descripcion"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+            <dt>
+                @Traducciones["DispositivoPrincipal"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DispositivoPrincipal.Descripcion)
+            </dd>
+
+
+            <dt>
+                @Traducciones["MemoriaMinima"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MemoriaRamMinima)
+            </dd>
+
+            <dt>
+                @Traducciones["AlmacenamientoMinimo"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AlmecenamientoMinimo)
+            </dd>
+
+            <dt>
+                @Traducciones["NucleosProcesadorMinimo"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NucleosProcesadorMinimo)
+            </dd>
+
+            <dt>
+                @Traducciones["MemoriaVideoMinima"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MemoriaVideoMinima)
+            </dd>
+
+
+            <dt>
+                @Traducciones["RequiereAceleradoraGrafica"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.RequiereAceleradoraGrafica)
+            </dd>
+
+            <dt>
+                @Traducciones["CantidadMonitores"].Texto
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CantidadMonitores)
+            </dd>
+
+        </dl>
+    </div>
+</main>
