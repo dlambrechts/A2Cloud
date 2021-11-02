@@ -18,6 +18,8 @@ namespace BLL
         {
             Activo.FechaCreacion = DateTime.Now;
 
+            Activo.CambiarEstado(new ActivoEstadoDisponibleBE());
+
             if (Activo.Tipo.ArquitecturaPc == true) { 
 
             mppActivo.InsertarPc(Activo);

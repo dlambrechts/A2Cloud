@@ -32,6 +32,7 @@ namespace MPP
                 Parametros.Add("@FechaCreacion", Activo.FechaCreacion);
                 Parametros.Add("@Tipo", Activo.Tipo.Id);
                 Parametros.Add("@NumeroSerie", Activo.NumeroSerie);
+                Parametros.Add("@Estado", Activo.Estado.GetType().ToString().Substring(3));
 
                 return AccesoDB.Escribir(Consulta, Parametros);
 
@@ -68,6 +69,7 @@ namespace MPP
                 Parametros.Add("@MemoriaVideo", Activo.MemoriaVideo);
                 Parametros.Add("@AceleradoraGrafica", Activo.AceleradoraGrafica);
                 Parametros.Add("@TamañoDisco", Activo.TamañoDisco);
+                Parametros.Add("@Estado", Activo.Estado.GetType().ToString().Substring(3));
 
                 return AccesoDB.Escribir(Consulta, Parametros);
 
@@ -157,6 +159,20 @@ namespace MPP
 
                         if ((Item["FechaCreacion"]) != DBNull.Value) { Activo.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                         if ((Item["FechaModificacion"]) != DBNull.Value) Activo.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
+
+                        ActivoEstadoBE estado;
+                        switch (Convert.ToString(Item["Estado"]).Trim())
+
+                        {
+                            case "ActivoEstadoAsignadoBE": { estado= new ActivoEstadoAsignadoBE(); estado.Codigo = estado.GetType().ToString(); estado.Descripcion = Item["DescEstado"].ToString().Trim(); Activo.CambiarEstado(estado); } break;
+                            case "ActivoEstadoDisponibleBE": { estado = new ActivoEstadoDisponibleBE(); estado.Codigo = estado.GetType().ToString(); estado.Descripcion = Item["DescEstado"].ToString().Trim(); Activo.CambiarEstado(estado); } break;
+                            case "ActivoEstadoBajaBE": { estado= new ActivoEstadoBajaBE(); estado.Codigo = estado.GetType().ToString(); estado.Descripcion = Item["DescEstado"].ToString().Trim(); Activo.CambiarEstado(estado); } break;
+
+                        }
+
+
+                       
+                       
 
                         Lista.Add(Activo);
                     }
@@ -334,6 +350,28 @@ namespace MPP
                 FileMananager.RegistrarError(ex.Message);
                 return null;
             }
+        }
+
+        public ActivoTipoBE ObtenerEstadoPorId(ActivoTipoBE tipo)
+
+        {
+            Hashtable Param = new Hashtable();
+            Param.Add("@Id", tipo.Id);
+            DataSet DS = new DataSet();
+            DS = AccesoDB.LeerDatos("ActivoEstadoObtenerPorId", Param);
+
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow Item in DS.Tables[0].Rows)
+                {
+
+                    tipo.Descripcion = Item["Descripcion"].ToString().Trim();
+
+                }
+            }
+
+            return tipo;
+
         }
     }
 }

@@ -44,6 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivoBE.cs" />
+    <Compile Include="ActivoEstadoAsignadoBE.cs" />
+    <Compile Include="ActivoEstadoBajaBE.cs" />
+    <Compile Include="ActivoEstadoBE.cs" />
+    <Compile Include="ActivoEstadoDisponibleBE.cs" />
     <Compile Include="AsignacionActivoBE.cs" />
     <Compile Include="AsignacionEstadoBE.cs" />
     <Compile Include="BackupBE.cs" />

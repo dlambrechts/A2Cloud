@@ -68,7 +68,7 @@ namespace BE
 
         private int cicloDeVida;
 
-        [Range(1, 10, ErrorMessage = "Ingrese un valor del 1 al 10")]
+        [Range(1, 10)]
         public int CicloDeVida 
         
         { 
@@ -81,16 +81,11 @@ namespace BE
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime FinCicloDeVida { get => FechaCompra.AddYears(CicloDeVida); set => finCicloDeVida = value; }
-        public ActivoBE()
-        
-        {
-            marca = new MarcaBE();
-            tipo = new ActivoTipoBE();
-        }
+
 
 
         private int memoriaRam;
-        [Range(0, 9999, ErrorMessage = "Ingrese un valor del 0 al 9999")]
+        [Range(0, 9999)]
         public int MemoriaRam { get => memoriaRam; set => memoriaRam = value; }
                
         private int tamañoDisco;
@@ -118,6 +113,25 @@ namespace BE
 
         private bool aceleradoraGrafica;
         public bool AceleradoraGrafica { get => aceleradoraGrafica; set => aceleradoraGrafica = value; }
-        
+
+        private ActivoEstadoBE estado;
+
+        public ActivoEstadoBE Estado { get { return estado; } }
+
+        public void CambiarEstado(ActivoEstadoBE est)
+        {
+
+            this.estado = est;
+
+        }
+
+        public ActivoBE()
+
+        {
+            marca = new MarcaBE();
+            tipo = new ActivoTipoBE();
+            estado = new ActivoEstadoDisponibleBE();
+        }
+
     }
 }

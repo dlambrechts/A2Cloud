@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace BE
 {
@@ -20,6 +21,9 @@ namespace BE
         public ActivoBE Activo { get => activo; set => activo = value; }
         public ColaboradorBE Colaborador { get => colaborador; set => colaborador = value; }
         public AsignacionEstadoBE Estado { get => estado; set => estado = value; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime FechaInicio { get => fechaInicio; set => fechaInicio = value; }
         public DateTime FechaFinalizacion { get => fechaFinalizacion; set => fechaFinalizacion = value; }
         public UbicacionBE Ubicacion { get => ubicacion; set => ubicacion = value; }

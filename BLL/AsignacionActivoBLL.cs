@@ -10,5 +10,16 @@ namespace BLL
 {
    public class AsignacionActivoBLL
     {
+        AsignacionActivoMPP mppAsignacionActivo = new AsignacionActivoMPP();
+
+        public List<AsignacionActivoBE> Listar() 
+        
+        {
+
+            return mppAsignacionActivo.Listar();
+        
+        }
+
+
     }
 }

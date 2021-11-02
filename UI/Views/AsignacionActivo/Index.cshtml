@@ -1,17 +1,17 @@
 ﻿
-@model X.PagedList.PagedList<BE.ActivoBE>
+@model X.PagedList.PagedList<BE.AsignacionActivoBE>
 
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Common
 
 @{
     Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
-    ViewBag.Title = Traducciones["Dispositivos"].Texto;
+    ViewBag.Title = Traducciones["Asignaciones"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">@Traducciones["Dispositivos"].Texto</h1>
+        <h1 class="h2">@Traducciones["Asignaciones"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 @using (Html.BeginForm())
@@ -23,7 +23,7 @@
                         </span>
                     </div>
                 }
-                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Activo", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "AsignacionActivo", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
                 <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
             </div>
 
@@ -53,29 +53,28 @@
                 <tr>
 
                     <th>
-                        @Traducciones["Tipo"].Texto
+                        @Traducciones["Dispositivo"].Texto
                     </th>
                     <th>
-                        @Traducciones["Marca"].Texto
+                        @Traducciones["Descripcion"].Texto
                     </th>
                     <th>
-                        @Traducciones["Modelo"].Texto
+                        @Traducciones["NumeroSerie"].Texto
                     </th>
                     <th>
-                        @Traducciones["Nombre"].Texto
+                        @Traducciones["Colaborador"].Texto
+                    </th>
+                    <th>
+                        @Traducciones["Ubicacion"].Texto
+                    </th>
+                    <th>
+                        @Traducciones["FechaInicio"].Texto
                     </th>
                     <th>
                         @Traducciones["Estado"].Texto
                     </th>
                     <th>
-                        @Traducciones["FechaCompra"].Texto
-                    </th>
-
-                    <th>
-                        @Traducciones["FinCicloVida"].Texto
-                    </th>
-                    <th>
-                        @Traducciones["NumeroSerie"].Texto
+                        @Traducciones["FechaFinalizacion"].Texto
                     </th>
                     <th></th>
                 </tr>
@@ -85,34 +84,34 @@
         <tr>
 
             <td>
-                @Html.DisplayFor(modelItem => item.Tipo.Descripcion)
+                @Html.DisplayFor(modelItem => item.Activo.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Marca.Descripcion)
+                @Html.DisplayFor(modelItem => item.Activo.Tipo.Descripcion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Modelo)
+                @Html.DisplayFor(modelItem => item.Activo.NumeroSerie)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
+                @Html.DisplayFor(modelItem => item.Colaborador)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ubicacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaInicio)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Estado.Descripcion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FechaCompra)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FinCicloDeVida)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroSerie)
+                @Html.DisplayFor(modelItem => item.FechaFinalizacion)
             </td>
             <td>
 
-                <a href="@Url.Action("Details", "Activo", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
-                <a href="@Url.Action("Edit", "Activo", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
-                <a href="#" onclick="Confirmar('@item.Id','@item.Nombre')"><i class="fa fa-trash"></i></a>
+                <a href="@Url.Action("Details", "AsignacionActivo", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
+                <a href="@Url.Action("Edit", "AsignacionActivo", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
+                <a href="#" onclick="Confirmar('@item.Id','@item.Activo.Nombre')"><i class="fa fa-trash"></i></a>
             </td>
         </tr>
             }
@@ -155,32 +154,32 @@
 
 @*Para eliminar campo oculto para el Id*@
 
-<input type="hidden" id="IdActivo" />
+<input type="hidden" id="IdAsignacionDeActivo" />
 
 <script>
 
     window.onload = function () {
         document.getElementById('activos-collapse').className = 'show';
-        document.getElementById('Activos').className = 'btn-activo';
+        document.getElementById('AsignacionActivo').className = 'btn-activo';
     };
 </script>
 
 <script>
     var Confirmar = function (id, nombre) {
 
-        $("#IdActivo").val(id);
+        $("#IdAsignacionDeActivo").val(id);
         $("#nombre_act").text(nombre);
         $("#Confirmar").modal('show');
     }
 
     var Eliminar = function () {
 
-        var Id = $('#IdActivo').val();
+        var Id = $('#IdAsignacionDeActivo').val();
 
         $.ajax({
 
             type: "POST",
-            url: "/Activo/Delete",
+            url: "/AsignacionDeActivo/Delete",
             data: { id: Id },
             success: function (response) {
                 if (response.success) {

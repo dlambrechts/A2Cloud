@@ -3,15 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BE;
+using BLL;
+using X.PagedList;
 
 namespace UI.Controllers
 {
     public class AsignacionActivoController : Controller
     {
+        ActivoBLL bllActivo = new ActivoBLL();
+        ColaboradorBLL bllColaborador = new ColaboradorBLL();
+
+        AsignacionActivoBLL bllAsignacionActivo = new AsignacionActivoBLL();
         // GET: AsignacionActivo
-        public ActionResult Index()
+        public ActionResult Index(int? pagina, string Dato_Buscar, string Valor_Filtro)
         {
-            return View();
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            ViewBag.EliminadoOk = TempData["EliminadoOk"] as string;
+            ViewBag.EditadoOk = TempData["EditadoOk"] as string;
+            ViewBag.CreadoOk = TempData["CreadoOk"] as string;
+
+            List<AsignacionActivoBE> Lista = new List<AsignacionActivoBE>();
+
+            Lista = bllAsignacionActivo.Listar();
+
+            if (Dato_Buscar != null)
+            { pagina = 1; }
+            else { Dato_Buscar = Valor_Filtro; }
+
+            ViewBag.ValorFiltro = Dato_Buscar;
+
+            if (!String.IsNullOrEmpty(Dato_Buscar))
+            {
+                Lista = Lista.Where(u => u.Detalle.ToUpper().Contains(Dato_Buscar.ToUpper())).ToList();
+            }
+
+            int RegistrosPorPagina = 10;
+            int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
+
+            return View(Lista.ToPagedList(Indice, RegistrosPorPagina));
         }
 
         // GET: AsignacionActivo/Details/5
@@ -23,6 +54,13 @@ namespace UI.Controllers
         // GET: AsignacionActivo/Create
         public ActionResult Create()
         {
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            ViewData["Activos"] = bllActivo.Listar().Where(x=>x.Estado.Asignar()==true);
+
+            var Colaboradores= bllColaborador.Listar().Select(c =>new { Id=c.Id,Descripcion=c.Nombre + " " + c.Apellido}).ToList();
+            ViewBag.Colaboradores = new SelectList(Colaboradores, "Id", "Descripcion");
+
             return View();
         }
 

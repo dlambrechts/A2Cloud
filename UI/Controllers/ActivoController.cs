@@ -68,8 +68,6 @@ namespace UI.Controllers
             ViewData["Marcas"] = bllMarca.Listar();
             ViewData["Tipos"] = bllActivo.ListarTipos();
 
-
-
             return View();
         }
 
