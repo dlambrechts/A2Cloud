@@ -48,7 +48,14 @@ namespace UI.Controllers
         // GET: Localizacion/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            
+                if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+                LocalizacionBE Localizacion = new LocalizacionBE();
+                Localizacion.Id = id;
+                Localizacion = bllLoc.ObtenerUno(Localizacion);
+                return View(Localizacion);
+            
         }
 
         // GET: Localizacion/Create
@@ -94,16 +101,39 @@ namespace UI.Controllers
         // GET: Localizacion/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            LocalizacionBE Localizacion = new LocalizacionBE();
+            Localizacion.Id = id;
+            Localizacion = bllLoc.ObtenerUno(Localizacion);
+
+
+            return View(Localizacion);
         }
 
         // POST: Localizacion/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(LocalizacionBE Localizacion)
         {
             try
             {
-                // TODO: Add update logic here
+
+                if (ModelState.IsValid)
+                {
+                    Localizacion.UsuarioModificacion = new UsuarioBE();
+                    Localizacion.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+                    TempData["EditadoOk"] = "Editado";
+                    bllLoc.Editar(Localizacion);
+                }
+
+                else
+
+                {
+
+                    return View("Edit", Localizacion);
+
+                }
 
                 return RedirectToAction("Index");
             }
@@ -113,25 +143,27 @@ namespace UI.Controllers
             }
         }
 
-        // GET: Localizacion/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Localizacion/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        // Localizacion/Delete/5
+        public JsonResult Delete(int id)
         {
             try
-            {
-                // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
             {
-                return View();
+                LocalizacionBE Localizacion = new LocalizacionBE();
+                Localizacion.Id = id;
+                Localizacion.UsuarioModificacion = new UsuarioBE();
+                Localizacion.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+                bllLoc.Eliminar(Localizacion);
+
+                return Json(new { success = true });
+
+            }
+
+            catch
+
+            {
+                return Json(new { success = false });
             }
         }
     }

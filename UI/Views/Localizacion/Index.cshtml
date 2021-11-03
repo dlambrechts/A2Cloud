@@ -81,7 +81,7 @@
                     <td>
                         <a href="@Url.Action("Details", "Localizacion", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
                         <a href="@Url.Action("Edit", "Localizacion", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
-                        <a href="#" onclick="Confirmar('@item.Id','@item.ToString()')"><i class="fa fa-trash"></i></a>
+                        <a href="#" onclick="Confirmar('@item.Id','@item.Descripcion')"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             }

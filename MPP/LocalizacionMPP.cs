@@ -135,7 +135,7 @@ namespace MPP
                 Hashtable Parametros = new Hashtable();
 
                 Parametros.Add("@Id", Localizacion.Id);
-                Parametros.Add("@Nombre", Localizacion.Descripcion);
+                Parametros.Add("@Descripcion", Localizacion.Descripcion);
 
 
                 Parametros.Add("@FechaModificacion", Localizacion.FechaModificacion);

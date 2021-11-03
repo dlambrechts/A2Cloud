@@ -16,5 +16,10 @@ namespace BE
 
         public string Descripcion { get => descripcion; set => descripcion = value; }
         public UbicacionBE Ubicacion { get => ubicacion; set => ubicacion = value; }
+
+        public LocalizacionBE() 
+        {
+            ubicacion = new UbicacionBE();
+        }
     }
 }

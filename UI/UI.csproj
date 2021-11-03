@@ -343,6 +343,8 @@
     <Content Include="Views\AsignacionActivo\Create.cshtml" />
     <Content Include="Views\Localizacion\Index.cshtml" />
     <Content Include="Views\Localizacion\Create.cshtml" />
+    <Content Include="Views\Localizacion\Edit.cshtml" />
+    <Content Include="Views\Localizacion\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
