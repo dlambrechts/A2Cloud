@@ -115,27 +115,14 @@
                                             </button>
                                             <div class="collapse" id="org-collapse">
                                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                                    <li><a href="#" class="link-dark rounded">@Traducciones["Configurar"].Texto</a></li>
+                                                    <li>@Html.ActionLink(Traducciones["Localizaciones"].Texto, "Index", "Localizacion", null, new { @class = "link-dark rounded", @id = "Localizacion" })</li>
                                                     <li>@Html.ActionLink(Traducciones["Colaboradores"].Texto, "Index", "Colaborador", null, new { @class = "link-dark rounded", @id = "Colaborador" })</li>
                                                     <li>@Html.ActionLink(Traducciones["Departamentos"].Texto, "Index", "Departamento", null, new { @class = "link-dark rounded", @id = "Departamento" })</li>
                                                 </ul>
                                             </div>
                                         </li>
                                     } }
-                                    @{ if (Permisos.Exists(per => per.ToString() == "GestionDePresupuesto"))
 
-                                        {
-                                            <li class="mb-1">
-                                                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#presup-collapse" aria-expanded="false">
-                                                    @Traducciones["Presupuesto"].Texto
-                                                </button>
-                                                <div class="collapse" id="presup-collapse">
-                                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                                        <li><a href="#" class="link-dark rounded">@Traducciones["EstimacionDePresupuesto"].Texto</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        } }
                                         @{ if (Permisos.Exists(per => per.ToString() == "GestionInteligenteDeActivos"))
 
                                             {

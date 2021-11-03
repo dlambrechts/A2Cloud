@@ -61,6 +61,7 @@
     <Compile Include="IdiomaTraduccionBE.cs" />
     <Compile Include="LicenciaBE.cs" />
     <Compile Include="LicenciaModalidadBE.cs" />
+    <Compile Include="LocalizacionBE.cs" />
     <Compile Include="MarcaBE.cs" />
     <Compile Include="PerfilComponenteBE.cs" />
     <Compile Include="PerfilDeHardwareBE.cs" />

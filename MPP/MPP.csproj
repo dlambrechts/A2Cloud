@@ -51,6 +51,7 @@
     <Compile Include="DigitoVerificadorMPP.cs" />
     <Compile Include="IdiomaMPP.cs" />
     <Compile Include="LicenciaMPP.cs" />
+    <Compile Include="LocalizacionMPP.cs" />
     <Compile Include="MarcaMPP.cs" />
     <Compile Include="PerfilDeHardwareMPP.cs" />
     <Compile Include="PerfilMPP.cs" />

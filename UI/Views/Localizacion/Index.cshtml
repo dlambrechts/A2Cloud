@@ -1,0 +1,165 @@
+﻿@model X.PagedList.PagedList<BE.LocalizacionBE>
+
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Common
+
+@{
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["Localizaciones"].Texto;
+}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@Traducciones["Localizaciones"].Texto</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                @using (Html.BeginForm())
+                {
+                    <div class="btn-group me-2">
+                        <span>
+                            @Traducciones["Buscar"].Texto @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
+
+                        </span>
+                    </div>
+                }
+                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Localizacion", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        @if (ViewBag.CreadoOk != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>@Traducciones["Correcto"].Texto:</strong> @Traducciones["LocalizacionCreada"].Texto
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (ViewBag.EditadoOk != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Correcto:</strong> @Traducciones["LocalizacionEditada"].Texto
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <table class=" table table-hover">
+            <thead>
+                <tr>
+
+                    <th>
+                        @Traducciones["Descripcion"].Texto
+                    </th>
+
+                    <th>
+                        @Traducciones["FechaCreacion"].Texto
+                    </th>
+                    <th>
+                        @Traducciones["FechaModificacion"].Texto
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCreacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaModificacion)
+                    </td>
+
+                    <td>
+                        <a href="@Url.Action("Details", "Localizacion", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
+                        <a href="@Url.Action("Edit", "Localizacion", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
+                        <a href="#" onclick="Confirmar('@item.Id','@item.ToString()')"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        <div class="pagination">
+            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, Valor_Filtro = ViewBag.ValorFiltro }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToIndividualPages = true,
+                DisplayPageCountAndCurrentLocation = false,
+                MaximumPageNumbersToDisplay = 8,
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" },
+            })
+        </div>
+    </div>
+
+</main>
+
+<!-- Modal Confirmar Eliminación-->
+<div class="modal fade" id="Confirmar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> @Traducciones["Eliminar"].Texto </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @Traducciones["ConfirmarEliminarLocalizacion"].Texto <b id="nombre_Localizacion"></b> ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> @Traducciones["Cancelar"].Texto</button>
+                <button type="button" class="btn btn-primary" onclick="Eliminar()"> @Traducciones["Confirmar"].Texto</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*Para eliminar campo oculto para el Id*@
+
+<input type="hidden" id="IdLocalizacion" />
+
+<script>
+
+    window.onload = function () {
+        document.getElementById('org-collapse').className = 'show';
+        document.getElementById('Localizacion').className = 'btn-activo';
+    };
+</script>
+
+<script>
+    var Confirmar = function (id, nombre) {
+
+        $("#IdLocalizacion").val(id);
+        $("#nombre_Localizacion").text(nombre);
+        $("#Confirmar").modal('show');
+    }
+
+    var Eliminar = function () {
+
+        var Id = $('#IdLocalizacion').val();
+
+        $.ajax({
+
+            type: "POST",
+            url: "/Localizacion/Delete",
+            data: { id: Id },
+            success: function (response) {
+                if (response.success) {
+                    $("#Confirmar").modal("hide");
+                    location.reload();
+
+                } else { }
+            }
+        })
+    }
+
+</script>
