@@ -29,6 +29,10 @@ namespace MPP
                 Parametros.Add("@Mail", Colaborador.Mail);
                 Parametros.Add("@Departamento", Colaborador.Departamento.Id);
                 Parametros.Add("@PerfilHardware", Colaborador.PerfilHardware.Id);
+                Parametros.Add("@FullRemoto", Colaborador.FullRemoto);
+
+                if (Colaborador.Localizacion != null) { Parametros.Add("@Localizacion", Colaborador.Localizacion.Id); }
+                
 
                 Parametros.Add("@Calle", Colaborador.Ubicacion.Calle);
                 Parametros.Add("@Altura", Colaborador.Ubicacion.Altura);
@@ -65,6 +69,7 @@ namespace MPP
 
                 DepartamentoMPP mppDepartamento = new DepartamentoMPP();
                 PerfilDeHardwareMPP mppPerfil = new PerfilDeHardwareMPP();
+                LocalizacionMPP mppLocalizacion = new LocalizacionMPP();
 
                 if (DS.Tables[0].Rows.Count > 0)
                 {
@@ -81,6 +86,12 @@ namespace MPP
                         Colaborador.Departamento = mppDepartamento.ObtenerUno(Colaborador.Departamento);
                         Colaborador.PerfilHardware.Id = Convert.ToInt32(Item["PerfilDeHardware"]);
                         Colaborador.PerfilHardware = mppPerfil.ObtenerUno(Colaborador.PerfilHardware);
+
+                        if ((Item["Localizacion"]) != DBNull.Value) { 
+                        Colaborador.Localizacion.Id = Convert.ToInt32(Item["Localizacion"]);
+                        Colaborador.Localizacion = mppLocalizacion.ObtenerUno(Colaborador.Localizacion);
+                        }
+                        Colaborador.FullRemoto = Convert.ToBoolean(Item["FullRemoto"]);
 
                         if ((Item["FechaCreacion"]) != DBNull.Value) { Colaborador.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                         if ((Item["FechaModificacion"]) != DBNull.Value) Colaborador.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
@@ -115,6 +126,7 @@ namespace MPP
             DepartamentoMPP mppDepartamento = new DepartamentoMPP();
             PerfilDeHardwareMPP mppPerfil = new PerfilDeHardwareMPP();
             UbicacionMPP mppUbicacion = new UbicacionMPP();
+            LocalizacionMPP mppLocalizacion = new LocalizacionMPP();
 
 
             if (DS.Tables[0].Rows.Count > 0)
@@ -131,6 +143,12 @@ namespace MPP
                     Colaborador.PerfilHardware = mppPerfil.ObtenerUno(Colaborador.PerfilHardware);
                     Colaborador.Ubicacion.Id = Convert.ToInt32(Item["Ubicacion"]);
                     Colaborador.Ubicacion = mppUbicacion.ObtenerUno(Colaborador.Ubicacion);
+                    if ((Item["Localizacion"]) != DBNull.Value)
+                    {
+                        Colaborador.Localizacion.Id = Convert.ToInt32(Item["Localizacion"]);
+                        Colaborador.Localizacion = mppLocalizacion.ObtenerUno(Colaborador.Localizacion);
+                    }
+                    Colaborador.FullRemoto = Convert.ToBoolean(Item["FullRemoto"]);
 
 
                     if ((Item["FechaCreacion"]) != DBNull.Value) { Colaborador.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
@@ -157,6 +175,8 @@ namespace MPP
                 Parametros.Add("@Mail", Colaborador.Mail);
                 Parametros.Add("@Departamento", Colaborador.Departamento.Id);
                 Parametros.Add("@PerfilHardware", Colaborador.PerfilHardware.Id);
+                Parametros.Add("@FullRemoto", Colaborador.FullRemoto);
+                if (Colaborador.Localizacion != null) { Parametros.Add("@Localizacion", Colaborador.Localizacion.Id); }
 
                 Parametros.Add("@FechaModificacion", Colaborador.FechaModificacion);
                 Parametros.Add("@UsuarioModificacion", Colaborador.UsuarioModificacion.Id);

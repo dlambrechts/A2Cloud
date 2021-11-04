@@ -58,6 +58,7 @@ namespace UI.Controllers
 
             ViewData["Activos"] = bllActivo.Listar().Where(x=>x.Estado.Asignar()==true);
 
+
             var Colaboradores= bllColaborador.Listar().Select(c =>new { Id=c.Id,Descripcion=c.Nombre + " " + c.Apellido}).ToList();
             ViewBag.Colaboradores = new SelectList(Colaboradores, "Id", "Descripcion");
 

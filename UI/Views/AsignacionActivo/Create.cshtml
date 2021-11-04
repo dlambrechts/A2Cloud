@@ -55,6 +55,19 @@
                 </div>
             </div>
 
+            <div class="col-auto">
+                <div class="input-group col-md-10">
+                    <span class="input-group-text"> @Traducciones["Ubicacion"].Texto</span>
+                    @{
+                        var listItems = new List<SelectListItem>();
+                        listItems.Add(new SelectListItem { Text = "Domicilio del Colaborador", Value = "0" });
+                        listItems.Add(new SelectListItem { Text = "Sucursal", Value = "1" });
+                    }
+
+                    @Html.DropDownList("DropdownlistName", listItems, new { @class = "form-control" })
+                </div>
+            </div>
+
             <div class="col-auto ">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["FechaAsignacion"].Texto</span>
@@ -64,19 +77,17 @@
             </div>
 
 
-
-
         </div>
-            <br />
-            <div class="col-md-6">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="@Traducciones["Crear"].Texto" class="btn btn-primary" />
+                <br />
+                <div class="col-md-6">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="@Traducciones["Crear"].Texto" class="btn btn-primary" />
+                    </div>
                 </div>
+
+                }
+
             </div>
-
-        }
-
-    </div>
 
 
 </main>

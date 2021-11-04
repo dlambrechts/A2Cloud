@@ -64,6 +64,21 @@
                     @Html.DropDownListFor(model => model.Departamento.Id, new SelectList((System.Collections.IEnumerable)ViewData["Departamentos"], "Id", "Descripcion"), new { @class = "form-control" })
                 </div>
             </div>
+            <div class="col-auto ">
+
+                <label class="control-label col-md-2">@Traducciones["FullRemoto"].Texto</label>
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.FullRemoto, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FullRemoto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-auto">
+                <div class="input-group col-md-10">
+                    <span class="input-group-text"> @Traducciones["Localizacion"].Texto</span>
+                    @Html.DropDownListFor(model => model.Localizacion.Id, new SelectList((System.Collections.IEnumerable)ViewData["Localizaciones"], "Id", "Descripcion"), new { @class = "form-control", @id = "Loc" })
+                </div>
+            </div>
             <div class="col-auto">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["PerfilDeHardware"].Texto</span>
@@ -127,11 +142,32 @@
     </div>
 </main>
 
-<script>
+@section scripts {
+    <script>
 
         window.onload = function () {
             document.getElementById('org-collapse').className = 'show';
             document.getElementById('Colaborador').className = 'btn-activo';
         };
-</script>
+
+
+        $(function () {
+            $('#FullRemoto').change(function () {
+                if ($(this).is(':checked')) {
+                    // desahabilitar dropdown Localizacion
+                    $('#Loc').attr('disabled', 'disabled');
+                } else {
+                    $('#Loc').removeAttr('disabled');
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            if($('#FullRemoto').is(':checked')){
+                $("#Loc").prop("disabled", "disabled"); }
+
+
+        });
+    </script>
+}
 

@@ -16,6 +16,8 @@ namespace BE
         private DepartamentoBE departamento;
         private PerfilDeHardwareBE perfilHardware;
         private UbicacionBE ubicacion;
+        private LocalizacionBE localizacion;
+        private bool fullRemoto;
 
         [Required]
         public string Nombre { get => nombre; set => nombre = value; }
@@ -27,6 +29,8 @@ namespace BE
         public DepartamentoBE Departamento { get => departamento; set => departamento = value; }
         public PerfilDeHardwareBE PerfilHardware { get => perfilHardware; set => perfilHardware = value; }
         public UbicacionBE Ubicacion { get => ubicacion; set => ubicacion = value; }
+        public bool FullRemoto { get => fullRemoto; set => fullRemoto = value; }
+        public LocalizacionBE Localizacion { get => localizacion; set => localizacion = value; }
 
         public override string ToString()
         {
@@ -39,6 +43,7 @@ namespace BE
             departamento = new DepartamentoBE();
             perfilHardware = new PerfilDeHardwareBE();
             ubicacion = new UbicacionBE();
+            localizacion = new LocalizacionBE();
         
         }
     }

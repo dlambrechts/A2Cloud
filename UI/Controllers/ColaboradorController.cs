@@ -14,6 +14,7 @@ namespace UI.Controllers
         ColaboradorBLL bllCol = new ColaboradorBLL();
         DepartamentoBLL bllDep = new DepartamentoBLL();
         PerfilDeHardwareBLL bllPerf = new PerfilDeHardwareBLL();
+        LocalizacionBLL bllLoc = new LocalizacionBLL();
 
         // GET: Colaborador
         public ActionResult Index(int? pagina, string Dato_Buscar, string Valor_Filtro)
@@ -64,6 +65,7 @@ namespace UI.Controllers
         {
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
+            ViewData["Localizaciones"] = bllLoc.Listar();
             ViewData["Departamentos"] = bllDep.Listar();
             ViewData["Perfiles"] = bllPerf.Listar();
 
@@ -79,12 +81,15 @@ namespace UI.Controllers
             {
                 ModelState.Remove("PerfilHardware.Descripcion");
                 ModelState.Remove("Departamento.Descripcion");
+                ModelState.Remove("Localizacion.Descripcion");
 
                 if (ModelState.IsValid)
                 {
                     Colaborador.UsuarioCreacion = new UsuarioBE();
                     Colaborador.UsuarioCreacion.Id = Convert.ToInt32(Session["IdUsuario"]);
 
+
+                    if (Colaborador.FullRemoto == true) Colaborador.Localizacion = null;
 
                     bllCol.Insertar(Colaborador);
                     TempData["CreadoOk"] = "Creado";
@@ -94,8 +99,10 @@ namespace UI.Controllers
 
                 else
                 {
+                    ViewData["Localizaciones"] = bllLoc.Listar();
                     ViewData["Departamentos"] = bllDep.Listar();
                     ViewData["Perfiles"] = bllPerf.Listar();
+
                     return View("Create", Colaborador);
                 }
             }
@@ -114,6 +121,7 @@ namespace UI.Controllers
             Colaborador.Id = id;
             Colaborador = bllCol.ObtenerUno(Colaborador);
 
+            ViewData["Localizaciones"] = bllLoc.Listar();
             ViewData["Departamentos"] = bllDep.Listar();
             ViewData["Perfiles"] = bllPerf.Listar();
 
@@ -128,19 +136,24 @@ namespace UI.Controllers
             {
                 ModelState.Remove("PerfilHardware.Descripcion");
                 ModelState.Remove("Departamento.Descripcion");
+                ModelState.Remove("Localizacion.Descripcion");
+
                 if (ModelState.IsValid)
                 {
                     Colaborador.UsuarioModificacion = new UsuarioBE();
                     Colaborador.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
 
+                    if (Colaborador.FullRemoto == true) Colaborador.Localizacion = null;
+
                     TempData["EditadoOk"] = "Editado";
+
                     bllCol.Editar(Colaborador);
                 }
 
                 else
 
                 {
-
+                    ViewData["Localizaciones"] = bllLoc.Listar();
                     ViewData["Departamentos"] = bllDep.Listar();
                     ViewData["Perfiles"] = bllPerf.Listar();
 

@@ -13,7 +13,7 @@ namespace BE
 
         private string descripcion;
         private UbicacionBE ubicacion;
-
+        [Required(ErrorMessage = "La Descripción es Obligatoria")]
         public string Descripcion { get => descripcion; set => descripcion = value; }
         public UbicacionBE Ubicacion { get => ubicacion; set => ubicacion = value; }
 
