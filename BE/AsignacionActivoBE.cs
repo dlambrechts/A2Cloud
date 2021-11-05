@@ -16,6 +16,7 @@ namespace BE
         private DateTime fechaInicio;
         private DateTime fechaFinalizacion;
         private UbicacionBE ubicacion;
+        private AsignacionTipoBE tipo;
 
         public string Detalle { get => detalle; set => detalle = value; }
         public ActivoBE Activo { get => activo; set => activo = value; }
@@ -27,6 +28,7 @@ namespace BE
         public DateTime FechaInicio { get => fechaInicio; set => fechaInicio = value; }
         public DateTime FechaFinalizacion { get => fechaFinalizacion; set => fechaFinalizacion = value; }
         public UbicacionBE Ubicacion { get => ubicacion; set => ubicacion = value; }
+        public AsignacionTipoBE Tipo { get => tipo; set => tipo = value; }
 
         public AsignacionActivoBE() 
         
@@ -35,6 +37,7 @@ namespace BE
             colaborador = new ColaboradorBE();
             estado = new AsignacionEstadoBE();
             ubicacion = new UbicacionBE();
+            tipo = new AsignacionTipoBE();
         }
     }
 }

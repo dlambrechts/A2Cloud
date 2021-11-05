@@ -21,5 +21,19 @@ namespace BLL
         }
 
 
+        public List<AsignacionTipoBE> ListarTipoAsignacion() 
+        
+        {
+            return mppAsignacionActivo.ListarTipoAsignacion();
+        
+        }
+
+        public AsignacionTipoBE TipoAsignacionObtenerUno(AsignacionTipoBE AsignacionTipo) 
+        
+        {
+
+            return mppAsignacionActivo.TipoAsignacionObtenerUno(AsignacionTipo);
+        }
+
     }
 }

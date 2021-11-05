@@ -120,5 +120,71 @@ namespace MPP
             return AsignacionEstado;
 
         }
+
+
+        public List<AsignacionTipoBE> ListarTipoAsignacion()
+
+        {
+            try
+            {
+                List<AsignacionTipoBE> Lista = new List<AsignacionTipoBE>();
+
+                Acceso AccesoDB = new Acceso();
+                DataSet DS = new DataSet();
+                DS = AccesoDB.LeerDatos("AsignacionTipoListar", null);
+
+                if (DS.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow Item in DS.Tables[0].Rows)
+                    {
+
+                        AsignacionTipoBE AsignacionTipo = new AsignacionTipoBE();
+
+                        AsignacionTipo.Id = Convert.ToInt32(Item["Id"]);
+                        AsignacionTipo.Descripcion = Item["Descripcion"].ToString().Trim();
+
+
+                        Lista.Add(AsignacionTipo);
+                    }
+
+                    return Lista;
+                }
+                else
+                {
+                    return Lista;
+                }
+
+            }
+            catch (Exception ex)
+
+            {
+                FileMananager.RegistrarError(ex.Message);
+                return null;
+            }
+        }
+
+        public AsignacionTipoBE TipoAsignacionObtenerUno(AsignacionTipoBE AsignacionTipo)
+
+        {
+            Hashtable Param = new Hashtable();
+            Param.Add("@Id", AsignacionTipo.Id);
+            DataSet DS = new DataSet();
+            DS = AccesoDB.LeerDatos("AsignacionTipoObtenerPorId", Param);
+
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow Item in DS.Tables[0].Rows)
+                {
+
+                    AsignacionTipo.Descripcion = Item["Descripcion"].ToString().Trim();
+
+
+                }
+            }
+
+            return AsignacionTipo;
+
+        }
+
     }
 }

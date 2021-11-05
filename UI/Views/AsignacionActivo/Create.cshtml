@@ -57,14 +57,8 @@
 
             <div class="col-auto">
                 <div class="input-group col-md-10">
-                    <span class="input-group-text"> @Traducciones["Ubicacion"].Texto</span>
-                    @{
-                        var listItems = new List<SelectListItem>();
-                        listItems.Add(new SelectListItem { Text = "Domicilio del Colaborador", Value = "0" });
-                        listItems.Add(new SelectListItem { Text = "Sucursal", Value = "1" });
-                    }
-
-                    @Html.DropDownList("DropdownlistName", listItems, new { @class = "form-control" })
+                    <span class="input-group-text"> @Traducciones["Tipo"].Texto</span>
+                    @Html.DropDownListFor(model => model.Tipo.Id, new SelectList((System.Collections.IEnumerable)ViewData["TiposAsignacion"], "Id", "Descripcion")," Seleccionar..", new { @class = "form-control" })
                 </div>
             </div>
 

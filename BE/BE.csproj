@@ -48,6 +48,7 @@
     <Compile Include="ActivoEstadoBajaBE.cs" />
     <Compile Include="ActivoEstadoBE.cs" />
     <Compile Include="ActivoEstadoDisponibleBE.cs" />
+    <Compile Include="AsignacionTipoBE.cs" />
     <Compile Include="AsignacionActivoBE.cs" />
     <Compile Include="AsignacionEstadoBE.cs" />
     <Compile Include="BackupBE.cs" />

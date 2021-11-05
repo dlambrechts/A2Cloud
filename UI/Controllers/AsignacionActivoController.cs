@@ -13,8 +13,8 @@ namespace UI.Controllers
     {
         ActivoBLL bllActivo = new ActivoBLL();
         ColaboradorBLL bllColaborador = new ColaboradorBLL();
-
         AsignacionActivoBLL bllAsignacionActivo = new AsignacionActivoBLL();
+
         // GET: AsignacionActivo
         public ActionResult Index(int? pagina, string Dato_Buscar, string Valor_Filtro)
         {
@@ -57,7 +57,7 @@ namespace UI.Controllers
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
             ViewData["Activos"] = bllActivo.Listar().Where(x=>x.Estado.Asignar()==true);
-
+            ViewData["TiposAsignacion"] = bllAsignacionActivo.ListarTipoAsignacion();
 
             var Colaboradores= bllColaborador.Listar().Select(c =>new { Id=c.Id,Descripcion=c.Nombre + " " + c.Apellido}).ToList();
             ViewBag.Colaboradores = new SelectList(Colaboradores, "Id", "Descripcion");
