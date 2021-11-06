@@ -37,6 +37,8 @@ namespace BE
             return Nombre+" "+Apellido;
         }
 
+        public string NombreCompleto { get { return nombre + " " + apellido; } }
+
         public ColaboradorBE() 
         
         {

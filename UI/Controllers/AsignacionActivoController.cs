@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BE;
 using BLL;
 using X.PagedList;
+using GestorDeArchivo;
 
 namespace UI.Controllers
 {
@@ -67,16 +68,46 @@ namespace UI.Controllers
 
         // POST: AsignacionActivo/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(AsignacionActivoBE Asignacion)
         {
             try
             {
-                // TODO: Add insert logic here
+                ModelState.Remove("Marca.Descripcion");
+                ModelState.Remove("Colaborador.Nombre");
+                ModelState.Remove("Colaborador.Apellido");
+                ModelState.Remove("Colaborador.Mail");
+                ModelState.Remove("Activo.Nombre");
+                ModelState.Remove("Activo.CicloDeVida");
+                ModelState.Remove("Activo.Modelo");
+                ModelState.Remove("Activo.ModeloProcesador");
 
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Asignacion.UsuarioCreacion = new UsuarioBE();
+                    Asignacion.UsuarioCreacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+                    Asignacion.Colaborador = bllColaborador.ObtenerUno(Asignacion.Colaborador);
+
+                    bllAsignacionActivo.Insertar(Asignacion);
+                    TempData["CreadoOk"] = "Creado";
+
+                    return RedirectToAction("Index");
+                }
+
+                else
+                {
+                    ViewData["Activos"] = bllActivo.Listar().Where(x => x.Estado.Asignar() == true);
+                    ViewData["TiposAsignacion"] = bllAsignacionActivo.ListarTipoAsignacion();
+
+                    var Colaboradores = bllColaborador.Listar().Select(c => new { Id = c.Id, Descripcion = c.Nombre + " " + c.Apellido }).ToList();
+                    ViewBag.Colaboradores = new SelectList(Colaboradores, "Id", "Descripcion");
+
+                    return View("Create", Asignacion);
+                }
             }
-            catch
+            catch(Exception ex)
             {
+                FileMananager.RegistrarError(ex.Message);
                 return View();
             }
         }

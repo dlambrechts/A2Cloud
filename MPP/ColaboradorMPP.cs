@@ -70,6 +70,7 @@ namespace MPP
                 DepartamentoMPP mppDepartamento = new DepartamentoMPP();
                 PerfilDeHardwareMPP mppPerfil = new PerfilDeHardwareMPP();
                 LocalizacionMPP mppLocalizacion = new LocalizacionMPP();
+                UbicacionMPP mppUbicacion = new UbicacionMPP();
 
                 if (DS.Tables[0].Rows.Count > 0)
                 {
@@ -92,6 +93,9 @@ namespace MPP
                         Colaborador.Localizacion = mppLocalizacion.ObtenerUno(Colaborador.Localizacion);
                         }
                         Colaborador.FullRemoto = Convert.ToBoolean(Item["FullRemoto"]);
+
+                        Colaborador.Ubicacion.Id = Convert.ToInt32(Item["Ubicacion"]);
+                        Colaborador.Ubicacion = mppUbicacion.ObtenerUno(Colaborador.Ubicacion);
 
                         if ((Item["FechaCreacion"]) != DBNull.Value) { Colaborador.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                         if ((Item["FechaModificacion"]) != DBNull.Value) Colaborador.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
@@ -150,6 +154,8 @@ namespace MPP
                     }
                     Colaborador.FullRemoto = Convert.ToBoolean(Item["FullRemoto"]);
 
+                    Colaborador.Ubicacion.Id = Convert.ToInt32(Item["Ubicacion"]);
+                    Colaborador.Ubicacion = mppUbicacion.ObtenerUno(Colaborador.Ubicacion);
 
                     if ((Item["FechaCreacion"]) != DBNull.Value) { Colaborador.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                     if ((Item["FechaModificacion"]) != DBNull.Value) Colaborador.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);

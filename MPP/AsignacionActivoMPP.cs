@@ -15,6 +15,36 @@ namespace MPP
     {
         Acceso AccesoDB = new Acceso();
 
+
+        public int Insertar(AsignacionActivoBE Asignacion)
+
+        {
+            try
+            {
+                string Consulta = "AsignacionActivoInsertar";
+                Hashtable Parametros = new Hashtable();
+
+                Parametros.Add("@Activo", Asignacion.Activo.Id);
+                Parametros.Add("@Detalle", Asignacion.Detalle);
+                Parametros.Add("@Colaborador", Asignacion.Colaborador.Id);
+                Parametros.Add("@Estado", Asignacion.Estado.Id);
+                Parametros.Add("@Tipo", Asignacion.Tipo.Id);
+                Parametros.Add("@Ubicacion", Asignacion.Ubicacion.Id);
+                Parametros.Add("@FechaInicio", Asignacion.FechaInicio);
+                Parametros.Add("@FechaCreacion", Asignacion.FechaCreacion);
+                Parametros.Add("@UsuarioCreacion", Asignacion.UsuarioCreacion.Id);
+
+
+                return AccesoDB.Escribir(Consulta, Parametros);
+
+            }
+            catch (Exception ex)
+
+            {
+                FileMananager.RegistrarError(ex.Message);
+                return -1;
+            }
+        }
         public List<AsignacionActivoBE> Listar()
 
         {
@@ -26,6 +56,9 @@ namespace MPP
                 DataSet DS = new DataSet();
                 DS = AccesoDB.LeerDatos("AsignacionActivoListar", null);
 
+                ActivoMPP mppActivo = new ActivoMPP();
+                ColaboradorMPP mppColaborador = new ColaboradorMPP();
+
                 if (DS.Tables[0].Rows.Count > 0)
                 {
                     foreach (DataRow Item in DS.Tables[0].Rows)
@@ -35,6 +68,16 @@ namespace MPP
 
                         AsignacionActivo.Id = Convert.ToInt32(Item["Id"]);
                         AsignacionActivo.Detalle = Item["Detalle"].ToString().Trim();
+                        AsignacionActivo.Activo.Id = Convert.ToInt32(Item["Activo"]);
+                        AsignacionActivo.Activo = mppActivo.ObtenerPorId(AsignacionActivo.Activo);
+                        AsignacionActivo.Colaborador.Id = Convert.ToInt32(Item["Colaborador"]);
+                        AsignacionActivo.Colaborador = mppColaborador.ObtenerUno(AsignacionActivo.Colaborador);
+                        AsignacionActivo.Tipo.Id = Convert.ToInt32(Item["Tipo"]);
+                        AsignacionActivo.Tipo = TipoAsignacionObtenerUno(AsignacionActivo.Tipo);
+                        AsignacionActivo.Estado.Id = Convert.ToInt32(Item["Estado"]);
+                        AsignacionActivo.Estado = EstadoObtenerUno(AsignacionActivo.Estado);
+                        AsignacionActivo.FechaInicio = Convert.ToDateTime(Item["FechaInicio"]);
+
                         if ((Item["FechaCreacion"]) != DBNull.Value) { AsignacionActivo.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                         if ((Item["FechaModificacion"]) != DBNull.Value) AsignacionActivo.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
 
@@ -111,8 +154,7 @@ namespace MPP
                 {
 
                     AsignacionEstado.Descripcion = Item["Descripcion"].ToString().Trim();
-                    if ((Item["FechaCreacion"]) != DBNull.Value) { AsignacionEstado.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
-                    if ((Item["FechaModificacion"]) != DBNull.Value) AsignacionEstado.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
+
 
                 }
             }

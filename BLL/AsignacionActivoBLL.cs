@@ -12,6 +12,33 @@ namespace BLL
     {
         AsignacionActivoMPP mppAsignacionActivo = new AsignacionActivoMPP();
 
+        public void Insertar(AsignacionActivoBE Asignacion)
+
+        {
+            Asignacion.FechaCreacion = DateTime.Now;
+
+            ActivoBLL bllActivo = new ActivoBLL();
+
+            Asignacion.Activo.CambiarEstado(new ActivoEstadoAsignadoBE());
+
+            Asignacion.Activo.FechaModificacion = DateTime.Now;
+            Asignacion.Activo.UsuarioModificacion = Asignacion.UsuarioCreacion;
+
+            Asignacion.Estado.Id = 1;
+
+            if(Asignacion.Tipo.Id==1)
+            {
+                Asignacion.Ubicacion = Asignacion.Colaborador.Ubicacion;
+
+            }
+
+            else { Asignacion.Ubicacion = Asignacion.Colaborador.Localizacion.Ubicacion; }
+            
+            mppAsignacionActivo.Insertar(Asignacion);
+
+            bllActivo.CambiarEstado(Asignacion.Activo);
+
+        }
         public List<AsignacionActivoBE> Listar() 
         
         {

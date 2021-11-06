@@ -44,6 +44,13 @@ namespace BLL
             else { mppActivo.Editar(Activo); }
         }
 
+        public int CambiarEstado(ActivoBE Activo) 
+        
+        {
+            Activo.FechaModificacion = DateTime.Now;
+            return mppActivo.CambiarEstado(Activo);
+        }
+
         public ActivoBE ObtenerPorId (ActivoBE Activo) 
         
         {

@@ -65,7 +65,7 @@
                         @Traducciones["Colaborador"].Texto
                     </th>
                     <th>
-                        @Traducciones["Ubicacion"].Texto
+                        @Traducciones["Tipo"].Texto
                     </th>
                     <th>
                         @Traducciones["FechaInicio"].Texto
@@ -73,9 +73,7 @@
                     <th>
                         @Traducciones["Estado"].Texto
                     </th>
-                    <th>
-                        @Traducciones["FechaFinalizacion"].Texto
-                    </th>
+
                     <th></th>
                 </tr>
             </thead>
@@ -93,10 +91,10 @@
                 @Html.DisplayFor(modelItem => item.Activo.NumeroSerie)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Colaborador)
+                @Html.DisplayFor(modelItem => item.Colaborador.NombreCompleto)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Ubicacion)
+                @Html.DisplayFor(modelItem => item.Tipo.Descripcion)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaInicio)
@@ -104,9 +102,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Estado.Descripcion)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaFinalizacion)
-            </td>
+
             <td>
 
                 <a href="@Url.Action("Details", "AsignacionActivo", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
