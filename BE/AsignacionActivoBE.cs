@@ -18,6 +18,7 @@ namespace BE
         private UbicacionBE ubicacion;
         private AsignacionTipoBE tipo;
 
+        [Required]
         public string Detalle { get => detalle; set => detalle = value; }
         public ActivoBE Activo { get => activo; set => activo = value; }
         public ColaboradorBE Colaborador { get => colaborador; set => colaborador = value; }

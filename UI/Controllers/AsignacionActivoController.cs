@@ -60,6 +60,7 @@ namespace UI.Controllers
             ViewData["Activos"] = bllActivo.Listar().Where(x=>x.Estado.Asignar()==true);
             ViewData["TiposAsignacion"] = bllAsignacionActivo.ListarTipoAsignacion();
 
+
             var Colaboradores= bllColaborador.Listar().Select(c =>new { Id=c.Id,Descripcion=c.Nombre + " " + c.Apellido}).ToList();
             ViewBag.Colaboradores = new SelectList(Colaboradores, "Id", "Descripcion");
 
@@ -81,7 +82,9 @@ namespace UI.Controllers
                 ModelState.Remove("Activo.Modelo");
                 ModelState.Remove("Activo.ModeloProcesador");
 
-                if (ModelState.IsValid)
+                if (Asignacion.Tipo.Id == 0) { ModelState.AddModelError(string.Empty, "Debe seleccionar la Ubicación"); }
+
+                if (ModelState.IsValid )
                 {
                     Asignacion.UsuarioCreacion = new UsuarioBE();
                     Asignacion.UsuarioCreacion.Id = Convert.ToInt32(Session["IdUsuario"]);
@@ -101,7 +104,7 @@ namespace UI.Controllers
 
                     var Colaboradores = bllColaborador.Listar().Select(c => new { Id = c.Id, Descripcion = c.Nombre + " " + c.Apellido }).ToList();
                     ViewBag.Colaboradores = new SelectList(Colaboradores, "Id", "Descripcion");
-
+                  
                     return View("Create", Asignacion);
                 }
             }
