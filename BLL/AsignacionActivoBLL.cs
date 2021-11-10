@@ -26,7 +26,10 @@ namespace BLL
 
             Asignacion.Estado.Id = 1;
 
-            if(Asignacion.Tipo.Id==1)
+            if (Asignacion.Colaborador.FullRemoto == true) { Asignacion.Tipo.Id = 1; }
+
+            if(Asignacion.Tipo.Id==1 )
+
             {
                 Asignacion.Ubicacion = Asignacion.Colaborador.Ubicacion;
 

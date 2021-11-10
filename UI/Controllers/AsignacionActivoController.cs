@@ -73,6 +73,11 @@ namespace UI.Controllers
         {
             try
             {
+
+                ColaboradorBE col = new ColaboradorBE();
+                col.Id = Asignacion.Colaborador.Id;
+                col = bllColaborador.ObtenerUno(col);
+
                 ModelState.Remove("Marca.Descripcion");
                 ModelState.Remove("Colaborador.Nombre");
                 ModelState.Remove("Colaborador.Apellido");
@@ -82,7 +87,8 @@ namespace UI.Controllers
                 ModelState.Remove("Activo.Modelo");
                 ModelState.Remove("Activo.ModeloProcesador");
 
-                if (Asignacion.Tipo.Id == 0) { ModelState.AddModelError(string.Empty, "Debe seleccionar la Ubicación"); }
+                if (Asignacion.Tipo.Id == 0 && col.FullRemoto==false) { ModelState.AddModelError(string.Empty, "Debe seleccionar la Ubicación"); }
+                if (Asignacion.Colaborador.Id == 0) { ModelState.AddModelError(string.Empty, "Debe seleccionar un Colaborador"); }
 
                 if (ModelState.IsValid )
                 {
@@ -115,27 +121,18 @@ namespace UI.Controllers
             }
         }
 
-        // GET: AsignacionActivo/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: AsignacionActivo/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public JsonResult ObtenerColaborador(int Id)
         {
-            try
-            {
-                // TODO: Add update logic here
+            ColaboradorBE colaborador = new ColaboradorBE();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            colaborador.Id = Id;
+            colaborador = bllColaborador.ObtenerUno(colaborador);
+
+            return Json(colaborador);
         }
+
 
         // GET: AsignacionActivo/Delete/5
         public ActionResult Delete(int id)

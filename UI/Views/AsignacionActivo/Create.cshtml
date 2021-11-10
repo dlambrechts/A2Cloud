@@ -55,7 +55,7 @@
                     <div class="input-group col-md-10">
                         <span class="input-group-text"> @Traducciones["Colaborador"].Texto</span>
 
-                        @Html.DropDownListFor(model => model.Colaborador.Id, (SelectList)ViewBag.Colaboradores, new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.Colaborador.Id, (SelectList)ViewBag.Colaboradores, "Seleccionar..", new { @class = "form-control" })
                     </div>
                 </div>
 
@@ -96,11 +96,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Ubicado en sucursal
+                    El activo se ubicará en la sucursal a la que pertenece el Colaborador seleccionado.  <b><span id="col_localizacion"></span></b>
                 </div>
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-primary" onclick="Eliminar()"> @Traducciones["Confirmar"].Texto</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> @Traducciones["Entendido"].Texto</button>
                 </div>
             </div>
         </div>
@@ -115,13 +115,34 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Ubicado en domicilio de usuario
+                    El activo se ubicará en el domicilio del usuario.
 
-                    <span class="ub_calle"></span>
+
+                    <b> <span id="col_domicilio"></span></b>
                 </div>
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-primary" onclick="Eliminar()"> @Traducciones["Confirmar"].Texto</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> @Traducciones["Entendido"].Texto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Si el Usuario Es FullRemoto-->
+    <div class="modal fade" id="full_remoto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">  </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    El colaborador trabaja 100% remoto, la ubicación del dispositivo será en su domicilio.
+                    <b> <span id="col_dom_remoto"></span></b>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> @Traducciones["Entendido"].Texto</button>
                 </div>
             </div>
         </div>
@@ -154,7 +175,7 @@
                 console.log($('#Tipo_Id').val())
 
                 $("#sucursal").modal('show');
-                $('ub_calle').text("New Span text content");
+                
             }
 
             else if ($('#Tipo_Id').val() == "1") // En domicilio del Colaborador
@@ -163,6 +184,44 @@
 
                 $("#colaborador").modal('show');
             }
+        });
+    </script>
+
+
+    <script>
+        $("#Colaborador_Id").change(function () {
+
+            var Colaborador = $("#Colaborador_Id").val();
+            console.log(Colaborador);
+            $.post("/AsignacionActivo/ObtenerColaborador",
+                { Id: Colaborador },
+                function (response) {
+
+
+                    var DomicilioColaborador = response.Ubicacion.Calle + " " + response.Ubicacion.Altura + " (CP: "+response.Ubicacion.CodigoPostal+")";
+
+                    var LocalizacionColaborador = response.Localizacion.Descripcion;
+
+                    $("#col_domicilio").text(DomicilioColaborador);
+                    $("#col_dom_remoto").text(DomicilioColaborador);
+                    $("#col_localizacion").text(LocalizacionColaborador);
+
+                    if (response.FullRemoto == true)
+
+                    {
+                        $("#full_remoto").modal('show');
+                
+                       
+                            $('#Tipo_Id').attr('disabled', 'disabled');
+
+                    }
+                    else {
+                        $('#Tipo_Id').removeAttr('disabled');
+                    }
+                }
+  
+            );
+
         });
     </script>
 
