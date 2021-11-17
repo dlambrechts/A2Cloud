@@ -21,8 +21,8 @@ namespace UI.Controllers
         {
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
-            ViewBag.EliminadoOk = TempData["EliminadoOk"] as string;
-            ViewBag.EditadoOk = TempData["EditadoOk"] as string;
+
+            ViewBag.FinalizadoOk = TempData["FinalizadoOk"] as string;
             ViewBag.CreadoOk = TempData["CreadoOk"] as string;
 
             List<AsignacionActivoBE> Lista = new List<AsignacionActivoBE>();
@@ -167,6 +167,7 @@ namespace UI.Controllers
                     Asignacion.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
 
                     bllAsignacionActivo.Finalizar(Asignacion);
+                    TempData["FinalizadoOk"] = "Finalizado";
 
                     return RedirectToAction("Index"); 
                 
