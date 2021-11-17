@@ -61,7 +61,7 @@ namespace UI.Controllers
             ViewData["TiposAsignacion"] = bllAsignacionActivo.ListarTipoAsignacion();
 
 
-            var Colaboradores= bllColaborador.Listar().Select(c =>new { Id=c.Id,Descripcion=c.Nombre + " " + c.Apellido}).ToList();
+            var Colaboradores = bllColaborador.Listar().Select(c => new { Id = c.Id, Descripcion = c.Nombre + " " + c.Apellido + " (" + c.Departamento.Descripcion + ")" }).ToList();
             ViewBag.Colaboradores = new SelectList(Colaboradores, "Id", "Descripcion");
 
             return View();
@@ -86,6 +86,7 @@ namespace UI.Controllers
                 ModelState.Remove("Activo.CicloDeVida");
                 ModelState.Remove("Activo.Modelo");
                 ModelState.Remove("Activo.ModeloProcesador");
+                ModelState.Remove("Activo.NumeroSerie");
 
                 if (Asignacion.Tipo.Id == 0 && col.FullRemoto==false) { ModelState.AddModelError(string.Empty, "Debe seleccionar la Ubicación"); }
                 if (Asignacion.Colaborador.Id == 0) { ModelState.AddModelError(string.Empty, "Debe seleccionar un Colaborador"); }
@@ -108,7 +109,7 @@ namespace UI.Controllers
                     ViewData["Activos"] = bllActivo.Listar().Where(x => x.Estado.Asignar() == true);
                     ViewData["TiposAsignacion"] = bllAsignacionActivo.ListarTipoAsignacion();
 
-                    var Colaboradores = bllColaborador.Listar().Select(c => new { Id = c.Id, Descripcion = c.Nombre + " " + c.Apellido }).ToList();
+                    var Colaboradores = bllColaborador.Listar().Select(c => new { Id = c.Id, Descripcion = c.Nombre + " " + c.Apellido +" (" +c.Departamento.Descripcion+")"}).ToList();
                     ViewBag.Colaboradores = new SelectList(Colaboradores, "Id", "Descripcion");
                   
                     return View("Create", Asignacion);
@@ -134,21 +135,52 @@ namespace UI.Controllers
         }
 
 
-        // GET: AsignacionActivo/Delete/5
-        public ActionResult Delete(int id)
+        // GET: AsignacionActivo/Finalizar/5
+        public ActionResult Finalizar(int id)
         {
-            return View();
+
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            AsignacionActivoBE Asignacion = new AsignacionActivoBE();
+            Asignacion.Id = id;
+            Asignacion = bllAsignacionActivo.ObtenerUno(Asignacion);
+
+            Asignacion.FechaFinalizacion = DateTime.Now;  // para que la fecha propuesta sea la fecha actual
+
+            return View(Asignacion);
         }
 
-        // POST: AsignacionActivo/Delete/5
+        // POST: AsignacionActivo/finalizar/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Finalizar(AsignacionActivoBE Asignacion)
         {
             try
             {
-                // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
+                ModelState.Clear();
+                if (Asignacion.FechaFinalizacion < Asignacion.FechaInicio)     { ModelState.AddModelError(string.Empty, "La fecha de finalización no puede ser menor a la fecha de asignación"); }
+
+                if (ModelState.IsValid) 
+                
+                {
+                    Asignacion.UsuarioModificacion = new UsuarioBE();
+                    Asignacion.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+                    bllAsignacionActivo.Finalizar(Asignacion);
+
+                    return RedirectToAction("Index"); 
+                
+                }
+
+                else
+
+                {
+                    Asignacion = bllAsignacionActivo.ObtenerUno(Asignacion);
+
+                    Asignacion.FechaFinalizacion = DateTime.Now;  // para que la fecha propuesta sea la fecha actual
+                    return View("Finalizar", Asignacion);
+                    
+                }
             }
             catch
             {

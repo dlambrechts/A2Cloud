@@ -45,6 +45,31 @@ namespace MPP
                 return -1;
             }
         }
+
+        public int Finalizar(AsignacionActivoBE Asignacion)
+
+        {
+            try
+            {
+                string Consulta = "AsignacionActivoFinalizar";
+                Hashtable Parametros = new Hashtable();
+
+                Parametros.Add("@Id", Asignacion.Id);
+                Parametros.Add("@FechaFinalizacion", Asignacion.FechaFinalizacion);
+                Parametros.Add("@FechaModificacion", Asignacion.FechaModificacion);
+                Parametros.Add("@UsuarioModificacion", Asignacion.UsuarioModificacion.Id);
+
+
+                return AccesoDB.Escribir(Consulta, Parametros);
+
+            }
+            catch (Exception ex)
+
+            {
+                FileMananager.RegistrarError(ex.Message);
+                return -1;
+            }
+        }
         public List<AsignacionActivoBE> Listar()
 
         {
@@ -98,6 +123,44 @@ namespace MPP
                 FileMananager.RegistrarError(ex.Message);
                 return null;
             }
+        }
+
+        public AsignacionActivoBE ObtenerUno(AsignacionActivoBE Asignacion)
+
+        {
+            Hashtable Param = new Hashtable();
+            Param.Add("@Id", Asignacion.Id);
+            DataSet DS = new DataSet();
+            DS = AccesoDB.LeerDatos("AsignacionActivoObtenerPorId", Param);
+
+
+            ColaboradorMPP mppColaborador = new ColaboradorMPP();
+            ActivoMPP mppActivo = new ActivoMPP();
+
+            if (DS.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow Item in DS.Tables[0].Rows)
+                {
+
+                    Asignacion.Detalle = Item["Detalle"].ToString().Trim();
+                    Asignacion.Activo.Id = Convert.ToInt32(Item["Activo"]);
+                    Asignacion.Activo = mppActivo.ObtenerPorId(Asignacion.Activo);
+                    Asignacion.Colaborador.Id = Convert.ToInt32(Item["Colaborador"]);
+                    Asignacion.Colaborador = mppColaborador.ObtenerUno(Asignacion.Colaborador);
+                    Asignacion.Tipo.Id = Convert.ToInt32(Item["Tipo"]);
+                    Asignacion.Tipo = TipoAsignacionObtenerUno(Asignacion.Tipo);
+                    Asignacion.Estado.Id = Convert.ToInt32(Item["Estado"]);
+                    Asignacion.Estado = EstadoObtenerUno(Asignacion.Estado);
+                    Asignacion.FechaInicio = Convert.ToDateTime(Item["FechaInicio"]);
+                    if ((Item["FechaFinalizacion"]) != DBNull.Value) { Asignacion.FechaFinalizacion = Convert.ToDateTime(Item["FechaFinalizacion"]); }
+                    if ((Item["FechaCreacion"]) != DBNull.Value) { Asignacion.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
+                    if ((Item["FechaModificacion"]) != DBNull.Value) Asignacion.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
+
+                }
+            }
+
+            return Asignacion;
+
         }
         public List<AsignacionEstadoBE> ListarEstados()
 

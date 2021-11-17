@@ -8,16 +8,16 @@ using MPP;
 
 namespace BLL
 {
-   public class AsignacionActivoBLL
+    public class AsignacionActivoBLL
     {
         AsignacionActivoMPP mppAsignacionActivo = new AsignacionActivoMPP();
-
+        ActivoBLL bllActivo = new ActivoBLL();
         public void Insertar(AsignacionActivoBE Asignacion)
 
         {
             Asignacion.FechaCreacion = DateTime.Now;
 
-            ActivoBLL bllActivo = new ActivoBLL();
+            
 
             Asignacion.Activo.CambiarEstado(new ActivoEstadoAsignadoBE());
 
@@ -28,7 +28,7 @@ namespace BLL
 
             if (Asignacion.Colaborador.FullRemoto == true) { Asignacion.Tipo.Id = 1; }
 
-            if(Asignacion.Tipo.Id==1 )
+            if (Asignacion.Tipo.Id == 1)
 
             {
                 Asignacion.Ubicacion = Asignacion.Colaborador.Ubicacion;
@@ -36,33 +36,53 @@ namespace BLL
             }
 
             else { Asignacion.Ubicacion = Asignacion.Colaborador.Localizacion.Ubicacion; }
-            
+
             mppAsignacionActivo.Insertar(Asignacion);
 
             bllActivo.CambiarEstado(Asignacion.Activo);
 
         }
-        public List<AsignacionActivoBE> Listar() 
+
+        public void Finalizar(AsignacionActivoBE Asignacion) 
         
+        {
+            Asignacion.FechaModificacion= DateTime.Now;
+            Asignacion.Activo.CambiarEstado(new ActivoEstadoDisponibleBE());
+            Asignacion.Activo.UsuarioModificacion = Asignacion.UsuarioModificacion;
+
+            mppAsignacionActivo.Finalizar(Asignacion);
+
+            bllActivo.CambiarEstado(Asignacion.Activo);
+
+        }
+        public List<AsignacionActivoBE> Listar()
+
         {
 
             return mppAsignacionActivo.Listar();
-        
+
         }
 
 
-        public List<AsignacionTipoBE> ListarTipoAsignacion() 
-        
+        public List<AsignacionTipoBE> ListarTipoAsignacion()
+
         {
             return mppAsignacionActivo.ListarTipoAsignacion();
-        
+
         }
 
-        public AsignacionTipoBE TipoAsignacionObtenerUno(AsignacionTipoBE AsignacionTipo) 
-        
+        public AsignacionTipoBE TipoAsignacionObtenerUno(AsignacionTipoBE AsignacionTipo)
+
         {
 
             return mppAsignacionActivo.TipoAsignacionObtenerUno(AsignacionTipo);
+        }
+
+        public AsignacionActivoBE ObtenerUno(AsignacionActivoBE Asignacion) 
+        
+        {
+
+            return mppAsignacionActivo.ObtenerUno(Asignacion);
         }
 
     }

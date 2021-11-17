@@ -34,7 +34,7 @@
         @if (ViewBag.CreadoOk != null)
         {
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>@Traducciones["Correcto"].Texto:</strong> @Traducciones["DispositivoCreado"].Texto
+                <strong>@Traducciones["Correcto"].Texto:</strong> @Traducciones["DispositivoAsignado"].Texto
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
@@ -106,9 +106,13 @@
             <td>
 
                 <a href="@Url.Action("Details", "AsignacionActivo", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
-                <a href="@Url.Action("Edit", "AsignacionActivo", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
-                <a href="#" onclick="Confirmar('@item.Id','@item.Activo.Nombre')"><i class="fa fa-trash"></i></a>
-            </td>
+                @if (item.Estado.Id == 1)
+                {
+            <a href="@Url.Action("Finalizar", "AsignacionActivo", new { id = item.Id })">@Traducciones["Finalizar"].Texto</a>
+                }
+
+                    
+                </td>
         </tr>
             }
 

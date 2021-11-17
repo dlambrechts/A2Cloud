@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BLL;
 using BE;
 using X.PagedList;
+using GestorDeArchivo;
 
 namespace UI.Controllers
 {
@@ -100,8 +101,9 @@ namespace UI.Controllers
                     return View("Create", Activo); 
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                FileMananager.RegistrarError(ex.Message);
                 return View();
             }
         }

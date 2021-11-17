@@ -32,7 +32,10 @@ namespace MPP
                 Parametros.Add("@FechaCreacion", Activo.FechaCreacion);
                 Parametros.Add("@Tipo", Activo.Tipo.Id);
                 Parametros.Add("@NumeroSerie", Activo.NumeroSerie);
-                Parametros.Add("@Estado", Activo.Estado.GetType().ToString().Substring(3));
+                string Estado = Activo.Estado.GetType().ToString();
+                Estado = Estado.Substring(0, Estado.Length - 2);
+                Estado = Estado.Substring(3);
+                Parametros.Add("@Estado", Estado);
 
                 return AccesoDB.Escribir(Consulta, Parametros);
 
@@ -72,8 +75,7 @@ namespace MPP
 
                 string Estado = Activo.Estado.GetType().ToString();
                 Estado= Estado.Substring(0, Estado.Length - 2);
-                Estado = Estado.Substring(3);
-             
+                Estado = Estado.Substring(3);            
                 Parametros.Add("@Estado",Estado );
 
                 return AccesoDB.Escribir(Consulta, Parametros);

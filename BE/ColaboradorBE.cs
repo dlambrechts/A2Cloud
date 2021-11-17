@@ -32,6 +32,8 @@ namespace BE
         public bool FullRemoto { get => fullRemoto; set => fullRemoto = value; }
         public LocalizacionBE Localizacion { get => localizacion; set => localizacion = value; }
 
+
+
         public override string ToString()
         {
             return Nombre+" "+Apellido;

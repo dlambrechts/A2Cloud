@@ -12,7 +12,7 @@ namespace BE
     {
         private string nombre;
 
-        [Required(ErrorMessage = "El nombre es obligatorio")]
+        [Required]
         public string Nombre 
         
         {
@@ -58,6 +58,7 @@ namespace BE
 
         private string numeroSerie;
 
+        [Required]
         public string NumeroSerie
 
         {
@@ -113,6 +114,8 @@ namespace BE
 
         private bool aceleradoraGrafica;
         public bool AceleradoraGrafica { get => aceleradoraGrafica; set => aceleradoraGrafica = value; }
+
+        public string DescripcionLarga { get => Nombre +" (" + tipo.Descripcion + " S/N: " +numeroSerie+" )" ; }
 
         private ActivoEstadoBE estado;
 

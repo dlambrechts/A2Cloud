@@ -345,6 +345,7 @@
     <Content Include="Views\Localizacion\Create.cshtml" />
     <Content Include="Views\Localizacion\Edit.cshtml" />
     <Content Include="Views\Localizacion\Details.cshtml" />
+    <Content Include="Views\AsignacionActivo\Finalizar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

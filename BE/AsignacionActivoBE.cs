@@ -27,6 +27,8 @@ namespace BE
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime FechaInicio { get => fechaInicio; set => fechaInicio = value; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime FechaFinalizacion { get => fechaFinalizacion; set => fechaFinalizacion = value; }
         public UbicacionBE Ubicacion { get => ubicacion; set => ubicacion = value; }
         public AsignacionTipoBE Tipo { get => tipo; set => tipo = value; }
