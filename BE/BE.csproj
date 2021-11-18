@@ -60,6 +60,7 @@
     <Compile Include="IdiomaBE.cs" />
     <Compile Include="IdiomaEtiquetaBE.cs" />
     <Compile Include="IdiomaTraduccionBE.cs" />
+    <Compile Include="AsignacionLicenciaBE.cs" />
     <Compile Include="LicenciaBE.cs" />
     <Compile Include="LicenciaModalidadBE.cs" />
     <Compile Include="LocalizacionBE.cs" />

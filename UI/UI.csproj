@@ -134,6 +134,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ActivoController.cs" />
     <Compile Include="Controllers\AsignacionActivoController.cs" />
+    <Compile Include="Controllers\AsignacionLicenciaController.cs" />
     <Compile Include="Controllers\BitacoraController.cs" />
     <Compile Include="Controllers\ColaboradorController.cs" />
     <Compile Include="Controllers\DbController.cs" />
@@ -351,6 +352,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\AsignacionLicencia\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

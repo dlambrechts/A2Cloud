@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ActivoBLL.cs" />
     <Compile Include="AsignacionActivoBLL.cs" />
+    <Compile Include="AsignacionLicenciaBLL.cs" />
     <Compile Include="BackupBLL.cs" />
     <Compile Include="BitacoraBLL.cs" />
     <Compile Include="ColaboradorBLL.cs" />
