@@ -49,7 +49,12 @@ namespace UI.Controllers
         // GET: AsignacionActivo/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            AsignacionActivoBE AsignacionActivo = new AsignacionActivoBE();
+            AsignacionActivo.Id = id;
+            AsignacionActivo = bllAsignacionActivo.ObtenerUno(AsignacionActivo);
+            return View(AsignacionActivo);
         }
 
         // GET: AsignacionActivo/Create
