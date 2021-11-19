@@ -108,6 +108,7 @@ namespace MPP
                         Licencia.Modalidad.Id = Item["Modalidad"].ToString().Trim();
                         Licencia.Modalidad = ModalidadObtenerUno(Licencia.Modalidad);
                         Licencia.NumeroContrato = Item["NumeroContrato"].ToString().Trim();
+                        Licencia.Disponible = Convert.ToInt32(Item["Disponible"]);
 
                         if ((Item["FechaCreacion"]) != DBNull.Value) { Licencia.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                         if ((Item["FechaModificacion"]) != DBNull.Value) Licencia.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
@@ -155,6 +156,7 @@ namespace MPP
                     Licencia.Modalidad.Id = Item["Modalidad"].ToString().Trim();
                     Licencia.Modalidad = ModalidadObtenerUno(Licencia.Modalidad);
                     Licencia.NumeroContrato = Item["NumeroContrato"].ToString().Trim();
+                    Licencia.Disponible = Convert.ToInt32(Item["Disponible"]);
 
                     if ((Item["FechaCreacion"]) != DBNull.Value) { Licencia.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                     if ((Item["FechaModificacion"]) != DBNull.Value) Licencia.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);

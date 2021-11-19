@@ -56,7 +56,7 @@
             <div class="col-auto">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["Cantidad"].Texto</span>
-                    @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control",@disabled="disabled" } })
                     @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
                 </div>
             </div>

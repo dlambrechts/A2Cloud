@@ -348,11 +348,12 @@
     <Content Include="Views\Localizacion\Details.cshtml" />
     <Content Include="Views\AsignacionActivo\Finalizar.cshtml" />
     <Content Include="Views\AsignacionActivo\Details.cshtml" />
+    <Content Include="Views\AsignacionLicencia\Index.cshtml" />
+    <Content Include="Views\AsignacionLicencia\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\AsignacionLicencia\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

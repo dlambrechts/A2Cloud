@@ -13,6 +13,7 @@ namespace BE
         private ColaboradorBE colaborador;
         private AsignacionEstadoBE estado;
         private LicenciaBE licencia;
+        private LicenciaModalidadBE modalidad;
         private int cantidadAsignada;
         private string detalle;
         private DateTime fechaInicio;
@@ -26,6 +27,7 @@ namespace BE
         public string Detalle { get => detalle; set => detalle = value; }
         public DateTime FechaInicio { get => fechaInicio; set => fechaInicio = value; }
         public DateTime FechaFinalizacion { get => fechaFinalizacion; set => fechaFinalizacion = value; }
+        public LicenciaModalidadBE Modalidad { get => modalidad; set => modalidad = value; }
 
         public AsignacionLicenciaBE() 
         
@@ -34,6 +36,7 @@ namespace BE
             colaborador = new ColaboradorBE();
             estado = new AsignacionEstadoBE();
             licencia = new LicenciaBE();
+            modalidad = new LicenciaModalidadBE();
         }
     }
 }

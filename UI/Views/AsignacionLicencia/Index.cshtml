@@ -1,16 +1,16 @@
-﻿@model X.PagedList.PagedList<BE.LicenciaBE>
+﻿@model X.PagedList.PagedList<BE.AsignacionLicenciaBE>
 
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Common
 
-
 @{
     Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
-    ViewBag.Title = Traducciones["ContratosDeLicencia"].Texto;
+    ViewBag.Title = Traducciones["Asignaciones"].Texto;
 }
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">@Traducciones["ContratosDeLicencia"].Texto</h1>
+        <h1 class="h2">@Traducciones["Asignaciones"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 @using (Html.BeginForm())
@@ -22,7 +22,7 @@
                         </span>
                     </div>
                 }
-                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Licencia", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "AsignacionLicencia", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
                 <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
             </div>
 
@@ -33,87 +33,90 @@
         @if (ViewBag.CreadoOk != null)
         {
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>@Traducciones["Correcto"].Texto:</strong> @Traducciones["LicenciaCreada"].Texto
+                <strong>@Traducciones["Correcto"].Texto:</strong> @Traducciones["LicenciaAsignada"].Texto
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
-        @if (ViewBag.EditadoOk != null)
+        @if (ViewBag.FinalizadoOk != null)
         {
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Correcto:</strong> @Traducciones["LicenciaEditada"].Texto
+                <strong>Correcto:</strong> @Traducciones["LicenciaAsignacionFinalizada"].Texto
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
 
-        <table class=" table table-hover">
+
+
+        <table class="table table-hover table-responsive">
             <thead>
                 <tr>
 
                     <th>
-                        @Traducciones["Descripcion"].Texto
-                    </th>
-
-                    <th>
-                        @Traducciones["ModalidadLicencia"].Texto
+                        @Traducciones["Dispositivo"].Texto
                     </th>
                     <th>
-                        @Traducciones["Cantidad"].Texto
+                        @Traducciones["Tipo"].Texto
                     </th>
                     <th>
-                        @Traducciones["Disponibles"].Texto
+                        @Traducciones["NumeroSerie"].Texto
                     </th>
                     <th>
-                        @Traducciones["FechaVigencia"].Texto
+                        @Traducciones["Colaborador"].Texto
                     </th>
                     <th>
-                        @Traducciones["FechaFinalizacion"].Texto
+                        @Traducciones["Destino"].Texto
                     </th>
-
                     <th>
-                        @Traducciones["NumeroContrato"].Texto
+                        @Traducciones["FechaInicio"].Texto
+                    </th>
+                    <th>
+                        @Traducciones["Estado"].Texto
                     </th>
 
                     <th></th>
                 </tr>
             </thead>
-
             @foreach (var item in Model)
             {
-        <tr>
+                <tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Activo.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Activo.Tipo.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Activo.NumeroSerie)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Colaborador.NombreCompleto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Modalidad.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado.Descripcion)
+                    </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Modalidad.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cantidad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Disponible)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaVigencia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaFinalizacion)
-            </td>
+                    <td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroContrato)
-            </td>
+                        <a href="@Url.Action("Details", "AsignacionLicencia", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
+                        @if (item.Estado.Id == 1)
+                        {
+                            <a href="@Url.Action("Finalizar", "AsignacionLicencia", new { id = item.Id })">@Traducciones["Finalizar"].Texto</a>
+                        }
 
-            <td>
-                <a href="@Url.Action("Details", "Licencia", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
-                <a href="@Url.Action("Edit", "Licencia", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
-                <a href="#" onclick="Confirmar('@item.Id','@item.Descripcion')"><i class="fa fa-trash"></i></a>
-            </td>
-        </tr>
+
+                    </td>
+                </tr>
             }
 
         </table>
+
         <div class="pagination">
             @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, Valor_Filtro = ViewBag.ValorFiltro }),
             new PagedListRenderOptions
@@ -138,7 +141,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @Traducciones["ConfirmarEliminarContrato"].Texto <b id="nombre_licencia"></b> ?
+                @Traducciones["ConfirmarEliminarDispositivo"].Texto <b id="nombre_act"></b> ?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> @Traducciones["Cancelar"].Texto</button>
@@ -148,35 +151,34 @@
     </div>
 </div>
 
-
 @*Para eliminar campo oculto para el Id*@
 
-<input type="hidden" id="IdLicencia" />
+<input type="hidden" id="IdAsignacionDeActivo" />
 
 <script>
 
     window.onload = function () {
         document.getElementById('licencias-collapse').className = 'show';
-        document.getElementById('Licencias').className = 'btn-activo';
+        document.getElementById('AsigLicencias').className = 'btn-activo';
     };
 </script>
 
 <script>
     var Confirmar = function (id, nombre) {
 
-        $("#IdLicencia").val(id);
-        $("#nombre_licencia").text(nombre);
+        $("#IdAsignacionDeActivo").val(id);
+        $("#nombre_act").text(nombre);
         $("#Confirmar").modal('show');
     }
 
     var Eliminar = function () {
 
-        var Id = $('#IdLicencia').val();
+        var Id = $('#IdAsignacionDeActivo').val();
 
         $.ajax({
 
             type: "POST",
-            url: "/Licencia/Delete",
+            url: "/AsignacionDeActivo/Delete",
             data: { id: Id },
             success: function (response) {
                 if (response.success) {

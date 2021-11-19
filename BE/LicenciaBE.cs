@@ -8,13 +8,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BE
 {
-   public class LicenciaBE:EntityBE
+    public class LicenciaBE : EntityBE
     {
         private string descripcion;
         private DateTime fechaVigencia;
         private DateTime fechaFinalizacion;
         private ProductoSoftwareBE producto;
         private int cantidad;
+        private int disponible;
         private LicenciaModalidadBE modalidad;
         private string numeroContrato;
 
@@ -32,6 +33,9 @@ namespace BE
         public int Cantidad { get => cantidad; set => cantidad = value; }
         public LicenciaModalidadBE Modalidad { get => modalidad; set => modalidad = value; }
         public string NumeroContrato { get => numeroContrato; set => numeroContrato = value; }
+
+        public string DescripcionLarga { get => Descripcion + " (" + Modalidad.Descripcion +") "; }
+        public int Disponible { get => disponible; set => disponible = value; }
 
         public LicenciaBE() 
         
