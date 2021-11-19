@@ -59,6 +59,7 @@ namespace UI.Controllers
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
             ViewData["Activos"] = bllActivo.Listar();
+
             ViewData["Licencias"] = bllLicencia.Listar();
 
            
@@ -85,26 +86,15 @@ namespace UI.Controllers
             }
         }
 
-        // GET: AsignacionLicencia/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: AsignacionLicencia/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public JsonResult ObtenerLicencia(int Id)
         {
-            try
-            {
-                // TODO: Add update logic here
+            LicenciaBE licencia = new LicenciaBE();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            licencia.Id = Id;
+            licencia = bllLicencia.ObtenerUno(licencia);
+
+            return Json(licencia);
         }
 
         // GET: AsignacionLicencia/Delete/5

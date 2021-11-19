@@ -24,8 +24,16 @@ namespace BE
         public AsignacionEstadoBE Estado { get => estado; set => estado = value; }
         public LicenciaBE Licencia { get => licencia; set => licencia = value; }
         public int CantidadAsignada { get => cantidadAsignada; set => cantidadAsignada = value; }
+
+        [Required]
         public string Detalle { get => detalle; set => detalle = value; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime FechaInicio { get => fechaInicio; set => fechaInicio = value; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime FechaFinalizacion { get => fechaFinalizacion; set => fechaFinalizacion = value; }
         public LicenciaModalidadBE Modalidad { get => modalidad; set => modalidad = value; }
 

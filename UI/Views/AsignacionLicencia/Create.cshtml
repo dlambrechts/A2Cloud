@@ -45,8 +45,8 @@
 
             <div class="col-auto">
                 <div class="input-group col-md-10">
-                    <span class="input-group-text"> @Traducciones["Licencias"].Texto</span>
-                    @Html.DropDownListFor(model => model.Activo.Id, new SelectList((System.Collections.IEnumerable)ViewData["Licencias"], "Id", "DescripcionLarga"), new { @class = "form-control" })
+                    <span class="input-group-text"> @Traducciones["Licencia"].Texto</span>
+                    @Html.DropDownListFor(model => model.Licencia.Id, new SelectList((System.Collections.IEnumerable)ViewData["Licencias"], "Id", "DescripcionLarga"),"Seleccionar..", new { @class = "form-control" })
                 </div>
             </div>
 
@@ -54,11 +54,13 @@
 
                 <div class=" input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["Disponibles"].Texto</span>
-                    @Html.EditorFor(model => model.Detalle, new { htmlAttributes = new { @class = "form-control", @disabled="disabled" } })
+                    <input class = "form-control "  disabled="disabled" id="dispo">
 
 
                 </div>
             </div>
+
+
 
             <div class="col-auto">
                 <div class="input-group col-md-10">
@@ -119,56 +121,39 @@
         };
     </script>
 
-    <script>
-        $("#Tipo_Id").change(function () {
 
-            if ($('#Tipo_Id').val() == "2") // En Sucursal de la Empresa
-            {
-                console.log($('#Tipo_Id').val())
-
-                $("#sucursal").modal('show');
-
-            }
-
-            else if ($('#Tipo_Id').val() == "1") // En domicilio del Colaborador
-
-            {
-
-                $("#colaborador").modal('show');
-            }
-        });
-    </script>
 
 
     <script>
-        $("#Colaborador_Id").change(function () {
+        $("#Licencia_Id").change(function () {
 
-            var Colaborador = $("#Colaborador_Id").val();
-            console.log(Colaborador);
-            $.post("/AsignacionLicencia/ObtenerColaborador",
-                { Id: Colaborador },
+            var Licencia = $("#Licencia_Id").val();
+            console.log(Licencia);
+            $.post("/AsignacionLicencia/ObtenerLicencia",
+                { Id: Licencia },
                 function (response) {
 
 
-                    var DomicilioColaborador = response.Ubicacion.Calle + " " + response.Ubicacion.Altura + " (CP: "+response.Ubicacion.CodigoPostal+")";
+                    
 
-                    var LocalizacionColaborador = response.Localizacion.Descripcion;
+                    var Disponible = response.Disponible;
+                   
 
-                    $("#col_domicilio").text(DomicilioColaborador);
-                    $("#col_dom_remoto").text(DomicilioColaborador);
-                    $("#col_localizacion").text(LocalizacionColaborador);
+                    $("#dispo").val(Disponible);
 
-                    if (response.FullRemoto == true)
+
+                    if (response.Modalidad.Id == 'PerpetuaDispositivo' || response.Modalidad.Id == 'SuscripcionDispositivo' )
 
                     {
-                        $("#full_remoto").modal('show');
 
-
-                            $('#Tipo_Id').attr('disabled', 'disabled');
+                        $('#Colaborador_Id').attr('disabled', 'disabled');
+                        $('#Activo_Id').removeAttr('disabled');
 
                     }
                     else {
-                        $('#Tipo_Id').removeAttr('disabled');
+                        $('#Activo_Id').attr('disabled', 'disabled');
+                        $('#Colaborador_Id').removeAttr('disabled');
+
                     }
                 }
 
