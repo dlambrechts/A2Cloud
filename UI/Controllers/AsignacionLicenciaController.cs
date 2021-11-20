@@ -60,9 +60,7 @@ namespace UI.Controllers
 
             ViewData["Activos"] = bllActivo.Listar();
 
-            ViewData["Licencias"] = bllLicencia.Listar();
-
-           
+            ViewData["Licencias"] = bllLicencia.Listar().Where(x=>x.Disponible>0).ToList();          
 
             var Colaboradores = bllColaborador.Listar().Select(c => new { Id = c.Id, Descripcion = c.Nombre + " " + c.Apellido + " (" + c.Departamento.Descripcion + ")" }).ToList();
             ViewBag.Colaboradores = new SelectList(Colaboradores, "Id", "Descripcion");
@@ -72,13 +70,56 @@ namespace UI.Controllers
 
         // POST: AsignacionLicencia/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(AsignacionLicenciaBE Asignacion)
         {
             try
             {
-                // TODO: Add insert logic here
+                Asignacion.Licencia = bllLicencia.ObtenerUno(Asignacion.Licencia);
 
-                return RedirectToAction("Index");
+                ModelState.Remove("Licencia.Descripcion");
+                ModelState.Remove("Colaborador.Nombre");
+                ModelState.Remove("Colaborador.Apellido");
+                ModelState.Remove("Colaborador.Mail");
+                ModelState.Remove("Activo.Nombre");
+                ModelState.Remove("Activo.CicloDeVida");
+                ModelState.Remove("Activo.Modelo");
+                ModelState.Remove("Activo.ModeloProcesador");
+                ModelState.Remove("Activo.NumeroSerie");
+
+                if(Asignacion.Licencia.Modalidad.Id.Equals("PerpetuaDispositivo") || Asignacion.Licencia.Modalidad.Id.Equals("SuscripcionDispositivo")) 
+                
+                {
+                    Asignacion.Colaborador.Id=0;
+                
+                }
+
+                else { Asignacion.Activo.Id = 0; }
+
+                if (ModelState.IsValid)
+                {
+                    Asignacion.UsuarioCreacion = new UsuarioBE();
+                    Asignacion.UsuarioCreacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+                    Asignacion.Colaborador = bllColaborador.ObtenerUno(Asignacion.Colaborador);
+
+                    bllAsignacion.Insertar(Asignacion);
+                    TempData["CreadoOk"] = "Creado";
+
+                    return RedirectToAction("Index");
+                }
+
+                else
+                {
+
+                    ViewData["Activos"] = bllActivo.Listar();
+
+                    ViewData["Licencias"] = bllLicencia.Listar().Where(x => x.Disponible > 0).ToList();
+
+                    var Colaboradores = bllColaborador.Listar().Select(c => new { Id = c.Id, Descripcion = c.Nombre + " " + c.Apellido + " (" + c.Departamento.Descripcion + ")" }).ToList();
+                    ViewBag.Colaboradores = new SelectList(Colaboradores, "Id", "Descripcion");
+
+                    return View("Create", Asignacion);
+                }
             }
             catch
             {
@@ -97,21 +138,53 @@ namespace UI.Controllers
             return Json(licencia);
         }
 
-        // GET: AsignacionLicencia/Delete/5
-        public ActionResult Delete(int id)
+        // GET: AsignacionActivo/Finalizar/5
+        public ActionResult Finalizar(int id)
         {
-            return View();
+
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            AsignacionLicenciaBE Asignacion = new AsignacionLicenciaBE();
+            Asignacion.Id = id;
+            Asignacion = bllAsignacion.ObtenerUno(Asignacion);
+
+            Asignacion.FechaFinalizacion = DateTime.Now;  // para que la fecha propuesta sea la fecha actual
+
+            return View(Asignacion);
         }
 
-        // POST: AsignacionLicencia/Delete/5
+        // POST: AsignacionActivo/finalizar/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Finalizar(AsignacionLicenciaBE Asignacion)
         {
             try
             {
-                // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
+                ModelState.Clear();
+                if (Asignacion.FechaFinalizacion < Asignacion.FechaInicio) { ModelState.AddModelError(string.Empty, "La fecha de finalización no puede ser menor a la fecha de asignación"); }
+
+                if (ModelState.IsValid)
+
+                {
+                    Asignacion.UsuarioModificacion = new UsuarioBE();
+                    Asignacion.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+                    bllAsignacion.Finalizar(Asignacion);
+                    TempData["FinalizadoOk"] = "Finalizado";
+
+                    return RedirectToAction("Index");
+
+                }
+
+                else
+
+                {
+                    Asignacion = bllAsignacion.ObtenerUno(Asignacion);
+
+                    Asignacion.FechaFinalizacion = DateTime.Now;  // para que la fecha propuesta sea la fecha actual
+                    return View("Finalizar", Asignacion);
+
+                }
             }
             catch
             {

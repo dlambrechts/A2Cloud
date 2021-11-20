@@ -23,14 +23,19 @@ namespace MPP
                 string Consulta = "AsignacionLicenciaInsertar";
                 Hashtable Parametros = new Hashtable();
 
-                Parametros.Add("@Activo", Asignacion.Activo.Id);
+                if (Asignacion.Activo.Id != 0) { Parametros.Add("@Activo", Asignacion.Activo.Id); }
+
+                if (Asignacion.Colaborador.Id !=0) { Parametros.Add("@Colaborador", Asignacion.Colaborador.Id); }
+
+                
                 Parametros.Add("@Detalle", Asignacion.Detalle);
-                Parametros.Add("@Colaborador", Asignacion.Colaborador.Id);
+                
                 Parametros.Add("@Licencia", Asignacion.Licencia.Id);
                 Parametros.Add("@Estado", Asignacion.Estado.Id);
                 Parametros.Add("@FechaInicio", Asignacion.FechaInicio);
                 Parametros.Add("@FechaCreacion", Asignacion.FechaCreacion);
                 Parametros.Add("@UsuarioCreacion", Asignacion.UsuarioCreacion.Id);
+                Parametros.Add("@CantidadAsignada", Asignacion.CantidadAsignada);
 
 
                 return AccesoDB.Escribir(Consulta, Parametros);
@@ -93,10 +98,20 @@ namespace MPP
 
                         AsignacionLicencia.Id = Convert.ToInt32(Item["Id"]);
                         AsignacionLicencia.Detalle = Item["Detalle"].ToString().Trim();
-                        AsignacionLicencia.Activo.Id = Convert.ToInt32(Item["Activo"]);
-                        AsignacionLicencia.Activo = mppActivo.ObtenerPorId(AsignacionLicencia.Activo);
-                        AsignacionLicencia.Colaborador.Id = Convert.ToInt32(Item["Colaborador"]);
-                        AsignacionLicencia.Colaborador = mppColaborador.ObtenerUno(AsignacionLicencia.Colaborador);
+
+                        if ((Item["Activo"]) != DBNull.Value)
+                        {
+                            AsignacionLicencia.Activo.Id = Convert.ToInt32(Item["Activo"]);
+                            AsignacionLicencia.Activo = mppActivo.ObtenerPorId(AsignacionLicencia.Activo);
+                        }
+
+                        if ((Item["Colaborador"]) != DBNull.Value)
+                        {
+                            AsignacionLicencia.Colaborador.Id = Convert.ToInt32(Item["Colaborador"]);
+                            AsignacionLicencia.Colaborador = mppColaborador.ObtenerUno(AsignacionLicencia.Colaborador);
+
+                        }
+
                         AsignacionLicencia.Licencia.Id = Convert.ToInt32(Item["Licencia"]);
                         AsignacionLicencia.Licencia = mppLicencia.ObtenerUno(AsignacionLicencia.Licencia);
 
@@ -146,10 +161,19 @@ namespace MPP
                 {
 
                     Asignacion.Detalle = Item["Detalle"].ToString().Trim();
-                    Asignacion.Activo.Id = Convert.ToInt32(Item["Activo"]);
-                    Asignacion.Activo = mppActivo.ObtenerPorId(Asignacion.Activo);
-                    Asignacion.Colaborador.Id = Convert.ToInt32(Item["Colaborador"]);
-                    Asignacion.Colaborador = mppColaborador.ObtenerUno(Asignacion.Colaborador);
+                    if ((Item["Activo"]) != DBNull.Value)
+                    {
+                        Asignacion.Activo.Id = Convert.ToInt32(Item["Activo"]);
+                        Asignacion.Activo = mppActivo.ObtenerPorId(Asignacion.Activo);
+                    }
+
+                    if ((Item["Colaborador"]) != DBNull.Value)
+                    {
+                        Asignacion.Colaborador.Id = Convert.ToInt32(Item["Colaborador"]);
+                        Asignacion.Colaborador = mppColaborador.ObtenerUno(Asignacion.Colaborador);
+
+                    }
+
                     Asignacion.Licencia.Id = Convert.ToInt32(Item["Licencia"]);
                     Asignacion.Licencia = mppLicencia.ObtenerUno(Asignacion.Licencia);
                     Asignacion.Estado.Id = Convert.ToInt32(Item["Estado"]);

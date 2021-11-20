@@ -52,19 +52,19 @@
                 <tr>
 
                     <th>
-                        @Traducciones["Dispositivo"].Texto
+                        @Traducciones["Licencia"].Texto
+                    </th>
+                    <th>
+                        @Traducciones["NumeroContrato"].Texto
                     </th>
                     <th>
                         @Traducciones["Tipo"].Texto
                     </th>
                     <th>
-                        @Traducciones["NumeroSerie"].Texto
-                    </th>
-                    <th>
                         @Traducciones["Colaborador"].Texto
                     </th>
                     <th>
-                        @Traducciones["Destino"].Texto
+                        @Traducciones["Dispositivo"].Texto
                     </th>
                     <th>
                         @Traducciones["FechaInicio"].Texto
@@ -78,41 +78,43 @@
             </thead>
             @foreach (var item in Model)
             {
-                <tr>
+        <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Activo.Nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Activo.Tipo.Descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Activo.NumeroSerie)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Colaborador.NombreCompleto)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Modalidad.Descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaInicio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Estado.Descripcion)
-                    </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Licencia.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Licencia.NumeroContrato)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Licencia.Modalidad.Descripcion)
+            </td>
 
-                    <td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Colaborador.NombreCompleto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activo.Nombre)
+            </td>
 
-                        <a href="@Url.Action("Details", "AsignacionLicencia", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
-                        @if (item.Estado.Id == 1)
-                        {
-                            <a href="@Url.Action("Finalizar", "AsignacionLicencia", new { id = item.Id })">@Traducciones["Finalizar"].Texto</a>
-                        }
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado.Descripcion)
+            </td>
+
+            <td>
+
+                <a href="@Url.Action("Details", "AsignacionLicencia", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
+                @if (item.Estado.Id == 1)
+                {
+                    <a href="@Url.Action("Finalizar", "AsignacionLicencia", new { id = item.Id })">@Traducciones["Finalizar"].Texto</a>
+                }
 
 
-                    </td>
-                </tr>
+            </td>
+        </tr>
             }
 
         </table>

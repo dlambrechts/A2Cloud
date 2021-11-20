@@ -13,7 +13,6 @@ namespace BE
         private ColaboradorBE colaborador;
         private AsignacionEstadoBE estado;
         private LicenciaBE licencia;
-        private LicenciaModalidadBE modalidad;
         private int cantidadAsignada;
         private string detalle;
         private DateTime fechaInicio;
@@ -35,7 +34,6 @@ namespace BE
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime FechaFinalizacion { get => fechaFinalizacion; set => fechaFinalizacion = value; }
-        public LicenciaModalidadBE Modalidad { get => modalidad; set => modalidad = value; }
 
         public AsignacionLicenciaBE() 
         
@@ -44,7 +42,7 @@ namespace BE
             colaborador = new ColaboradorBE();
             estado = new AsignacionEstadoBE();
             licencia = new LicenciaBE();
-            modalidad = new LicenciaModalidadBE();
+
         }
     }
 }

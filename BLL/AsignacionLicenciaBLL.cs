@@ -19,6 +19,8 @@ namespace BLL
 
             Asignacion.Estado.Id = 1;
 
+            Asignacion.CantidadAsignada = 1;
+
             mppAsignacion.Insertar(Asignacion);
 
 
@@ -42,6 +44,13 @@ namespace BLL
 
             return mppAsignacion.Listar();
 
+        }
+
+        public AsignacionLicenciaBE ObtenerUno(AsignacionLicenciaBE Asignacion)
+
+        {
+
+            return mppAsignacion.ObtenerUno(Asignacion);
         }
 
     }
