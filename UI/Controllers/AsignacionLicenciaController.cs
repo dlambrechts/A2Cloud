@@ -50,7 +50,12 @@ namespace UI.Controllers
         // GET: AsignacionLicencia/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            AsignacionLicenciaBE AsignacionLicencia = new AsignacionLicenciaBE();
+            AsignacionLicencia.Id = id;
+            AsignacionLicencia = bllAsignacion.ObtenerUno(AsignacionLicencia);
+            return View(AsignacionLicencia);
         }
 
         // GET: AsignacionLicencia/Create

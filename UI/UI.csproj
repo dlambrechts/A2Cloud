@@ -351,6 +351,7 @@
     <Content Include="Views\AsignacionLicencia\Index.cshtml" />
     <Content Include="Views\AsignacionLicencia\Create.cshtml" />
     <Content Include="Views\AsignacionLicencia\Finalizar.cshtml" />
+    <Content Include="Views\AsignacionLicencia\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
