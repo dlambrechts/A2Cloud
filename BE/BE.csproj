@@ -71,6 +71,7 @@
     <Compile Include="PerfilPatenteBE.cs" />
     <Compile Include="ActivoTipoBE.cs" />
     <Compile Include="ProductoSoftwareBE.cs" />
+    <Compile Include="RecomendacionBE.cs" />
     <Compile Include="UbicacionBE.cs" />
     <Compile Include="UsuarioBE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

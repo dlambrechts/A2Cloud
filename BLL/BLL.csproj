@@ -52,6 +52,7 @@
     <Compile Include="DepartamentoBLL.cs" />
     <Compile Include="DigitoVerificadorBLL.cs" />
     <Compile Include="IdiomaBLL.cs" />
+    <Compile Include="InteligenciaBLL.cs" />
     <Compile Include="LicenciaBLL.cs" />
     <Compile Include="LocalizacionBLL.cs" />
     <Compile Include="MarcaBLL.cs" />

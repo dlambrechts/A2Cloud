@@ -141,6 +141,7 @@
     <Compile Include="Controllers\DepartamentoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdiomaController.cs" />
+    <Compile Include="Controllers\InteligenciaController.cs" />
     <Compile Include="Controllers\LicenciaController.cs" />
     <Compile Include="Controllers\LocalizacionController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -352,6 +353,7 @@
     <Content Include="Views\AsignacionLicencia\Create.cshtml" />
     <Content Include="Views\AsignacionLicencia\Finalizar.cshtml" />
     <Content Include="Views\AsignacionLicencia\Details.cshtml" />
+    <Content Include="Views\Inteligencia\AnalisisActivosOciosos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
