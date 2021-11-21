@@ -67,7 +67,7 @@
             {
 
                 <dt>
-                    @Traducciones["FechaFinalizacion"].Texto
+                    @Traducciones["FechaFinAsignacionLicencia"].Texto
                 </dt>
 
                 <dd>
@@ -76,12 +76,13 @@
             }
 
 
-
-
-
-
-
-
         </dl>
     </div>
 </main>
+<script>
+
+        window.onload = function () {
+            document.getElementById('licencias-collapse').className = 'show';
+            document.getElementById('AsigLicencias').className = 'btn-activo';
+        };
+</script>

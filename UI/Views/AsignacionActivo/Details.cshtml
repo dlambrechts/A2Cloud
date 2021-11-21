@@ -55,7 +55,7 @@
                 @Html.DisplayFor(model => model.FechaInicio)
             </dd>
 
-            @if (Model.FechaFinalizacion!=default(DateTime))
+            @if (Model.FechaFinalizacion != default(DateTime))
             {
 
                 <dt>
@@ -89,3 +89,10 @@
         </dl>
     </div>
 </main>
+<script>
+
+        window.onload = function () {
+            document.getElementById('activos-collapse').className = 'show';
+            document.getElementById('AsignacionActivo').className = 'btn-activo';
+        };
+</script>
