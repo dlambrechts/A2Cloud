@@ -163,8 +163,14 @@ namespace MPP
                         Activo.Tipo.Id = Convert.ToInt32(Item["Tipo"]);
                         Activo.Tipo = ObtenerTipoPorId(Activo.Tipo);
                         Activo.NumeroSerie = Item["NumeroSerie"].ToString().Trim();
-                       
 
+                        if ((Item["AceleradoraGrafica"]) != DBNull.Value) { Activo.AceleradoraGrafica = Convert.ToBoolean(Item["AceleradoraGrafica"]); }
+                        if ((Item["MemoriaRam"]) != DBNull.Value) { Activo.MemoriaRam = Convert.ToInt32(Item["MemoriaRam"]); }
+                        if ((Item["TamañoDisco"]) != DBNull.Value) { Activo.TamañoDisco = Convert.ToInt32(Item["TamañoDisco"]); }
+                        Activo.ModeloProcesador = Item["ModeloProcesador"].ToString().Trim();
+                        if ((Item["NucleosProcesador"]) != DBNull.Value) { Activo.NucleosProcesador = Convert.ToInt32(Item["NucleosProcesador"]); }
+                        if ((Item["FrecuenciaProcesador"]) != DBNull.Value) { Activo.FrecuenciaProcesador = Convert.ToDecimal(Item["FrecuenciaProcesador"]); }
+                        if ((Item["MemoriaVideo"]) != DBNull.Value) { Activo.MemoriaVideo = Convert.ToInt32(Item["MemoriaVideo"]); }
                         if ((Item["FechaCreacion"]) != DBNull.Value) { Activo.FechaCreacion = Convert.ToDateTime(Item["FechaCreacion"]); }
                         if ((Item["FechaModificacion"]) != DBNull.Value) Activo.FechaModificacion = Convert.ToDateTime(Item["FechaModificacion"]);
 

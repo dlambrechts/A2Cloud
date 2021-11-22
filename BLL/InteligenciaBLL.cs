@@ -21,30 +21,50 @@ namespace BLL
         {
             List<RecomendacionBE> Recomendaciones = new List<RecomendacionBE>();
 
-            List<ActivoBE> Activos = new List<ActivoBE>();
-            List<ColaboradorBE> Colaboradores = new List<ColaboradorBE>();
+            List<ActivoBE> ActivosDisponibles = new List<ActivoBE>();
+            List<ColaboradorBE> ColaboradoresSin = new List<ColaboradorBE>();
 
-            Activos = ActivosSinAsignar();
+            ActivosDisponibles = ActivosSinAsignar();
+            ColaboradoresSin = ColaboradoresSinDispositivoPrincipal();
 
-            foreach (ActivoBE item in Activos)
+            List<ColaboradorBE> candidatos = new List<ColaboradorBE>();
+
+            foreach (ActivoBE activo in ActivosDisponibles)
             {
-                if (item.Tipo.ArquitecturaPc == true)
+
+                candidatos.Clear();
+
+                foreach (ColaboradorBE colaborador in ColaboradoresSin)
                 {
-                    RecomendacionBE recomendacion = new RecomendacionBE();
 
 
+                    if (CumpleConPerfil(activo, colaborador))
+                    {
+                        candidatos.Add(colaborador);
+                    }
 
+                }
 
+                if (candidatos.Count > 0)
+                { 
+                RecomendacionBE recomendacion = new RecomendacionBE();
+
+                recomendacion.Hallazgo = "El dispositivo " + activo.DescripcionLarga + " no está siendo utilizado actualmente.";
+
+                    string stringCandidatos = string.Join(", ", candidatos);
+                    recomendacion.Propuesta = "El dispositivo se ajusta al perfil de " + stringCandidatos +" y aún no tienen un dispositivo principal asignado." ;
+
+                Recomendaciones.Add(recomendacion);
                 }
             }
 
 
             return Recomendaciones;
 
-
         }
 
-        public List<ActivoBE> ActivosSinAsignar()  // Lista los activos con ciclo de vida vigente que no están asignados
+   
+        private List<ActivoBE> ActivosSinAsignar()  // Lista los activos con ciclo de vida vigente que no están asignados
 
         {
 
@@ -58,10 +78,10 @@ namespace BLL
 
         }
 
-        public bool CumpleConPerfil(ActivoBE Activo, ColaboradorBE Colaborador) // Verifica si un Dispositivo cumple con el perfil de un Colaborador
+        private bool CumpleConPerfil(ActivoBE Activo, ColaboradorBE Colaborador) // Verifica si un Dispositivo cumple con el perfil de un Colaborador
         {
 
-            if (Activo.Tipo == Colaborador.PerfilHardware.DispositivoPrincipal
+            if (Activo.Tipo.Id == Colaborador.PerfilHardware.DispositivoPrincipal.Id
                 && Activo.MemoriaRam >= Colaborador.PerfilHardware.MemoriaRamMinima
                 && Activo.TamañoDisco >= Colaborador.PerfilHardware.AlmecenamientoMinimo
                 && Activo.NucleosProcesador >= Colaborador.PerfilHardware.NucleosProcesadorMinimo
@@ -74,7 +94,7 @@ namespace BLL
 
         }
 
-        public List<ColaboradorBE>ColaboradoresSinDispositivoPrincipal()
+        private List<ColaboradorBE>ColaboradoresSinDispositivoPrincipal() //
         {
             List<ColaboradorBE> Colaboradores = new List<ColaboradorBE>();
 
@@ -90,9 +110,13 @@ namespace BLL
             foreach(ColaboradorBE item in Colaboradores)
 
             {
-                
+                if (Asignaciones.Exists(x => x.Colaborador.Id == item.Id && x.Activo.Tipo.Id == item.PerfilHardware.DispositivoPrincipal.Id)){
+                     }
+                else { SinDispositivoPrincipal.Add(item); }
 
             }
+
+            return SinDispositivoPrincipal;
 
         }
     }
