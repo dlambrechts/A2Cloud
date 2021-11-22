@@ -37,14 +37,12 @@
                 <tr>
 
                     <th>
-                        @Traducciones["Descripcion"].Texto
+                        @Traducciones["Hallazgo"].Texto
                     </th>
                     <th>
-                        @Traducciones["FechaCreacion"].Texto
+                        @Traducciones["Recomendacion"].Texto
                     </th>
-                    <th>
-                        @Traducciones["FechaModificacion"].Texto
-                    </th>
+
 
                 </tr>
             </thead>
@@ -56,9 +54,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Hallazgo)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Difucultad)
-                    </td>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.Propuesta)
                     </td>

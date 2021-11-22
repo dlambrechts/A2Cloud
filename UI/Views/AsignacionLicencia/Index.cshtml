@@ -15,12 +15,16 @@
             <div class="btn-group me-2">
                 @using (Html.BeginForm())
                 {
-                    <div class="btn-group me-2">
-                        <span>
-                            @Traducciones["Buscar"].Texto @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
+                    <label>@Traducciones["Colaborador"].Texto:</label>
+                    @Html.DropDownList("Colaborador", new SelectList(ViewBag.Colaboradores, "Id", "NombreCompleto"), new { @class = "" })
 
-                        </span>
-                    </div>
+                    <label>@Traducciones["Estado"].Texto:</label>
+                    @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Id", "Descripcion"), new { @class = "" })
+
+                    <label>@Traducciones["Dispositivo"].Texto:</label>
+                    @Html.DropDownList("Dispositivo", new SelectList(ViewBag.Dispositivos, "Id", "Nombre"), new { @class = "" })
+
+                    <input type="submit" value="@Traducciones["Filtrar"].Texto" class="btn btn-sm btn-outline-secondary" />
                 }
                 <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "AsignacionLicencia", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
                 <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
@@ -120,7 +124,7 @@
         </table>
 
         <div class="pagination">
-            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, Valor_Filtro = ViewBag.ValorFiltro }),
+            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, Colaborador = ViewBag.Colaborador, Estado = ViewBag.Estado, Dispositivo = ViewBag.Dispositivo }),
             new PagedListRenderOptions
             {
                 DisplayLinkToIndividualPages = true,

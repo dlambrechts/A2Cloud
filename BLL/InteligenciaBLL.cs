@@ -72,7 +72,7 @@ namespace BLL
 
             Activos = mppActivo.Listar();
 
-            Activos.Where(x => x.Estado.Asignar() == true).ToList();
+            Activos=Activos.Where(x => x.Estado.Asignar() == true).ToList();
 
             return Activos;
 

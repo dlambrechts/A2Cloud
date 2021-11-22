@@ -78,6 +78,12 @@ namespace BLL
             return mppAsignacionActivo.TipoAsignacionObtenerUno(AsignacionTipo);
         }
 
+        public List<AsignacionEstadoBE> ListarEstados() 
+        
+        {
+            return mppAsignacionActivo.ListarEstados();
+        }
+
         public AsignacionActivoBE ObtenerUno(AsignacionActivoBE Asignacion) 
         
         {

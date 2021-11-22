@@ -16,12 +16,31 @@ namespace UI.Controllers
         ActivoBLL bllActivo = new ActivoBLL();
         ColaboradorBLL bllColaborador = new ColaboradorBLL();
         LicenciaBLL bllLicencia = new LicenciaBLL();
+        AsignacionActivoBLL bllAsignacionActivo = new AsignacionActivoBLL();
 
         // GET: AsignacionLicencia
-        public ActionResult Index(int? pagina, string Dato_Buscar, string Valor_Filtro)
+        public ActionResult Index(int? pagina, string Colaborador, string Estado,string Dispositivo)
         {
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
+            List<ColaboradorBE> Colaboradores = bllColaborador.Listar();
+            ColaboradorBE defecto = new ColaboradorBE(); defecto.Id = 0; defecto.Nombre = "Todos";
+            Colaboradores.Add(defecto);
+            Colaboradores = Colaboradores.OrderBy(x => x.Id).ToList();
+            ViewBag.Colaboradores = Colaboradores;
+
+            List<ActivoBE> Dispositivos = bllActivo.Listar();
+            Dispositivos = Dispositivos.Where(x => x.Tipo.ArquitecturaPc == true).ToList();
+            ActivoBE DispDefecto = new ActivoBE(); DispDefecto.Id = 0; DispDefecto.Nombre = "Todos";
+            Dispositivos.Add(DispDefecto);
+            Dispositivos = Dispositivos.OrderBy(x => x.Id).ToList();
+            ViewBag.Dispositivos = Dispositivos;
+
+            List<AsignacionEstadoBE> Estados = bllAsignacionActivo.ListarEstados();
+            AsignacionEstadoBE estDef = new AsignacionEstadoBE(); estDef.Id = 0; estDef.Descripcion = "Todos";
+            Estados.Add(estDef);
+            Estados = Estados.OrderBy(x => x.Id).ToList();
+            ViewBag.Estados = Estados;
 
             ViewBag.FinalizadoOk = TempData["FinalizadoOk"] as string;
             ViewBag.CreadoOk = TempData["CreadoOk"] as string;
@@ -30,15 +49,28 @@ namespace UI.Controllers
 
             Lista = bllAsignacion.Listar();
 
-            if (Dato_Buscar != null)
-            { pagina = 1; }
-            else { Dato_Buscar = Valor_Filtro; }
+            ViewBag.Colaborador = Colaborador;
+            ViewBag.Estados = Estados;
+            ViewBag.Dispositivos = Dispositivos;
 
-            ViewBag.ValorFiltro = Dato_Buscar;
 
-            if (!String.IsNullOrEmpty(Dato_Buscar))
+
+            if (!String.IsNullOrEmpty(Colaborador) && Convert.ToInt32(Colaborador) != 0)
+
             {
-                Lista = Lista.Where(u => u.Detalle.ToUpper().Contains(Dato_Buscar.ToUpper())).ToList();
+                Lista = Lista.Where(reg => reg.Colaborador.Id == Convert.ToInt32(Colaborador)).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(Estado) && Convert.ToInt32(Estado) != 0)
+
+            {
+                Lista = Lista.Where(reg => reg.Estado.Id == Convert.ToInt32(Estado)).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(Dispositivo) && Convert.ToInt32(Dispositivo) != 0)
+
+            {
+                Lista = Lista.Where(reg => reg.Activo.Id == Convert.ToInt32(Dispositivo)).ToList();
             }
 
             int RegistrosPorPagina = 10;
