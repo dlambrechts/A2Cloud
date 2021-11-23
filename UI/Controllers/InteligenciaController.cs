@@ -40,76 +40,32 @@ namespace UI.Controllers
             return View(Lista.ToPagedList(Indice, RegistrosPorPagina));
         }
 
-        // GET: Inteligencia/Details/5
-        public ActionResult Details(int id)
+        public ActionResult AnalisisColaboradorActivos(int? pagina, string Dato_Buscar, string Valor_Filtro)
         {
-            return View();
-        }
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
-        // GET: Inteligencia/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: Inteligencia/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            List<RecomendacionBE> Lista = new List<RecomendacionBE>();
+
+            Lista = bllInteligencia.AnalisisColaboradorActivos();
+
+            if (Dato_Buscar != null)
+            { pagina = 1; }
+            else { Dato_Buscar = Valor_Filtro; }
+
+            ViewBag.ValorFiltro = Dato_Buscar;
+
+            if (!String.IsNullOrEmpty(Dato_Buscar))
             {
-                // TODO: Add insert logic here
+                Lista = Lista.Where(u => u.Hallazgo.ToUpper().Contains(Dato_Buscar.ToUpper())).ToList();
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            int RegistrosPorPagina = 10;
+            int Indice = pagina.HasValue ? Convert.ToInt32(pagina) : 1;
+
+            return View(Lista.ToPagedList(Indice, RegistrosPorPagina));
         }
 
-        // GET: Inteligencia/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: Inteligencia/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Inteligencia/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Inteligencia/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

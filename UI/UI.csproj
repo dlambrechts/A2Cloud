@@ -354,6 +354,7 @@
     <Content Include="Views\AsignacionLicencia\Finalizar.cshtml" />
     <Content Include="Views\AsignacionLicencia\Details.cshtml" />
     <Content Include="Views\Inteligencia\AnalisisActivosOciosos.cshtml" />
+    <Content Include="Views\Inteligencia\AnalisisColaboradorActivos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

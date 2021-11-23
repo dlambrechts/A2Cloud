@@ -63,6 +63,86 @@ namespace BLL
 
         }
 
+        public List<RecomendacionBE> AnalisisColaboradorActivos() 
+        
+        {
+            List<RecomendacionBE> Recomendaciones = new List<RecomendacionBE>();
+            List<ColaboradorBE> Colaboradores = new List<ColaboradorBE>();
+            List<ColaboradorBE> ColaboradoresSin = new List<ColaboradorBE>();
+            List<ActivoBE> Activos = new List<ActivoBE>();
+
+            Activos = mppActivo.Listar().Where(x => x.Tipo.ArquitecturaPc == true).ToList();
+
+            List<ActivoBE> DispositivosCandidatos = new List<ActivoBE>();
+
+
+            Colaboradores = mppColaborador.Listar();
+            ColaboradoresSin = ColaboradoresSinDispositivoPrincipal();
+
+            foreach (ColaboradorBE colaborador in Colaboradores)
+
+            {
+                if (ColaboradoresSin.Exists(x => x.Id == colaborador.Id))
+                {
+
+                    DispositivosCandidatos.Clear();
+
+                    foreach (ActivoBE activo in Activos)
+                    {
+                        if (CumpleConPerfil(activo, colaborador) == true)
+                        {
+                            DispositivosCandidatos.Add(activo);
+
+                        }
+
+                    }
+
+                    if (DispositivosCandidatos.Count > 0) 
+                    { 
+                        string stringDispCandidatos = string.Join(", ", DispositivosCandidatos);
+                        RecomendacionBE recomendacion = new RecomendacionBE();
+
+                        recomendacion.Hallazgo = "El colaborador " + colaborador.NombreCompleto + " no tiene Dispositivo principal asignado";
+                        recomendacion.Propuesta = "Los siguientes activos estan disponibles y cumplen con el perfil del colaborador: " + stringDispCandidatos;
+
+                        Recomendaciones.Add(recomendacion);
+                    }
+                }
+
+                else 
+                
+                {
+                    DispositivosCandidatos.Clear();
+
+                    foreach (ActivoBE activo in Activos)
+                    {
+                        if (CumpleConPerfil(activo, colaborador) == true)
+                        {
+                            DispositivosCandidatos.Add(activo);
+
+                        }
+
+                    }
+
+                    if (DispositivosCandidatos.Count > 0)
+                    {
+                        string stringDispCandidatos = string.Join(", ", DispositivosCandidatos);
+                        RecomendacionBE recomendacion = new RecomendacionBE();
+
+                        recomendacion.Hallazgo = "El Dispositivo Principal de " + colaborador.NombreCompleto + " no comple con los requerimientos de su Perfil de Hardware";
+                        recomendacion.Propuesta = "Los siguientes activos estan disponibles y cumplen con el perfil del colaborador: " + stringDispCandidatos;
+
+                        Recomendaciones.Add(recomendacion);
+                    }
+                }
+
+            }
+         
+
+            return Recomendaciones;
+        
+        }
+
    
         private List<ActivoBE> ActivosSinAsignar()  // Lista los activos con ciclo de vida vigente que no están asignados
 
