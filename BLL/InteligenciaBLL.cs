@@ -71,7 +71,7 @@ namespace BLL
             List<ColaboradorBE> ColaboradoresSin = new List<ColaboradorBE>();
             List<ActivoBE> Activos = new List<ActivoBE>();
 
-            Activos = mppActivo.Listar().Where(x => x.Tipo.ArquitecturaPc == true).ToList();
+            Activos = mppActivo.Listar().Where(x => x.Tipo.ArquitecturaPc == true && x.Estado.Asignar()==true).ToList();
 
             List<ActivoBE> DispositivosCandidatos = new List<ActivoBE>();
 
@@ -114,11 +114,19 @@ namespace BLL
                 {
                     DispositivosCandidatos.Clear();
 
-                    foreach (ActivoBE activo in Activos)
+                    List<ActivoBE> DispColaborador = new List<ActivoBE>();
+                    DispColaborador = AsignacionesActivasColaborador(colaborador);
+
+                    foreach (ActivoBE activo in DispColaborador)
                     {
-                        if (CumpleConPerfil(activo, colaborador) == true)
+                        if (CumpleConPerfil(activo, colaborador) == false)
                         {
-                            DispositivosCandidatos.Add(activo);
+                            foreach(ActivoBE act in Activos)
+
+                                if (CumpleConPerfil(act, colaborador)) 
+                                { 
+                                    DispositivosCandidatos.Add(activo);
+                                }
 
                         }
 
@@ -198,6 +206,29 @@ namespace BLL
 
             return SinDispositivoPrincipal;
 
+        }
+
+        private List<ActivoBE> AsignacionesActivasColaborador(ColaboradorBE Colaborador)
+
+        {
+            List<ActivoBE> Dispositivos = new List<ActivoBE>();
+            List<AsignacionActivoBE> Asignaciones = mppAsignacion.Listar();
+
+            Asignaciones = Asignaciones.Where(x => x.Estado.Id == 1 && x.Colaborador.Id == Colaborador.Id ).ToList();
+
+            if (Asignaciones.Count == 0) { return null; }
+
+            else 
+            
+            {
+                foreach(AsignacionActivoBE item in Asignaciones)
+                {
+
+                    Dispositivos.Add(item.Activo);
+                }    
+                return Dispositivos;
+            }
+            
         }
     }
 }
