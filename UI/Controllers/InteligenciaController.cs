@@ -17,8 +17,6 @@ namespace UI.Controllers
         {
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
-
-
             List<RecomendacionBE> Lista = new List<RecomendacionBE>();
 
             Lista = bllInteligencia.AnalisisActivosOciosos();

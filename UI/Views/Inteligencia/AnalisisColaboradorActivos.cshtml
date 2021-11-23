@@ -65,7 +65,7 @@
         </table>
 
         <div class="pagination">
-            @Html.PagedListPager(Model, pagina => Url.Action("AnalisisActivosOciosos", new { pagina, Valor_Filtro = ViewBag.ValorFiltro }),
+            @Html.PagedListPager(Model, pagina => Url.Action("AnalisisColaboradorActivos", new { pagina, Valor_Filtro = ViewBag.ValorFiltro }),
             new PagedListRenderOptions
             {
                 DisplayLinkToIndividualPages = true,

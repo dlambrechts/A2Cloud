@@ -71,7 +71,7 @@ namespace BLL
             List<ColaboradorBE> ColaboradoresSin = new List<ColaboradorBE>();
             List<ActivoBE> Activos = new List<ActivoBE>();
 
-            Activos = mppActivo.Listar().Where(x => x.Tipo.ArquitecturaPc == true && x.Estado.Asignar()==true).ToList();
+            Activos = mppActivo.Listar().Where(x => x.Tipo.ArquitecturaPc == true && x.Estado.Asignar()==true).ToList(); // Dispositivos de tipo Principal que no están asignados
 
             List<ActivoBE> DispositivosCandidatos = new List<ActivoBE>();
 
@@ -97,16 +97,25 @@ namespace BLL
 
                     }
 
+                    RecomendacionBE recomendacion = new RecomendacionBE();
+                    recomendacion.Hallazgo = "El colaborador " + colaborador.NombreCompleto + " no tiene Dispositivo Principal asignado";
+
                     if (DispositivosCandidatos.Count > 0) 
                     { 
                         string stringDispCandidatos = string.Join(", ", DispositivosCandidatos);
-                        RecomendacionBE recomendacion = new RecomendacionBE();
-
-                        recomendacion.Hallazgo = "El colaborador " + colaborador.NombreCompleto + " no tiene Dispositivo principal asignado";
+                        
                         recomendacion.Propuesta = "Los siguientes activos estan disponibles y cumplen con el perfil del colaborador: " + stringDispCandidatos;
 
-                        Recomendaciones.Add(recomendacion);
+                        
                     }
+
+                    else 
+                    
+                    {
+                        recomendacion.Propuesta = "No hay Dispositivos disponibles que cumplan con el perfil de " + colaborador.PerfilHardware.Descripcion + ", deberá incorporar un nuevo Dispositivo";
+                    }
+
+                    Recomendaciones.Add(recomendacion);
                 }
 
                 else 
@@ -116,6 +125,8 @@ namespace BLL
 
                     List<ActivoBE> DispColaborador = new List<ActivoBE>();
                     DispColaborador = AsignacionesActivasColaborador(colaborador);
+
+                    bool ContemplarColaborador = true;
 
                     foreach (ActivoBE activo in DispColaborador)
                     {
@@ -130,15 +141,30 @@ namespace BLL
 
                         }
 
+                        else { ContemplarColaborador = false; }
+
                     }
 
-                    if (DispositivosCandidatos.Count > 0)
-                    {
-                        string stringDispCandidatos = string.Join(", ", DispositivosCandidatos);
+                    if (ContemplarColaborador) 
+                    { 
                         RecomendacionBE recomendacion = new RecomendacionBE();
 
-                        recomendacion.Hallazgo = "El Dispositivo Principal de " + colaborador.NombreCompleto + " no comple con los requerimientos de su Perfil de Hardware";
-                        recomendacion.Propuesta = "Los siguientes activos estan disponibles y cumplen con el perfil del colaborador: " + stringDispCandidatos;
+                        recomendacion.Hallazgo = "El Dispositivo Principal de " + colaborador.NombreCompleto + " no cumple con los requerimientos de su Perfil de Hardware";
+
+                        if (DispositivosCandidatos.Count > 0)
+                        {
+                            string stringDispCandidatos = string.Join(", ", DispositivosCandidatos);
+
+                            recomendacion.Propuesta = "Los siguientes activos estan disponibles y cumplen con el perfil del colaborador: " + stringDispCandidatos;
+
+                        
+                        }
+
+                        else 
+                    
+                        {
+                            recomendacion.Propuesta = "No hay Dispositivos disponibles que cumplan con el perfil de " + colaborador.PerfilHardware.Descripcion +", deberá incorporar un nuevo Dispositivo" ;
+                        }
 
                         Recomendaciones.Add(recomendacion);
                     }
