@@ -9,15 +9,75 @@ using GestorDeArchivo;
 
 namespace UI.Controllers
 {
+   
     public class HomeController : Controller
     {
+
+       
         UsuarioBLL bllUusuario = new UsuarioBLL();
         ActivoBLL bllActivo = new ActivoBLL();
+        LicenciaBLL bllLicencia = new LicenciaBLL();
+        ColaboradorBLL bllColaborador = new ColaboradorBLL();
+        DepartamentoBLL bllDepartamento = new DepartamentoBLL();
+        InteligenciaBLL bllInteligencia = new InteligenciaBLL();
+
         public ActionResult Index()
         {
             if (Session["IdUsuario"] != null) {
 
                 ConfigurarIdioma();
+
+                List<ActivoBE> Activos = bllActivo.Listar();
+                List<LicenciaBE> Licencias = bllLicencia.Listar();
+
+                // Cantidades Generales
+
+                ViewBag.CantidadDispositivos = Activos.Count();
+                ViewBag.CantidadContratosLicencia = Licencias.Count();
+                ViewBag.CantidadDepartamentos = bllDepartamento.Listar().Count();
+                ViewBag.CantidadColaboradores = bllColaborador.Listar().Count();
+
+                int ActivosAsignados = Activos.Where(x => x.Estado.Codigo == "BE.ActivoEstadoAsignadoBE").ToList().Count();
+                int ActivosDisponibles = Activos.Where(x => x.Estado.Codigo == "BE.ActivoEstadoDisponibleBE").ToList().Count();
+                int ActivosBaja = Activos.Where(x => x.Estado.Codigo == "BE.ActivoEstadoBajaBE").ToList().Count();
+
+                // Panel de Porcentajes
+
+                if (Activos.Count > 0)
+                {
+                    ViewBag.PorcentajeActivosAsignados = (ActivosAsignados * 100) / Activos.Count();
+
+                    ViewBag.PorcentajeActivosDisponibles = (ActivosDisponibles * 100) / Activos.Count();
+
+                    ViewBag.PorcentajeActivosBaja = (ActivosBaja * 100) / Activos.Count();
+
+                } else ViewBag.PorcentajeActivosAsignados = 0;
+
+                if (Licencias.Count > 0)
+
+                {
+                    int LicenciasTotal = 0;
+                    int LicenciasDisponible = 0;
+                    foreach (LicenciaBE contrato in Licencias)
+                    {
+                        LicenciasTotal = LicenciasTotal + contrato.Cantidad;
+                        LicenciasDisponible = LicenciasDisponible + contrato.Disponible;
+                    }
+
+                    int LicenciasAsignada = LicenciasTotal - LicenciasDisponible;
+
+                    ViewBag.PorcentajeLicenciasAsignadas = (LicenciasAsignada * 100) / LicenciasTotal;
+                }
+
+                else { ViewBag.PorcentajeLicenciasAsignadas = 0; }
+
+
+                // Notificaciones de Inteligencia
+
+                if (bllInteligencia.AnalisisActivosOciosos().Count > 0) { ViewBag.AnalisisOciosos = "SI"; }
+
+                if (bllInteligencia.AnalisisColaboradorActivos().Count > 0) { ViewBag.AnalisisColaborador = "SI"; }
+
                 return View();
             }
 
