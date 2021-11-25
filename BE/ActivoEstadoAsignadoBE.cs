@@ -15,12 +15,17 @@ namespace BE
 
         public override bool DarDeBaja()
         {
-            return true;
+            return false;
         }
 
         public override bool Desasignar()
         {
             return true;
+        }
+
+        public override bool Eliminar()
+        {
+            return false;
         }
     }
 }

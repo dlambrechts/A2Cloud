@@ -88,6 +88,7 @@
         </div>
 
         <!-- Content Row -->
+        <!--Comienzo Dashboard -->
 
         <div class="row">
 
@@ -126,7 +127,7 @@
 
 
             <!-- Gráfico de Torta -->
-            <div class="col-xl-4 col-lg-5">
+            <div class="col-lg-6 mb-4">
                 <div class="card shadow mb-4">
                     <!-- Cabecera -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -158,6 +159,7 @@
                                 <i class="fa fa-circle" style="color: #109b0d"></i> @Traducciones["Impresora"].Texto
                             </span>
                         </div>
+                        <br />
                     </div>
                 </div>
             </div>
@@ -170,19 +172,22 @@
 
     </div>
     <!-- /.container-fluid -->
+    <!-- / Notificaciones de la Inteligencia de Negocio -->
+
+
     <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
 
         @if (ViewBag.AnalisisOciosos != null)
         {
             <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
-                    <img src="..." class="rounded me-2" alt="...">
+                    <i class="fa fa-bell"></i>&ensp;
                     <strong class="me-auto">@Traducciones["AnalisisDeActivosOciosos"].Texto</strong>
-                    
+
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div class="toast-body">
-                   Existen Activos Ociosos, haga clic aquí para ver las recomendaciones
+                    @Traducciones["NotificacionActivosOciosos"].Texto @Html.ActionLink(Traducciones["Ver"].Texto, "AnalisisActivosOciosos", "Inteligencia", null, new { @class = "link-dark rounded" })
                 </div>
             </div>
         }
@@ -190,19 +195,19 @@
         {
             <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
-                    <img src="..." class="rounded me-2" alt="...">
+                    <i class="fa fa-bell"></i>&ensp;
                     <strong class="me-auto">@Traducciones["AnalisisColaboradorVsRecursos"].Texto</strong>
-            
+
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div class="toast-body">
-                   Existen Colaboradores con su Perfil de Hardware incompleto, haga clic aquí para ver las recomendaciones.
+                    @Traducciones["NotificacionColaboradorActivo"].Texto @Html.ActionLink(Traducciones["Ver"].Texto, "AnalisisColaboradorActivos", "Inteligencia", null, new { @class = "link-dark rounded" })
                 </div>
             </div>
 
         }
 
-        </div>
+    </div>
 
 
 </main>
@@ -212,11 +217,10 @@
 
 
     <script src="~/Scripts/chart.js"></script>
-    @*<script src="~/Scripts/chart-bar.js"></script>*@
     <script src="~/Scripts/chart-area.js"></script>
     <script src="~/Scripts/chart-pie.js"></script>
 
-    @*<script src="~/Scripts/datatables.js"></script>*@
+
 
     <script>
         $(document).ready(function () {

@@ -5,12 +5,12 @@
 
 @{
     Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
-    ViewBag.Title = Traducciones["Recomendaciones"].Texto;
+    ViewBag.Title = Traducciones["AnalisisColaboradorVsRecursos"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">@Traducciones["Recomendaciones"].Texto</h1>
+        <h1 class="h2">@Traducciones["AnalisisColaboradorVsRecursos"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 @using (Html.BeginForm())
@@ -22,7 +22,7 @@
                         </span>
                     </div>
                 }
-                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Recomendacion", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+                
                 <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
             </div>
 
@@ -30,6 +30,10 @@
     </div>
     <div class="container-fluid">
 
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <strong>@Traducciones["LeyendaAnalisisColaborador"].Texto</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
 
 
         <table class=" table table-hover">
@@ -42,6 +46,9 @@
                     <th>
                         @Traducciones["Recomendacion"].Texto
                     </th>
+                    <th>
+                        @Traducciones["AccionesRapidas"].Texto
+                    </th>
 
 
                 </tr>
@@ -49,17 +56,20 @@
 
             @foreach (var item in Model)
             {
-                <tr>
+        <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Hallazgo)
-                    </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hallazgo)
+            </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Propuesta)
-                    </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Propuesta)
+            </td>
+            <td>
+                <a>@Html.ActionLink(@Traducciones["Asignar"].Texto, "Create", "AsignacionActivo", null, null)</a>
+            </td>
 
-                </tr>
+        </tr>
             }
 
         </table>

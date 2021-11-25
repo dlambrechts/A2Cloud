@@ -17,13 +17,26 @@ namespace UI.Controllers
 
 
         // GET: Activo
-        public ActionResult Index(int? pagina, string Dato_Buscar, string Valor_Filtro) 
+        public ActionResult Index(int? pagina, string Dato_Buscar, string Valor_Filtro, string Tipo, string Estado) 
         {
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
             ViewBag.EliminadoOk = TempData["EliminadoOk"] as string;
             ViewBag.EditadoOk = TempData["EditadoOk"] as string;
             ViewBag.CreadoOk = TempData["CreadoOk"] as string;
+
+            List<ActivoEstadoBE> Estados = bllActivo.Estados();
+            ActivoEstadoDisponibleBE defecto = new ActivoEstadoDisponibleBE(); defecto.Codigo = "0"; defecto.Descripcion = "Todos";
+            Estados.Add(defecto);
+            Estados = Estados.OrderBy(x => x.Codigo).ToList();
+            ViewBag.Estados = Estados;
+
+            List<ActivoTipoBE> Tipos = bllActivo.ListarTipos();
+            ActivoTipoBE Tipodefecto = new ActivoTipoBE(); Tipodefecto.Id = 0; Tipodefecto.Descripcion = "Todos";
+            Tipos.Add(Tipodefecto);
+            Tipos = Tipos.OrderBy(x => x.Id).ToList();
+            ViewBag.Tipos = Tipos;
+
 
             List<ActivoBE> Lista = new List<ActivoBE>();
 
@@ -34,6 +47,8 @@ namespace UI.Controllers
             else { Dato_Buscar = Valor_Filtro; }
 
             ViewBag.ValorFiltro = Dato_Buscar;
+            ViewBag.Estado = Estado;
+            ViewBag.Tipo = Tipo;
 
             if (!String.IsNullOrEmpty(Dato_Buscar))
             {
@@ -42,6 +57,17 @@ namespace UI.Controllers
                      || u.Modelo.ToUpper().Contains(Dato_Buscar.ToUpper())
                      || u.Marca.Descripcion.ToUpper().Contains(Dato_Buscar.ToUpper())
                     ).ToList();
+            }
+
+            if (!String.IsNullOrEmpty(Estado) && !Estado.Equals("0"))
+
+            {
+                Lista = Lista.Where(reg => reg.Estado.Codigo == Estado).ToList();
+            }
+            if (!String.IsNullOrEmpty(Tipo) && Convert.ToInt32(Tipo) != 0)
+
+            {
+                Lista = Lista.Where(reg => reg.Tipo.Id == Convert.ToInt32(Tipo)).ToList();
             }
 
             int RegistrosPorPagina = 10;
@@ -164,7 +190,6 @@ namespace UI.Controllers
             try 
             
             {
-
                 ActivoBE Activo = new ActivoBE();
                 Activo.Id = id;
                 Activo.UsuarioModificacion = new UsuarioBE();
@@ -178,6 +203,31 @@ namespace UI.Controllers
 
             catch 
             
+            {
+                return Json(new { success = false });
+            }
+        }
+
+        // GET: Activo/Baja/5
+        public JsonResult Baja(int id)
+        {
+            try
+
+            {
+                ActivoBE Activo = new ActivoBE();
+                Activo.Id = id;
+                Activo.UsuarioModificacion = new UsuarioBE();
+                Activo.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+                ActivoEstadoBajaBE nuevoEstado = new ActivoEstadoBajaBE();
+                Activo.CambiarEstado(nuevoEstado);
+                bllActivo.CambiarEstado(Activo);
+
+                return Json(new { success = true });
+
+            }
+
+            catch
+
             {
                 return Json(new { success = false });
             }

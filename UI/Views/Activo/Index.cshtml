@@ -16,12 +16,20 @@
             <div class="btn-group me-2">
                 @using (Html.BeginForm())
                 {
+
                     <div class="btn-group me-2">
                         <span>
                             @Traducciones["Buscar"].Texto @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
 
                         </span>
                     </div>
+                    <label>@Traducciones["Estado"].Texto:</label>
+                    @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Codigo", "Descripcion"), new { @class = "" })
+
+                    <label>@Traducciones["Tipo"].Texto:</label>
+                    @Html.DropDownList("Tipo", new SelectList(ViewBag.Tipos, "Id", "Descripcion"), new { @class = "" })
+
+                    <input type="submit" value="@Traducciones["Filtrar"].Texto" class="btn btn-sm btn-outline-secondary" />
                 }
                 <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Activo", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
                 <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
@@ -82,45 +90,57 @@
             </thead>
             @foreach (var item in Model)
             {
-        <tr>
+                <tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Tipo.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Marca.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Modelo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCompra)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FinCicloDeVida)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroSerie)
-            </td>
-            <td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tipo.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Marca.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Modelo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCompra)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FinCicloDeVida)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumeroSerie)
+                    </td>
+                    <td>
 
-                <a href="@Url.Action("Details", "Activo", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
-                <a href="@Url.Action("Edit", "Activo", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
-                <a href="#" onclick="Confirmar('@item.Id','@item.Nombre')"><i class="fa fa-trash"></i></a>
-            </td>
-        </tr>
+                        <a href="@Url.Action("Details", "Activo", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
+                        <a href="@Url.Action("Edit", "Activo", new {id=item.Id })"><i class="fa fa-edit"></i></a>&ensp;&ensp;
+                        @if (item.Estado.Eliminar() == true)
+                        {
+                            <a href="#" onclick="Confirmar('@item.Id','@item.Nombre')" style="color:black;"><i class="fa fa-trash"></i></a>
+                        }
+                        else
+                        {<a href="#" style="color: grey;"><i class="fa fa-trash"></i></a>}
+                        &ensp; &ensp;
+                        @if (item.Estado.DarDeBaja() == true)
+                        {
+                            <a href="#" onclick="ConfirmarBaja('@item.Id','@item.Nombre')" style="color:black;"><i class="fa fa-angle-double-down" title="@Traducciones["DarDeBaja"].Texto "></i></a>
+                        }
+                        else
+                        {<a href="#" style="color: grey;"><i class="fa fa-angle-double-down" title="@Traducciones["NoSePuedeDarDeBaja"].Texto "></i></a>}
+                    </td>
+                </tr>
             }
 
         </table>
 
         <div class="pagination">
-            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, Valor_Filtro = ViewBag.ValorFiltro }),
+            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, Valor_Filtro = ViewBag.ValorFiltro, Tipo = ViewBag.Tipo, Estado = ViewBag.Estado }),
             new PagedListRenderOptions
             {
                 DisplayLinkToIndividualPages = true,
@@ -148,6 +168,25 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> @Traducciones["Cancelar"].Texto</button>
                 <button type="button" class="btn btn-primary" onclick="Eliminar()"> @Traducciones["Confirmar"].Texto</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Confirmar Baja-->
+<div class="modal fade" id="ConfirmarBaja" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> @Traducciones["DarDeBaja"].Texto </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @Traducciones["ConfirmarBajaActivo"].Texto <b id="nombre_act"></b> ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> @Traducciones["Cancelar"].Texto</button>
+                <button type="button" class="btn btn-primary" onclick="Baja()"> @Traducciones["Confirmar"].Texto</button>
             </div>
         </div>
     </div>
@@ -185,6 +224,35 @@
             success: function (response) {
                 if (response.success) {
                     $("#Confirmar").modal("hide");
+                    location.reload();
+
+                } else { }
+            }
+        })
+    }
+
+</script>
+
+<script>
+    var ConfirmarBaja = function (id, nombre) {
+
+        $("#IdActivo").val(id);
+        $("#nombre_act").text(nombre);
+        $("#ConfirmarBaja").modal('show');
+    }
+
+    var Baja = function () {
+
+        var Id = $('#IdActivo').val();
+
+        $.ajax({
+
+            type: "POST",
+            url: "/Activo/Baja",
+            data: { id: Id },
+            success: function (response) {
+                if (response.success) {
+                    $("#ConfirmarBaja").modal("hide");
                     location.reload();
 
                 } else { }

@@ -42,7 +42,7 @@ namespace UI.Controllers
 
             
             ViewBag.Colaborador = Colaborador;
-            ViewBag.Estados = Estados;
+            ViewBag.Estado = Estado;
 
 
 

@@ -82,6 +82,27 @@ namespace BLL
             return mppActivo.Eliminar(Activo);
         }
 
+        public List<ActivoEstadoBE> Estados()
+
+        {
+            List<ActivoEstadoBE> Estados = new List<ActivoEstadoBE>();
+
+            ActivoEstadoDisponibleBE Disponible = new ActivoEstadoDisponibleBE();
+            Disponible.Codigo = "BE.ActivoEstadoDisponibleBE"; Disponible.Descripcion = "Disponible";
+            Estados.Add(Disponible);
+
+            ActivoEstadoAsignadoBE Asignado = new ActivoEstadoAsignadoBE();
+            Asignado.Codigo = "BE.ActivoEstadoAsignadoBE"; Asignado.Descripcion = "Asignado";
+            Estados.Add(Asignado);
+
+            ActivoEstadoBajaBE Baja = new ActivoEstadoBajaBE();
+            Baja.Codigo = "BE.ActivoEstadoBajaBE"; Baja.Descripcion = "Baja";
+            Estados.Add(Baja);
+
+            return Estados;
+
+
+        }
 
     }
 }

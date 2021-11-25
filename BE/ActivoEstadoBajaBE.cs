@@ -21,5 +21,10 @@ namespace BE
         {
             return false;
         }
+
+        public override bool Eliminar()
+        {
+            return true;
+        }
     }
 }

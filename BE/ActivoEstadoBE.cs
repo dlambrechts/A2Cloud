@@ -18,5 +18,6 @@ namespace BE
         public abstract bool Asignar();
         public abstract bool Desasignar();
         public abstract bool DarDeBaja();
+        public abstract bool Eliminar();
     }
 }
