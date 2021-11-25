@@ -162,5 +162,53 @@ namespace UI.Controllers
                 return Json(new { success = false });
             }
         }
+
+
+        // GET: PerfilDeHardware/Copiar
+        public ActionResult Copiar(int id)
+        {
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            PerfilDeHardwareBE PerfilDeHardware = new PerfilDeHardwareBE();
+            PerfilDeHardware.Id = id;
+            PerfilDeHardware = bllPerfilDeHardware.ObtenerUno(PerfilDeHardware);
+
+            PerfilDeHardwareBE Copia = new PerfilDeHardwareBE();
+            Copia = PerfilDeHardware.Clonar();
+            Copia.Descripcion = Copia.Descripcion + " (copia)";
+
+            ViewData["Tipos"] = bllActivo.ListarTipos().Where(x => x.ArquitecturaPc == true);
+            return View(Copia);
+        }
+
+        // POST: PerfilDeHardware/Copiar
+        [HttpPost]
+        public ActionResult Copiar(PerfilDeHardwareBE PerfilDeHardware)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    PerfilDeHardware.UsuarioCreacion = new UsuarioBE();
+                    PerfilDeHardware.UsuarioCreacion.Id = Convert.ToInt32(Session["IdUsuario"]);
+
+
+                    bllPerfilDeHardware.Insertar(PerfilDeHardware);
+                    TempData["CreadoOk"] = "Creado";
+
+                    return RedirectToAction("Index");
+                }
+
+                else
+                {
+                    ViewData["Tipos"] = bllActivo.ListarTipos().Where(x => x.ArquitecturaPc == true);
+                    return View("Create", PerfilDeHardware);
+                }
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }

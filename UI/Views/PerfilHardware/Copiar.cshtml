@@ -1,0 +1,128 @@
+﻿@model BE.PerfilDeHardwareBE
+
+@{
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["EditarPerfilDeHardware"].Texto;
+}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@Traducciones["EditarPerfilDeHardware"].Texto</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid pull-left" style="max-width:1024px">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row gy-2 gx-3 align-items-center">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+
+
+
+                <div class="col-auto">
+                    <div class=" input-group col-md-10">
+                        <span class="input-group-text"> @Traducciones["Descripcion"].Texto</span>
+                        @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-auto ">
+                    <div class="input-group col-md-10">
+                        <span class="input-group-text"> @Traducciones["DispositivoPrincipal"].Texto</span>
+                        @Html.DropDownListFor(model => model.DispositivoPrincipal.Id, new SelectList((System.Collections.IEnumerable)ViewData["Tipos"], "Id", "Descripcion"), new { @class = "form-control" })
+
+                    </div>
+                </div>
+
+                <div class="col-auto">
+                    <div class="input-group col-md-10">
+                        <span class="input-group-text"> @Traducciones["MemoriaMinima"].Texto</span>
+                        @Html.EditorFor(model => model.MemoriaRamMinima, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-text">Gb</span>
+                        @Html.ValidationMessageFor(model => model.MemoriaRamMinima, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-auto">
+                    <div class="input-group col-md-10">
+                        <span class="input-group-text"> @Traducciones["AlmacenamientoMinimo"].Texto</span>
+                        @Html.EditorFor(model => model.AlmecenamientoMinimo, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-text">Gb</span>
+                        @Html.ValidationMessageFor(model => model.AlmecenamientoMinimo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-auto">
+                    <div class="input-group col-md-10">
+                        <span class="input-group-text"> @Traducciones["NucleosProcesadorMinimo"].Texto</span>
+                        @Html.EditorFor(model => model.NucleosProcesadorMinimo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NucleosProcesadorMinimo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group col-md-10">
+                        <span class="input-group-text"> @Traducciones["FrecuenciaProcesadorMinima"].Texto</span>
+                        @Html.EditorFor(model => model.FrecuenciaProcesadorMinima, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-text">Ghz</span>
+                        @Html.ValidationMessageFor(model => model.FrecuenciaProcesadorMinima, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-auto">
+                    <div class="input-group col-md-10">
+                        <span class="input-group-text"> @Traducciones["MemoriaVideoMinima"].Texto</span>
+                        @Html.EditorFor(model => model.MemoriaVideoMinima, new { htmlAttributes = new { @class = "form-control" } })
+                        <span class="input-group-text">Gb</span>
+                        @Html.ValidationMessageFor(model => model.MemoriaVideoMinima, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+                <div class="col-auto">
+                    <div class="input-group col-md-10">
+                        <span class="input-group-text"> @Traducciones["CantidadMonitores"].Texto</span>
+                        @Html.EditorFor(model => model.CantidadMonitores, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CantidadMonitores, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-auto">
+                    <label class="control-label col-md-2">@Traducciones["RequiereAceleradoraGrafica"].Texto</label>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.RequiereAceleradoraGrafica, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RequiereAceleradoraGrafica, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group col-sm-4">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="@Traducciones["Guardar"].Texto" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</main>
+
+<script>
+
+    window.onload = function () {
+        document.getElementById('activos-collapse').className = 'show';
+        document.getElementById('PerfilHardware').className = 'btn-activo';
+    };
+</script>

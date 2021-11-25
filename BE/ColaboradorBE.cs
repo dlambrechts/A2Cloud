@@ -51,5 +51,7 @@ namespace BE
             localizacion = new LocalizacionBE();
         
         }
+
+
     }
 }

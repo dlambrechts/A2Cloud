@@ -92,6 +92,8 @@ namespace UI.Controllers
                     if (Colaborador.FullRemoto == true) Colaborador.Localizacion = null;
 
                     bllCol.Insertar(Colaborador);
+
+                   
                     TempData["CreadoOk"] = "Creado";
 
                     return RedirectToAction("Index");

@@ -29,5 +29,10 @@ namespace BE
         public ActivoTipoBE DispositivoPrincipal { get => dispositivoPrincipal; set => dispositivoPrincipal = value; }
 
         public PerfilDeHardwareBE() { dispositivoPrincipal = new ActivoTipoBE(); }
+
+        public PerfilDeHardwareBE Clonar()
+        {
+            return (PerfilDeHardwareBE)this.MemberwiseClone();
+        }
     }
 }
