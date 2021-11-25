@@ -16,17 +16,18 @@
             @using (Html.BeginForm())
             {
                 <div class="btn-group me-2">
-                    <span>
-                        @Traducciones["Buscar"].Texto @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
-
-                    </span>
+                 
+                         @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "", @placeholder= @Traducciones["Buscar"].Texto })
+                        <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
+                        <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Usuario", null, new { @class = "btn btn-sm btn-outline-primary", @type = "button" })</a>
+           
                 </div>
             }
 
-            <div class="btn-group me-2">
-                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Usuario", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
-                <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
-            </div>
+    
+
+
+     
 
         </div>
     </div>
@@ -55,7 +56,7 @@
             </div>
         }
 
-        <table class="table table-hover">
+        <table class="table table-hover table-responsive">
             <thead>
                 <tr>
 

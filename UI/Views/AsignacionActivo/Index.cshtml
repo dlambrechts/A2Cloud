@@ -16,19 +16,22 @@
             <div class="btn-group me-2">
                 @using (Html.BeginForm())
                 {
-                    <label>@Traducciones["Colaborador"].Texto:</label>
-                    @Html.DropDownList("Colaborador", new SelectList(ViewBag.Colaboradores, "Id", "NombreCompleto"), new { @class = "" })
+                    <div class="btn-group me-2">
+                        @Html.DropDownList("Colaborador", new SelectList(ViewBag.Colaboradores, "Id", "NombreCompleto"), new { @class = "" })
 
-                    <label>@Traducciones["Estado"].Texto:</label>
-                    @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Id", "Descripcion"), new { @class = "" })
 
-                    <input type="submit" value="@Traducciones["Filtrar"].Texto" class="btn btn-sm btn-outline-secondary" />
+                        @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Id", "Descripcion"), new { @class = "" })
+
+                        <input type="submit" value="@Traducciones["Filtrar"].Texto" class="btn btn-sm btn-outline-secondary" />
+                        <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
+                        <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "AsignacionActivo", null, new { @class = "btn btn-sm btn-outline-primary", @type = "button" })</a>
+                    </div>
                 }
-                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "AsignacionActivo", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
-                <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
-            </div>
 
-        </div>
+
+                </div>
+
+            </div>
     </div>
     <div class="container-fluid">
 

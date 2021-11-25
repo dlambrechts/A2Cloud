@@ -10,34 +10,40 @@
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">@Traducciones["Dispositivos"].Texto</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-                @using (Html.BeginForm())
-                {
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">@Traducciones["Dispositivos"].Texto</h1>
+
+
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group me-2 ">
+                    @using (Html.BeginForm())
+                    {
 
                     <div class="btn-group me-2">
-                        <span>
-                            @Traducciones["Buscar"].Texto @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "" })
 
-                        </span>
+                        @Html.TextBox("Dato_Buscar", ViewBag.ValorFiltro as string, new { @autocomplete = "off", @autofocus = "", @placeholder = @Traducciones["Buscar"].Texto })
+
+
+
+                        @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Codigo", "Descripcion"), new { @class = "" })
+
+
+                        @Html.DropDownList("Tipo", new SelectList(ViewBag.Tipos, "Id", "Descripcion"), new { @class = "" })
+
+                        <input type="submit" value="@Traducciones["Filtrar"].Texto" class="btn btn-sm btn-outline-secondary" />
+
+                        <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
+                        <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Activo", null, new { @class = "btn btn-sm btn-outline-primary", @type = "button" })</a>
                     </div>
-                    <label>@Traducciones["Estado"].Texto:</label>
-                    @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Codigo", "Descripcion"), new { @class = "" })
 
-                    <label>@Traducciones["Tipo"].Texto:</label>
-                    @Html.DropDownList("Tipo", new SelectList(ViewBag.Tipos, "Id", "Descripcion"), new { @class = "" })
+                    }
 
-                    <input type="submit" value="@Traducciones["Filtrar"].Texto" class="btn btn-sm btn-outline-secondary" />
-                }
-                <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Activo", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
-                <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
+                </div>
+
             </div>
-
         </div>
-    </div>
-    <div class="container-fluid">
+
 
         @if (ViewBag.CreadoOk != null)
         {
@@ -56,7 +62,7 @@
 
 
 
-        <table class="table table-hover">
+        <table class="table table-hover table-responsive">
             <thead>
                 <tr>
 

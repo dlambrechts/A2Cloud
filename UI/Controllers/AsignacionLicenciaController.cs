@@ -24,20 +24,20 @@ namespace UI.Controllers
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
             List<ColaboradorBE> Colaboradores = bllColaborador.Listar();
-            ColaboradorBE defecto = new ColaboradorBE(); defecto.Id = 0; defecto.Nombre = "Todos";
+            ColaboradorBE defecto = new ColaboradorBE(); defecto.Id = 0; defecto.Nombre = "Todos los Colaboradores";
             Colaboradores.Add(defecto);
             Colaboradores = Colaboradores.OrderBy(x => x.Id).ToList();
             ViewBag.Colaboradores = Colaboradores;
 
             List<ActivoBE> Dispositivos = bllActivo.Listar();
             Dispositivos = Dispositivos.Where(x => x.Tipo.ArquitecturaPc == true).ToList();
-            ActivoBE DispDefecto = new ActivoBE(); DispDefecto.Id = 0; DispDefecto.Nombre = "Todos";
+            ActivoBE DispDefecto = new ActivoBE(); DispDefecto.Id = 0; DispDefecto.Nombre = "Todos los Dispositivos";
             Dispositivos.Add(DispDefecto);
             Dispositivos = Dispositivos.OrderBy(x => x.Id).ToList();
             ViewBag.Dispositivos = Dispositivos;
 
             List<AsignacionEstadoBE> Estados = bllAsignacionActivo.ListarEstados();
-            AsignacionEstadoBE estDef = new AsignacionEstadoBE(); estDef.Id = 0; estDef.Descripcion = "Todos";
+            AsignacionEstadoBE estDef = new AsignacionEstadoBE(); estDef.Id = 0; estDef.Descripcion = "Todos lo Estados";
             Estados.Add(estDef);
             Estados = Estados.OrderBy(x => x.Id).ToList();
             ViewBag.Estados = Estados;

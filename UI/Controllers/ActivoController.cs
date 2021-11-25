@@ -26,13 +26,13 @@ namespace UI.Controllers
             ViewBag.CreadoOk = TempData["CreadoOk"] as string;
 
             List<ActivoEstadoBE> Estados = bllActivo.Estados();
-            ActivoEstadoDisponibleBE defecto = new ActivoEstadoDisponibleBE(); defecto.Codigo = "0"; defecto.Descripcion = "Todos";
+            ActivoEstadoDisponibleBE defecto = new ActivoEstadoDisponibleBE(); defecto.Codigo = "0"; defecto.Descripcion = "Todos los Estados";
             Estados.Add(defecto);
             Estados = Estados.OrderBy(x => x.Codigo).ToList();
             ViewBag.Estados = Estados;
 
             List<ActivoTipoBE> Tipos = bllActivo.ListarTipos();
-            ActivoTipoBE Tipodefecto = new ActivoTipoBE(); Tipodefecto.Id = 0; Tipodefecto.Descripcion = "Todos";
+            ActivoTipoBE Tipodefecto = new ActivoTipoBE(); Tipodefecto.Id = 0; Tipodefecto.Descripcion = "Todos lo Tipos";
             Tipos.Add(Tipodefecto);
             Tipos = Tipos.OrderBy(x => x.Id).ToList();
             ViewBag.Tipos = Tipos;
