@@ -16,19 +16,19 @@
                 @using (Html.BeginForm())
                 {
                     <div class="btn-group me-2">
-                   
-                        @Html.DropDownList("Colaborador", new SelectList(ViewBag.Colaboradores, "Id", "NombreCompleto"), new { @class = "" })
+                        <div class="ocultar-cel btn-group me-2">
+                            @Html.DropDownList("Colaborador", new SelectList(ViewBag.Colaboradores, "Id", "NombreCompleto"), new { @class = "" })
 
-                      
-                        @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Id", "Descripcion"), new { @class = "" })
 
-                     
-                        @Html.DropDownList("Dispositivo", new SelectList(ViewBag.Dispositivos, "Id", "Nombre"), new { @class = "" })
+                            @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Id", "Descripcion"), new { @class = "" })
 
-                        <input type="submit" value="@Traducciones["Filtrar"].Texto" class="btn btn-sm btn-outline-secondary" />
 
-                        <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
-                        <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "AsignacionLicencia", null, new { @class = "btn btn-sm btn-outline-primary", @type = "button" })</a>
+                            @Html.DropDownList("Dispositivo", new SelectList(ViewBag.Dispositivos, "Id", "Nombre"), new { @class = "" })
+
+                            <input type="submit" value="@Traducciones["Filtrar"].Texto" class="btn btn-sm btn-outline-secondary" />
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
+                            <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "AsignacionLicencia", null, new { @class = "btn btn-sm btn-outline-primary", @type = "button" })</a>
                         </div>
                         }
 
@@ -54,9 +54,9 @@
             </div>
         }
 
+    <div class="table-responsive">
 
-
-        <table class="table table-hover table-responsive">
+        <table class="table table-hover ">
             <thead>
                 <tr>
 
@@ -87,47 +87,47 @@
             </thead>
             @foreach (var item in Model)
             {
-        <tr>
+                <tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Licencia.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Licencia.NumeroContrato)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Licencia.Modalidad.Descripcion)
-            </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Licencia.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Licencia.NumeroContrato)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Licencia.Modalidad.Descripcion)
+                    </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Colaborador.NombreCompleto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Activo.Nombre)
-            </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Colaborador.NombreCompleto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Activo.Nombre)
+                    </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado.Descripcion)
-            </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado.Descripcion)
+                    </td>
 
-            <td>
+                    <td>
 
-                <a href="@Url.Action("Details", "AsignacionLicencia", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
-                @if (item.Estado.Id == 1)
-                {
-                    <a href="@Url.Action("Finalizar", "AsignacionLicencia", new { id = item.Id })">@Traducciones["Finalizar"].Texto</a>
-                }
+                        <a href="@Url.Action("Details", "AsignacionLicencia", new {id=item.Id })"><i class="fa fa-eye"></i></a>&ensp;&ensp;
+                        @if (item.Estado.Id == 1)
+                        {
+                            <a href="@Url.Action("Finalizar", "AsignacionLicencia", new { id = item.Id })">@Traducciones["Finalizar"].Texto</a>
+                        }
 
 
-            </td>
-        </tr>
+                    </td>
+                </tr>
             }
 
         </table>
-
+    </div>
         <div class="pagination">
             @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, Colaborador = ViewBag.Colaborador, Estado = ViewBag.Estado, Dispositivo = ViewBag.Dispositivo }),
             new PagedListRenderOptions
