@@ -102,7 +102,7 @@
                                             <li>@Html.ActionLink(Traducciones["ProductosDeSoftware"].Texto, "Index", "ProductoSoftware", null, new { @class = "link-dark rounded", @id = "ProdSoft" })</li>
                                             <li>@Html.ActionLink(Traducciones["ContratosDeLicencia"].Texto, "Index", "Licencia", null, new { @class = "link-dark rounded", @id = "Licencias" })</li>
                                             <li>@Html.ActionLink(Traducciones["AsignacionDeLicencias"].Texto, "Index", "AsignacionLicencia", null, new { @class = "link-dark rounded", @id = "AsigLicencias" })</li>
-                                     
+
 
 
                                         </ul>
@@ -137,6 +137,23 @@
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                             <li>@Html.ActionLink(Traducciones["AnalisisDeActivosOciosos"].Texto, "AnalisisActivosOciosos", "Inteligencia", null, new { @class = "link-dark rounded", @id = "ActOc" })</li>
                                             <li>@Html.ActionLink(Traducciones["AnalisisColaboradorVsRecursos"].Texto, "AnalisisColaboradorActivos", "Inteligencia", null, new { @class = "link-dark rounded", @id = "ColAct" })</li>
+
+                                        </ul>
+                                    </div>
+                                </li>
+                            } }
+
+                        @{ if (Permisos.Exists(per => per.ToString() == "Reportes"))
+
+                            {
+                                <li class="mb-1">
+                                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#reportes-collapse" aria-expanded="false">
+                                        @Traducciones["Reportes"].Texto
+                                    </button>
+                                    <div class="collapse" id="reportes-collapse">
+                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                            <li>@Html.ActionLink("Rep1", "AnalisisActivosOciosos", "Inteligencia", null, new { @class = "link-dark rounded", @id = "Rep1" })</li>
+                                            <li>@Html.ActionLink(Traducciones["AnalisisColaboradorVsRecursos"].Texto, "AnalisisColaboradorActivos", "Inteligencia", null, new { @class = "link-dark rounded", @id = "Rep2" })</li>
 
                                         </ul>
                                     </div>
