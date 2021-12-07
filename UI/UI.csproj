@@ -445,11 +445,11 @@
     <Content Include="Views\Inteligencia\AnalisisActivosOciosos.cshtml" />
     <Content Include="Views\Inteligencia\AnalisisColaboradorActivos.cshtml" />
     <Content Include="Views\PerfilHardware\Copiar.cshtml" />
+    <Content Include="Views\Reportes\ReporteAsignacionActivos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Reportes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

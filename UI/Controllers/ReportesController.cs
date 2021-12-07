@@ -25,88 +25,37 @@ namespace UI.Controllers
     public class ReportesController : Controller
     {
         AsignacionActivoBLL bllAsignacion = new AsignacionActivoBLL();
+        ColaboradorBLL bllColaborador = new ColaboradorBLL();
         
         // GET: Reportes
-        public ActionResult Index()
+        public ActionResult ReporteAsignacionActivos()
         {
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            List<ColaboradorBE> Colaboradores = bllColaborador.Listar();
+            ColaboradorBE defecto = new ColaboradorBE(); defecto.Id = 0; defecto.Nombre = "Todos los Colaboradores";
+            Colaboradores.Add(defecto);
+            Colaboradores = Colaboradores.OrderBy(x => x.Id).ToList();
+            ViewBag.Colaboradores = Colaboradores;
+
             return View();
         }
 
-        // GET: Reportes/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
-        // GET: Reportes/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Reportes/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult ReporteAsignacionActivos(string Colaborador)
+
         {
-            try
+
+            List<AsignacionActivoBE> Asignaciones = new List<AsignacionActivoBE>(bllAsignacion.Listar());
+
+            if (!Colaborador.Equals("0"))
+                    
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                Asignaciones = Asignaciones.Where(x => x.Colaborador.Id == Convert.ToInt32(Colaborador)).ToList();
+            
             }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: Reportes/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Reportes/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Reportes/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Reportes/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Pdf() 
-        
-        {
             MemoryStream ms = new MemoryStream();
             PdfWriter pw = new PdfWriter(ms);
             PdfDocument pdfDocument = new PdfDocument(pw);
@@ -118,17 +67,10 @@ namespace UI.Controllers
             pdfDocument.AddEventHandler(PdfDocumentEvent.START_PAGE, new HeaderEventHandler1(img)); // Carga el encabezado
             pdfDocument.AddEventHandler(PdfDocumentEvent.END_PAGE, new FooterEventHandler1()); // Carga el pié de página
 
-            
-
             Table tabla = new Table(1).UseAllAvailableWidth();
 
             Cell celda = new Cell().Add(new Paragraph("Reporte de Asignación de Activos").SetFontSize(14))
                 .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
-                .SetBorder(Border.NO_BORDER);
-            tabla.AddCell(celda);
-
-            celda = new Cell().Add(new Paragraph("lalala"))
-                 .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
                 .SetBorder(Border.NO_BORDER);
             tabla.AddCell(celda);
 
@@ -148,7 +90,7 @@ namespace UI.Controllers
             celda2 = new Cell().Add(new Paragraph("Colaborador"));
             tabla2.AddHeaderCell(celda2.AddStyle(estiloCelda));
 
-            List<AsignacionActivoBE> Asignaciones = new List<AsignacionActivoBE>(bllAsignacion.Listar());
+            
 
 
             foreach (AsignacionActivoBE item in Asignaciones)
@@ -223,8 +165,9 @@ namespace UI.Controllers
                 .SetBorder(new SolidBorder(ColorConstants.BLACK,1));
                 ;
                 
-
             tableEvent.AddCell(cell);
+
+
 
             return tableEvent;
         }
@@ -273,6 +216,8 @@ namespace UI.Controllers
 
 
             tableEvent.AddCell(cell);
+
+
 
             return tableEvent;
         }
