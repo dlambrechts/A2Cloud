@@ -7,6 +7,11 @@ using BE;
 using BLL;
 using X.PagedList;
 using GestorDeArchivo;
+using OfficeOpenXml;
+using System.IO;
+using OfficeOpenXml.Style;
+using System.Drawing;
+using System.Globalization;
 
 namespace UI.Controllers
 {
@@ -17,7 +22,7 @@ namespace UI.Controllers
         AsignacionActivoBLL bllAsignacionActivo = new AsignacionActivoBLL();
 
         // GET: AsignacionActivo
-        public ActionResult Index(int? pagina, string Colaborador,string Estado)
+        public ActionResult Index(int? pagina, string Colaborador, string Estado)
         {
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
@@ -40,7 +45,7 @@ namespace UI.Controllers
 
             Lista = bllAsignacionActivo.Listar();
 
-            
+
             ViewBag.Colaborador = Colaborador;
             ViewBag.Estado = Estado;
 
@@ -80,7 +85,7 @@ namespace UI.Controllers
         {
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
-            ViewData["Activos"] = bllActivo.Listar().Where(x=>x.Estado.Asignar()==true);
+            ViewData["Activos"] = bllActivo.Listar().Where(x => x.Estado.Asignar() == true);
             ViewData["TiposAsignacion"] = bllAsignacionActivo.ListarTipoAsignacion();
 
 
@@ -111,10 +116,10 @@ namespace UI.Controllers
                 ModelState.Remove("Activo.ModeloProcesador");
                 ModelState.Remove("Activo.NumeroSerie");
 
-                if (Asignacion.Tipo.Id == 0 && col.FullRemoto==false) { ModelState.AddModelError(string.Empty, "Debe seleccionar la Ubicación"); }
+                if (Asignacion.Tipo.Id == 0 && col.FullRemoto == false) { ModelState.AddModelError(string.Empty, "Debe seleccionar la Ubicación"); }
                 if (Asignacion.Colaborador.Id == 0) { ModelState.AddModelError(string.Empty, "Debe seleccionar un Colaborador"); }
 
-                if (ModelState.IsValid )
+                if (ModelState.IsValid)
                 {
                     Asignacion.UsuarioCreacion = new UsuarioBE();
                     Asignacion.UsuarioCreacion.Id = Convert.ToInt32(Session["IdUsuario"]);
@@ -132,13 +137,13 @@ namespace UI.Controllers
                     ViewData["Activos"] = bllActivo.Listar().Where(x => x.Estado.Asignar() == true);
                     ViewData["TiposAsignacion"] = bllAsignacionActivo.ListarTipoAsignacion();
 
-                    var Colaboradores = bllColaborador.Listar().Select(c => new { Id = c.Id, Descripcion = c.Nombre + " " + c.Apellido +" (" +c.Departamento.Descripcion+")"}).ToList();
+                    var Colaboradores = bllColaborador.Listar().Select(c => new { Id = c.Id, Descripcion = c.Nombre + " " + c.Apellido + " (" + c.Departamento.Descripcion + ")" }).ToList();
                     ViewBag.Colaboradores = new SelectList(Colaboradores, "Id", "Descripcion");
-                  
+
                     return View("Create", Asignacion);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 FileMananager.RegistrarError(ex.Message);
                 return View();
@@ -181,10 +186,10 @@ namespace UI.Controllers
             {
 
                 ModelState.Clear();
-                if (Asignacion.FechaFinalizacion < Asignacion.FechaInicio)     { ModelState.AddModelError(string.Empty, "La fecha de finalización no puede ser menor a la fecha de asignación"); }
+                if (Asignacion.FechaFinalizacion < Asignacion.FechaInicio) { ModelState.AddModelError(string.Empty, "La fecha de finalización no puede ser menor a la fecha de asignación"); }
 
-                if (ModelState.IsValid) 
-                
+                if (ModelState.IsValid)
+
                 {
                     Asignacion.UsuarioModificacion = new UsuarioBE();
                     Asignacion.UsuarioModificacion.Id = Convert.ToInt32(Session["IdUsuario"]);
@@ -192,8 +197,8 @@ namespace UI.Controllers
                     bllAsignacionActivo.Finalizar(Asignacion);
                     TempData["FinalizadoOk"] = "Finalizado";
 
-                    return RedirectToAction("Index"); 
-                
+                    return RedirectToAction("Index");
+
                 }
 
                 else
@@ -203,12 +208,61 @@ namespace UI.Controllers
 
                     Asignacion.FechaFinalizacion = DateTime.Now;  // para que la fecha propuesta sea la fecha actual
                     return View("Finalizar", Asignacion);
-                    
+
                 }
             }
             catch
             {
                 return View();
+            }
+        }
+
+        public void ExportarExcel()
+        {
+            try
+            {
+                if (Session["IdUsuario"] == null) RedirectToAction("Login", "Home");
+
+
+
+
+                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+                ExcelPackage excel = new ExcelPackage();
+                var workSheet = excel.Workbook.Worksheets.Add("AsignacionActivos");
+
+                List<AsignacionActivoBE> Asignaciones = new List<AsignacionActivoBE>();
+
+                Asignaciones = bllAsignacionActivo.Listar();
+
+                workSheet.Cells[1, 1].LoadFromCollection(Asignaciones.Select(x => new { x.Detalle, Dispositivo = x.Activo.Nombre, NúmeroSerie= x.Activo.NumeroSerie, Estado = x.Estado.Descripcion, Colaborador = x.Colaborador.NombreCompleto,  Ubicación = x.Tipo.Descripcion, Creado = x.FechaCreacion, Modificado = x.FechaModificacion }).ToList(), true);
+                workSheet.Cells[workSheet.Dimension.Address].AutoFitColumns();
+
+                workSheet.Cells["A1:H1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                workSheet.Cells["A1:H1"].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml("#99C"));
+                workSheet.Cells["A1:H1"].Style.Font.Size = 13;
+                workSheet.Cells["A1:H1"].Style.Font.Name = "Calibri";
+                workSheet.Cells["G2:G1000"].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                workSheet.Cells["H2:H1000"].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                    Response.AddHeader("content-disposition", "attachment;  filename=AsignacionDeActivos.xlsx");
+                    excel.SaveAs(memoryStream);
+                    memoryStream.WriteTo(Response.OutputStream);
+                    Response.Flush();
+                    Response.End();
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                FileMananager.RegistrarError("Error al Exportar a XLS :" + ex.Message);
+
             }
         }
     }

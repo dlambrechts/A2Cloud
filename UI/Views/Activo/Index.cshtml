@@ -31,7 +31,10 @@
 
                             <input type="submit" value="@Traducciones["Filtrar"].Texto" class="btn btn-sm btn-outline-secondary" />
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
+
+
+                        <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("ExportarExcel","Activo")"><i class="fa fa-download" aria-hidden="true"></i> @Traducciones["Exportar"].Texto</a>
+
                         <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "Activo", null, new { @class = "btn btn-sm btn-outline-primary", @type = "button" })</a>
 
 
