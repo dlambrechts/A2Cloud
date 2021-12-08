@@ -1,12 +1,12 @@
 ﻿
 @{
     Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
-    ViewBag.Title = Traducciones["ReporteAsignacionActivos"].Texto;
+    ViewBag.Title = Traducciones["ReporteCicloDeVidaActivos"].Texto;
 }
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">@Traducciones["ReporteAsignacionActivos"].Texto</h1>
+        <h1 class="h2">@Traducciones["ReporteCicloDeVidaActivos"].Texto</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", "Home", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
@@ -14,6 +14,7 @@
             </div>
         </div>
     </div>
+
     @if (ViewBag.ErrorFechas != null)
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -22,16 +23,15 @@
         </div>
     }
 
-
     <div class="container-fluid">
         @using (Html.BeginForm())
         {
-            @Html.DropDownList("Colaborador", new SelectList(ViewBag.Colaboradores, "Id", "NombreCompleto"), new { @class = "" })
+            @Html.DropDownList("Tipo", new SelectList(ViewBag.Tipos, "Id", "Descripcion"), new { @class = "" })
 
-            @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Id", "Descripcion"), new { @class = "" })
+            @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Codigo", "Descripcion"), new { @class = "" })
 
 
-            @Html.TextBox("Desde", "", new { type = "date", @autocomplete = "off",@required="required" });
+            @Html.TextBox("Desde", "", new { type = "date", @autocomplete = "off", @required = "required" });
             @Html.TextBox("Hasta", "", new { type = "date", @autocomplete = "off", @required = "required" });
 
 

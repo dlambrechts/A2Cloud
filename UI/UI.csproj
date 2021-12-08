@@ -446,6 +446,7 @@
     <Content Include="Views\Inteligencia\AnalisisColaboradorActivos.cshtml" />
     <Content Include="Views\PerfilHardware\Copiar.cshtml" />
     <Content Include="Views\Reportes\ReporteAsignacionActivos.cshtml" />
+    <Content Include="Views\Reportes\ReporteCicloDeVidaActivos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
