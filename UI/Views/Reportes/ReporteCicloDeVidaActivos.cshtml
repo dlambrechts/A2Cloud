@@ -23,21 +23,32 @@
         </div>
     }
 
-    <div class="container-fluid">
-        @using (Html.BeginForm())
-        {
-            @Html.DropDownList("Tipo", new SelectList(ViewBag.Tipos, "Id", "Descripcion"), new { @class = "" })
+<div class="container-fluid">
+    @using (Html.BeginForm())
 
-            @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Codigo", "Descripcion"), new { @class = "" })
-
-
-            @Html.TextBox("Desde", "", new { type = "date", @autocomplete = "off", @required = "required" });
-            @Html.TextBox("Hasta", "", new { type = "date", @autocomplete = "off", @required = "required" });
-
-
-            <input type="submit" value="@Traducciones["GenerarReporte"].Texto" formtarget="_blank" class="btn btn-sm btn-outline-secondary" />
-
-
+    {
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="inputState" class="form-label">@Traducciones["Tipo"].Texto</label>
+            @Html.DropDownList("Tipo", new SelectList(ViewBag.Tipos, "Id", "Descripcion"), new { @class = "form-select" })
+        </div>
+        <div class="col-md-6">
+            <label for="inputState" class="form-label">@Traducciones["Estado"].Texto</label>
+            @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Codigo", "Descripcion"), new { @class = "form-select" })
+        </div>
+        <div class="col-md-3">
+            <label for="inputState" class="form-label">@Traducciones["DesdeFinCicloVida"].Texto</label>
+            @Html.TextBox("Desde", "", new { type = "date", @autocomplete = "off", @required = "required",  @class="form-control datepicker" })
+        </div>
+        <div class="col-md-3">
+            <label for="inputState" class="form-label">@Traducciones["HastaFinCicloVida"].Texto</label>
+            @Html.TextBox("Hasta", "", new { type = "date", @autocomplete = "off", @required = "required", @class = "form-control datepicker" })
+        </div>
+        <div class="col-md-3">
+            <label for="inputState" class="form-label">&nbsp</label>
+            <input type="submit" value="@Traducciones["GenerarReporte"].Texto" formtarget="_blank" class="form-control btn btn-primary" />
+            </div>
+        </div>
         }
     </div>
 </main>
