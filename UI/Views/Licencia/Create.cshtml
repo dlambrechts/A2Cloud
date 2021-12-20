@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div class="container-fluid pull-left" style="max-width:1024px">
+    <div class="container-fluid ">
 
         @using (Html.BeginForm())
         {
@@ -28,9 +28,10 @@
 
 
 
-        <div class="row gy-2 gx-3 align-items-center">
+        <div class="row g-3">
 
-            <div class="col-auto">
+
+            <div class="col-md-6">
                 <div class=" input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["Descripcion"].Texto</span>
                     @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
@@ -38,14 +39,14 @@
                 </div>
             </div>
 
-            <div class="col-auto">
+            <div class="col-md-6">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["ProductoSoftware"].Texto</span>
                     @Html.DropDownListFor(model => model.Producto.Id, new SelectList((System.Collections.IEnumerable)ViewData["Productos"], "Id", "Descripcion"), new { @class = "form-control" })
                 </div>
             </div>
 
-            <div class="col-auto">
+            <div class="col-md-4">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["Cantidad"].Texto</span>
                     @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" } })
@@ -53,7 +54,7 @@
                 </div>
             </div>
 
-            <div class="col-auto">
+            <div class="col-md-4">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["FechaVigencia"].Texto</span>
                     @Html.EditorFor(model => model.FechaVigencia, new { htmlAttributes = new { @class = "form-control" } })
@@ -61,7 +62,7 @@
                 </div>
             </div>
 
-            <div class="col-auto">
+            <div class="col-md-4">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["FechaFinalizacion"].Texto</span>
                     @Html.EditorFor(model => model.FechaFinalizacion, new { htmlAttributes = new { @class = "form-control" } })
@@ -69,14 +70,14 @@
                 </div>
             </div>
 
-            <div class="col-auto">
+            <div class="col-md-6">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["ModalidadLicencia"].Texto</span>
                     @Html.DropDownListFor(model => model.Modalidad.Id, new SelectList((System.Collections.IEnumerable)ViewData["Modalidades"], "Id", "Descripcion"), new { @class = "form-control" })
                 </div>
             </div>
 
-            <div class="col-auto">
+            <div class="col-md-6">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["NumeroContrato"].Texto</span>
                     @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control" } })
@@ -92,9 +93,9 @@
             </div>
         </div>
         }
-        </div>
-        
-    </main>
+    </div>
+
+</main>
 
 
         <script>

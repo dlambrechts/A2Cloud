@@ -18,7 +18,7 @@
 
 
 
-<div class="container-fluid pull-left" style="max-width:1024px">
+<div class="container-fluid">
 
     @using (Html.BeginForm())
     {
@@ -26,10 +26,10 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="row gy-2 gx-3 align-items-center">
+    <div class="row g-3">
 
 
-        <div class=" col-auto">
+        <div class="col-md-3">
 
             <div class=" input-group col-md-10">
                 <span class="input-group-text"> @Traducciones["Nombre"].Texto</span>
@@ -40,14 +40,14 @@
             </div>
         </div>
 
-        <div class="col-auto">
+        <div class="col-md-3">
             <div class="input-group col-md-10">
                 <span class="input-group-text"> @Traducciones["Marca"].Texto</span>
                 @Html.DropDownListFor(model => model.Marca.Id, new SelectList((System.Collections.IEnumerable)ViewData["Marcas"], "Id", "Descripcion"), new { @class = "form-control" })
             </div>
         </div>
 
-        <div class="col-auto ">
+        <div class="col-md-6">
             <div class="input-group col-md-10">
                 <span class="input-group-text"> @Traducciones["Modelo"].Texto</span>
                 @Html.EditorFor(model => model.Modelo, new { htmlAttributes = new { @class = "form-control" } })
@@ -56,7 +56,7 @@
         </div>
 
 
-        <div class="col-auto ">
+        <div class="col-md-3">
             <div class="input-group col-md-10">
                 <span class="input-group-text"> @Traducciones["FechaCompra"].Texto</span>
                 @Html.EditorFor(model => model.FechaCompra, new { htmlAttributes = new { @class = "form-control datepicker", @autocomplete = "off" } })
@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <div class="col-auto ">
+        <div class="col-md-3">
             <div class="input-group col-md-10">
                 <span class="input-group-text"> @Traducciones["Tipo"].Texto</span>
                 @Html.DropDownListFor(model => model.Tipo.Id, new SelectList((System.Collections.IEnumerable)ViewData["Tipos"], "Id", "Descripcion"), new { @class = "form-control" })
@@ -73,7 +73,7 @@
         </div>
 
 
-        <div class="col-auto ">
+        <div class="col-md-3">
             <div class="input-group col-md-10">
                 <span class="input-group-text"> @Traducciones["CicloDeVida"].Texto</span>
                 @Html.EditorFor(model => model.CicloDeVida, new { htmlAttributes = new { @class = "form-control", @Value = "1" } })
@@ -82,7 +82,7 @@
             </div>
         </div>
 
-        <div class="col-auto ">
+        <div class="col-md-3">
             <div class="input-group col-md-10">
                 <span class="input-group-text"> @Traducciones["NumeroSerie"].Texto</span>
                 @Html.EditorFor(model => model.NumeroSerie, new { htmlAttributes = new { @class = "form-control" } })
@@ -93,8 +93,8 @@
     </div>
         <br />
         // Componentes de PC
-        <div class="row gy-2 gx-3 align-items-center" id="cmp-pc">
-            <div class="col-auto ">
+        <div class="row g-3" id="cmp-pc">
+            <div class="col-md-6">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["ModeloProcesador"].Texto</span>
                     @Html.EditorFor(model => model.ModeloProcesador, new { htmlAttributes = new { @class = "form-control" } })
@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <div class="col-auto ">
+            <div class="col-md-3">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["FrecuenciaProcesador"].Texto</span>
                     @Html.EditorFor(model => model.FrecuenciaProcesador, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
@@ -111,14 +111,14 @@
                 </div>
             </div>
 
-            <div class="col-auto ">
+            <div class="col-md-3">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["NucleosProcesador"].Texto</span>
                     @Html.EditorFor(model => model.NucleosProcesador, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
                     @Html.ValidationMessageFor(model => model.NucleosProcesador, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-auto ">
+            <div class="col-md-3 ">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["MemoriaRam"].Texto</span>
                     @Html.EditorFor(model => model.MemoriaRam, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
@@ -127,7 +127,7 @@
                 </div>
             </div>
 
-            <div class="col-auto ">
+            <div class="col-md-3">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["TamañoDisco"].Texto</span>
                     @Html.EditorFor(model => model.TamañoDisco, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
@@ -136,7 +136,7 @@
                 </div>
             </div>
 
-            <div class="col-auto ">
+            <div class="col-md-3">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["MemoriaVideo"].Texto</span>
                     @Html.EditorFor(model => model.MemoriaVideo, new { htmlAttributes = new { @class = "form-control", @Value = "0" } })
@@ -144,7 +144,7 @@
                 </div>
             </div>
 
-            <div class="col-auto ">
+            <div class="col-md-3 ">
  
                 <label class="control-label col-md-2">@Traducciones["AceleradoraGrafica"].Texto</label>
                 <div class="col-md-10">
@@ -189,7 +189,7 @@
 
         window.onload = function () {
             document.getElementById('activos-collapse').className = 'show';
-            document.getElementById('AsignacionActivo').className = 'btn-activo';
+            document.getElementById('Activos').className = 'btn-activo';
         };
     </script>
 

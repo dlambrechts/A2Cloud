@@ -15,8 +15,8 @@ namespace DAL
         private SqlConnection Conexion;
         private SqlTransaction Transaccion;
         private SqlCommand ComandoSQL;
-       private string CadenaConexion = "Data Source=.;Initial Catalog=a2cloud;Integrated Security=True";
-       // private string CadenaConexion = "Data Source=EQA-NB09\\SQLEXPRESS;Initial Catalog=a2cloud;User ID=sa; Password=123";
+       private string CadenaConexion = "Data Source=.;Initial Catalog=a2cloud;User=sa;Password=Remiser0";
+
 
 
 
@@ -96,7 +96,7 @@ namespace DAL
         public void QueryBackup(string Consulta) // Exclusivo para tareas de backup: se conecta a la base MASTER y no utiliza Transacciones
         {
             ComandoSQL = new SqlCommand();
-            Conexion = new SqlConnection("Data Source=.;Initial Catalog=master;Integrated Security=True");
+            Conexion = new SqlConnection("Data Source=.;Initial Catalog=master;User=sa;Password=Remiser0");
             Conexion.Open();
             ComandoSQL.Connection = Conexion;
 

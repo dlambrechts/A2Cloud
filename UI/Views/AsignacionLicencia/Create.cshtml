@@ -18,10 +18,7 @@
 
 
 
-    <div class="container-fluid pull-left" style="max-width:1024px">
-
-
-
+    <div class="container-fluid ">
 
 
         @using (Html.BeginForm())
@@ -30,10 +27,10 @@
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="row gy-2 gx-3 align-items-center">
+        <div class="row g-3">
 
 
-            <div class=" col-auto">
+            <div class="col-md-6">
 
                 <div class=" input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["Detalle"].Texto</span>
@@ -43,18 +40,18 @@
                 </div>
             </div>
 
-            <div class="col-auto">
+            <div class="col-md-6">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["Licencia"].Texto</span>
-                    @Html.DropDownListFor(model => model.Licencia.Id, new SelectList((System.Collections.IEnumerable)ViewData["Licencias"], "Id", "DescripcionLarga"),"Seleccionar..", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.Licencia.Id, new SelectList((System.Collections.IEnumerable)ViewData["Licencias"], "Id", "DescripcionLarga"), "Seleccionar..", new { @class = "form-control" })
                 </div>
             </div>
 
-            <div class=" col-auto">
+            <div class="col-md-4">
 
                 <div class=" input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["Disponibles"].Texto</span>
-                    <input class = "form-control "  disabled="disabled" id="dispo">
+                    <input class="form-control " disabled="disabled" id="dispo">
 
 
                 </div>
@@ -62,14 +59,14 @@
 
 
 
-            <div class="col-auto">
+            <div class="col-md-8">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["Dispositivo"].Texto</span>
                     @Html.DropDownListFor(model => model.Activo.Id, new SelectList((System.Collections.IEnumerable)ViewData["Activos"], "Id", "DescripcionLarga"), new { @class = "form-control" })
                 </div>
             </div>
 
-            <div class="col-auto">
+            <div class="col-md-6">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["Colaborador"].Texto</span>
 
@@ -79,7 +76,7 @@
 
 
 
-            <div class="col-auto ">
+            <div class="col-md-6">
                 <div class="input-group col-md-10">
                     <span class="input-group-text"> @Traducciones["FechaAsignacion"].Texto</span>
                     @Html.EditorFor(model => model.FechaInicio, new { htmlAttributes = new { @class = "form-control datepicker", @autocomplete = "off" } })
