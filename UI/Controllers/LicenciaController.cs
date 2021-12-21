@@ -6,7 +6,12 @@ using System.Web.Mvc;
 using BE;
 using BLL;
 using X.PagedList;
-
+using GestorDeArchivo;
+using OfficeOpenXml;
+using System.IO;
+using OfficeOpenXml.Style;
+using System.Drawing;
+using System.Globalization;
 
 namespace UI.Controllers
 {
@@ -164,6 +169,59 @@ namespace UI.Controllers
 
             {
                 return Json(new { success = false });
+            }
+        }
+
+        public void ExportarExcel()
+        {
+            try
+            {
+                if (Session["IdUsuario"] == null) RedirectToAction("Login", "Home");
+
+
+
+
+                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+                ExcelPackage excel = new ExcelPackage();
+                var workSheet = excel.Workbook.Worksheets.Add("Licencias");
+
+                List<LicenciaBE> Licencias = new List<LicenciaBE>();
+
+                Licencias = bllLic.Listar();
+
+                workSheet.Cells[1, 1].LoadFromCollection(Licencias.Select(x => new { Descripción = x.Descripcion,Producto=x.Producto.Descripcion,x.Cantidad, x.FechaVigencia, x.FechaFinalizacion, Creado = x.FechaCreacion, Modificado = x.FechaModificacion }).ToList(), true);
+                workSheet.Cells[workSheet.Dimension.Address].AutoFitColumns();
+
+                workSheet.Cells["A1:G1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                workSheet.Cells["A1:G1"].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml("#99C"));
+                workSheet.Cells["A1:G1"].Style.Font.Size = 13;
+                workSheet.Cells["A1:G1"].Style.Font.Name = "Calibri";
+                workSheet.Cells["D2:D1000"].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                workSheet.Cells["E2:E1000"].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                workSheet.Cells["F2:F1000"].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                workSheet.Cells["G2:G1000"].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+
+
+
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                    Response.AddHeader("content-disposition", "attachment;  filename=Licencias.xlsx");
+                    excel.SaveAs(memoryStream);
+                    memoryStream.WriteTo(Response.OutputStream);
+                    Response.Flush();
+                    Response.End();
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                FileMananager.RegistrarError("Error al Exportar a XLS :" + ex.Message);
+
             }
         }
     }

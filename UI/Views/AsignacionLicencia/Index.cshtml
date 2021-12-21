@@ -15,21 +15,21 @@
             <div class="btn-group me-2">
                 @using (Html.BeginForm())
                 {
-                    <div class="btn-group me-2">
-                        <div class="ocultar-cel btn-group me-2">
-                            @Html.DropDownList("Colaborador", new SelectList(ViewBag.Colaboradores, "Id", "NombreCompleto"), new { @class = "" })
+                <div class="btn-group me-2">
+                    <div class="ocultar-cel btn-group me-2">
+                        @Html.DropDownList("Colaborador", new SelectList(ViewBag.Colaboradores, "Id", "NombreCompleto"), new { @class = "" })
 
 
-                            @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Id", "Descripcion"), new { @class = "" })
+                        @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Id", "Descripcion"), new { @class = "" })
 
 
-                            @Html.DropDownList("Dispositivo", new SelectList(ViewBag.Dispositivos, "Id", "Nombre"), new { @class = "" })
+                        @Html.DropDownList("Dispositivo", new SelectList(ViewBag.Dispositivos, "Id", "Nombre"), new { @class = "" })
 
-                            <input type="submit" value="@Traducciones["Filtrar"].Texto" class="btn btn-sm btn-outline-secondary" />
-                            </div>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">@Traducciones["Exportar"].Texto</button>
-                            <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "AsignacionLicencia", null, new { @class = "btn btn-sm btn-outline-primary", @type = "button" })</a>
-                        </div>
+                        <input type="submit" value="@Traducciones["Filtrar"].Texto" class="btn btn-sm btn-outline-secondary" />
+                    </div>
+                    <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("ExportarExcel","AsignacionLicencia")"><i class="fa fa-download" aria-hidden="true"></i> @Traducciones["Exportar"].Texto</a>
+                    <a>@Html.ActionLink(@Traducciones["Nuevo"].Texto, "Create", "AsignacionLicencia", null, new { @class = "btn btn-sm btn-outline-primary", @type = "button" })</a>
+                </div>
                         }
 
 

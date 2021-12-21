@@ -11,18 +11,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login</title>
+    <title>@Traducciones["Login"].Texto - A2Cloud</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
-
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
     <!-- As a heading -->
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand mb-0 h1" href="@Url.Action("index", "Login")">A2Cloud</a>
+            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" style="font-weight:bold" href="@Url.Action("index", "Login")">&ensp;A2Cloud &ensp;<i class="fa fa-cloud"></i></a>
             <div class="d-flex">
                 @Html.DropDownList("Idiomas", new SelectList((System.Collections.IEnumerable)Session["Idiomas"], "Id", "Descripcion"), new { @id = "selIdioma", @class = "form-control me-2", @onchange = "CambiarIdioma();" })
             </div>
@@ -43,41 +43,47 @@
                             <div class="col-12 text-center">
                                 <div> <img class="mb-4" src="~/Content/img/Logo.png" alt="" width="191" height="109"></div>
                                 <h2 class="fw-normal" style="color:#148AB6">A2Cloud</h2>
-                                <h4>@if (Traducciones.ContainsKey("Bienvenido"))
-                                {@Traducciones["Bienvenido"].Texto;
-                            }</h4>
-                            </div>
-                            @if (ViewBag.Resultado != null)
-                            {
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong>No se pudo iniciar sesión: </strong>@ViewBag.Resultado
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            }
-                            <div>
-                                <label>@if (Traducciones.ContainsKey("Usuario"))
-                                {@Traducciones["Usuario"].Texto;
-                            }</label>
-                                @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control", required = "required", @autofocus = "" } })
-                            </div>
-                            <div class="col-12">
-                                <label>@if (Traducciones.ContainsKey("Contraseña"))
-                                {@Traducciones["Contraseña"].Texto;
-                            }</label>
-                                @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                            </div>
-                            <div class="col-12">
-
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-dark float-end">
-                                    @if (Traducciones.ContainsKey("Login"))
-                                    {@Traducciones["Login"].Texto;
+                                <h4>
+                                    @if (Traducciones.ContainsKey("Bienvenido"))
+                                    {@Traducciones["Bienvenido"].Texto;
                                 }
-                            </button>
+                            </h4>
                         </div>
+                        @if (ViewBag.Resultado != null)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>No se pudo iniciar sesión: </strong>@ViewBag.Resultado
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+                        <div>
+                            <label>
+                                @if (Traducciones.ContainsKey("Usuario"))
+                                {@Traducciones["Usuario"].Texto;
+                            }
+                        </label>
+                        @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control", required = "required", @autofocus = "" } })
                     </div>
-                }
+                    <div class="col-12">
+                        <label>
+                            @if (Traducciones.ContainsKey("Contraseña"))
+                            {@Traducciones["Contraseña"].Texto;
+                        }
+                    </label>
+                    @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                </div>
+                <div class="col-12">
+
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-dark float-end">
+                        @if (Traducciones.ContainsKey("Login"))
+                        {@Traducciones["Login"].Texto;
+                    }
+                    </button>
+                </div>
+            </div>
+        }
 
                     <hr class="mt-4">
                     <div class="col-12">
@@ -91,6 +97,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
 </body>
 </html>
 

@@ -6,6 +6,12 @@ using System.Web.Mvc;
 using BE;
 using BLL;
 using X.PagedList;
+using OfficeOpenXml;
+using System.IO;
+using OfficeOpenXml.Style;
+using System.Drawing;
+using System.Globalization;
+using GestorDeArchivo;
 
 namespace UI.Controllers
 {
@@ -208,6 +214,57 @@ namespace UI.Controllers
             catch
             {
                 return View();
+            }
+        }
+
+        public void ExportarExcel()
+        {
+            try
+            {
+                if (Session["IdUsuario"] == null) RedirectToAction("Login", "Home");
+
+
+
+
+                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+                ExcelPackage excel = new ExcelPackage();
+                var workSheet = excel.Workbook.Worksheets.Add("PerfilesHardware");
+
+                List<PerfilDeHardwareBE> Perfiles = new List<PerfilDeHardwareBE>();
+
+                Perfiles = bllPerfilDeHardware.Listar();
+
+                workSheet.Cells[1, 1].LoadFromCollection(Perfiles.Select(x => new { x.Descripcion, DispositivoPrincipal = x.DispositivoPrincipal.Descripcion, x.MemoriaRamMinima, x.AlmecenamientoMinimo, x.NucleosProcesadorMinimo, x.MemoriaVideoMinima, Creado = x.FechaCreacion, Modificado = x.FechaModificacion }).ToList(), true);
+                workSheet.Cells[workSheet.Dimension.Address].AutoFitColumns();
+
+                workSheet.Cells["A1:H1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                workSheet.Cells["A1:H1"].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml("#99C"));
+                workSheet.Cells["A1:H1"].Style.Font.Size = 13;
+                workSheet.Cells["A1:H1"].Style.Font.Name = "Calibri";
+                workSheet.Cells["H2:H1000"].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                workSheet.Cells["G2:G1000"].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+
+
+
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                    Response.AddHeader("content-disposition", "attachment;  filename=PerfilesDeHardware.xlsx");
+                    excel.SaveAs(memoryStream);
+                    memoryStream.WriteTo(Response.OutputStream);
+                    Response.Flush();
+                    Response.End();
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                FileMananager.RegistrarError("Error al Exportar a XLS :" + ex.Message);
+
             }
         }
     }

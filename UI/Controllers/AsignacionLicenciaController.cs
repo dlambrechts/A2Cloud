@@ -7,6 +7,12 @@ using BE;
 using BLL;
 using X.PagedList;
 using GestorDeArchivo;
+using GestorDeArchivo;
+using OfficeOpenXml;
+using System.IO;
+using OfficeOpenXml.Style;
+using System.Drawing;
+using System.Globalization;
 
 namespace UI.Controllers
 {
@@ -226,6 +232,55 @@ namespace UI.Controllers
             catch
             {
                 return View();
+            }
+        }
+
+        public void ExportarExcel()
+        {
+            try
+            {
+                if (Session["IdUsuario"] == null) RedirectToAction("Login", "Home");
+
+
+
+
+                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+                ExcelPackage excel = new ExcelPackage();
+                var workSheet = excel.Workbook.Worksheets.Add("AsignacionLicenicas");
+
+                List<AsignacionLicenciaBE> Asignaciones = new List<AsignacionLicenciaBE>();
+
+                Asignaciones = bllAsignacion.Listar();
+
+                workSheet.Cells[1, 1].LoadFromCollection(Asignaciones.Select(x => new { x.Detalle, Estado = x.Estado.Descripcion, Dispositivo = x.Activo.Nombre,  Colaborador = x.Colaborador.NombreCompleto, Creado = x.FechaCreacion, Modificado = x.FechaModificacion }).ToList(), true);
+                workSheet.Cells[workSheet.Dimension.Address].AutoFitColumns();
+
+                workSheet.Cells["A1:F1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                workSheet.Cells["A1:F1"].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml("#99C"));
+                workSheet.Cells["A1:F1"].Style.Font.Size = 13;
+                workSheet.Cells["A1:F1"].Style.Font.Name = "Calibri";
+                workSheet.Cells["E2:E1000"].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                workSheet.Cells["F2:F1000"].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                    Response.AddHeader("content-disposition", "attachment;  filename=AsignacionLicencias.xlsx");
+                    excel.SaveAs(memoryStream);
+                    memoryStream.WriteTo(Response.OutputStream);
+                    Response.Flush();
+                    Response.End();
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                FileMananager.RegistrarError("Error al Exportar a XLS :" + ex.Message);
+
             }
         }
     }

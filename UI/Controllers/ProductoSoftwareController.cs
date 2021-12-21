@@ -6,6 +6,12 @@ using System.Web.Mvc;
 using X.PagedList;
 using BLL;
 using BE;
+using GestorDeArchivo;
+using OfficeOpenXml;
+using System.IO;
+using OfficeOpenXml.Style;
+using System.Drawing;
+using System.Globalization;
 
 namespace UI.Controllers
 {
@@ -44,15 +50,15 @@ namespace UI.Controllers
 
             return View(Lista.ToPagedList(Indice, RegistrosPorPagina));
         }
-            // GET: ProductoSoftware/Details/5
-            public ActionResult Details(int id)
+        // GET: ProductoSoftware/Details/5
+        public ActionResult Details(int id)
 
         {
             if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
 
             ProductoSoftwareBE soft = new ProductoSoftwareBE();
             soft.Id = id;
-            soft=bllSoft.ObtenerUno(soft);
+            soft = bllSoft.ObtenerUno(soft);
 
             return View(soft);
         }
@@ -118,8 +124,8 @@ namespace UI.Controllers
         {
             try
             {
-      
-              
+
+
                 ModelState.Remove("Marca.Descripcion");
 
                 if (ModelState.IsValid)
@@ -167,6 +173,58 @@ namespace UI.Controllers
 
             {
                 return Json(new { success = false });
+            }
+        }
+
+        public void ExportarExcel()
+        {
+            try
+            {
+                if (Session["IdUsuario"] == null) RedirectToAction("Login", "Home");
+
+
+
+
+                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+                ExcelPackage excel = new ExcelPackage();
+                var workSheet = excel.Workbook.Worksheets.Add("Productos");
+
+                List<ProductoSoftwareBE> Productos = new List<ProductoSoftwareBE>();
+
+                Productos = bllSoft.Listar();
+
+                workSheet.Cells[1, 1].LoadFromCollection(Productos.Select(x => new { Descripción = x.Descripcion, Marca = x.Marca.Descripcion, Creado = x.FechaCreacion, Modificado = x.FechaModificacion }).ToList(), true);
+                workSheet.Cells[workSheet.Dimension.Address].AutoFitColumns();
+
+                workSheet.Cells["A1:D1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                workSheet.Cells["A1:D1"].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml("#99C"));
+                workSheet.Cells["A1:D1"].Style.Font.Size = 13;
+                workSheet.Cells["A1:D1"].Style.Font.Name = "Calibri";
+                workSheet.Cells["D2:D1000"].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+                workSheet.Cells["C2:C1000"].Style.Numberformat.Format = DateTimeFormatInfo.CurrentInfo.ShortDatePattern;
+
+
+
+
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                    Response.AddHeader("content-disposition", "attachment;  filename=ProductosDeSoftware.xlsx");
+                    excel.SaveAs(memoryStream);
+                    memoryStream.WriteTo(Response.OutputStream);
+                    Response.Flush();
+                    Response.End();
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                FileMananager.RegistrarError("Error al Exportar a XLS :" + ex.Message);
+
             }
         }
     }
