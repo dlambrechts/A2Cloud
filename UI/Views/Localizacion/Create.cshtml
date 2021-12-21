@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div class="container-fluid pull-left" style="max-width:1024px">
+    <div class="container-fluid">
 
         @using (Html.BeginForm())
         {
@@ -28,9 +28,9 @@
 
 
 
-            <div class="row gy-2 gx-3 align-items-center">
+            <div class="row g-3">
 
-                <div class="col-auto">
+                <div class="col-md-6">
                     <div class=" input-group col-md-10">
                         <span class="input-group-text"> @Traducciones["Descripcion"].Texto</span>
                         @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
@@ -39,7 +39,7 @@
                 </div>
 
 
-                <div class="col-auto">
+                <div class="col-md-6">
                     <div class="input-group col-md-10">
                         <span class="input-group-text"> @Traducciones["Calle"].Texto</span>
                         @Html.EditorFor(model => model.Ubicacion.Calle, new { htmlAttributes = new { @class = "form-control" } })
@@ -47,7 +47,7 @@
                     </div>
                 </div>
 
-                <div class="col-auto">
+                <div class="col-md-6">
                     <div class="input-group col-md-10">
                         <span class="input-group-text"> @Traducciones["Numero"].Texto</span>
                         @Html.EditorFor(model => model.Ubicacion.Altura, new { htmlAttributes = new { @class = "form-control" } })
@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <div class="col-auto">
+                <div class="col-md-6">
                     <div class="input-group col-md-10">
                         <span class="input-group-text"> @Traducciones["CodigoPostal"].Texto</span>
                         @Html.EditorFor(model => model.Ubicacion.CodigoPostal, new { htmlAttributes = new { @class = "form-control" } })
@@ -63,7 +63,7 @@
                     </div>
                 </div>
 
-                <div class="col-auto">
+                <div class="col-md-6">
                     <div class="input-group col-md-10">
                         <span class="input-group-text"> @Traducciones["Piso"].Texto</span>
                         @Html.EditorFor(model => model.Ubicacion.Piso, new { htmlAttributes = new { @class = "form-control" } })
