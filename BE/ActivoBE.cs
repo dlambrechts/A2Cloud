@@ -117,6 +117,8 @@ namespace BE
 
         public string DescripcionLarga { get => Nombre +" (" + tipo.Descripcion + " S/N: " +numeroSerie+" )" ; }
 
+        public string DescSerie { get => Nombre + " " + NumeroSerie; }
+
         private ActivoEstadoBE estado;
 
         public ActivoEstadoBE Estado { get { return estado; } }

@@ -28,6 +28,7 @@ namespace UI.Controllers
         ColaboradorBLL bllColaborador = new ColaboradorBLL();
         UsuarioBLL bllUsuario = new UsuarioBLL();
         ActivoBLL bllActivo = new ActivoBLL();
+        AsignacionLicenciaBLL bllAsignacionLic = new AsignacionLicenciaBLL();
 
         // GET: ReporteAsignacionActivos
         public ActionResult ReporteAsignacionActivos()
@@ -166,8 +167,8 @@ namespace UI.Controllers
             return View();
     }
 
-        [HttpPost]
-        public ActionResult ReporteCicloDeVidaActivos(string Tipo, string Estado, string Desde, string Hasta)
+     [HttpPost]
+     public ActionResult ReporteCicloDeVidaActivos(string Tipo, string Estado, string Desde, string Hasta)
 
         {
             UsuarioBE emisor = new UsuarioBE();
@@ -278,10 +279,139 @@ namespace UI.Controllers
 
 
 
+        public ActionResult ReporteAsignacionLicencias()
+        {
+            if (Session["IdUsuario"] == null) { return RedirectToAction("Index", "Login"); }
+
+            List<ColaboradorBE> Colaboradores = bllColaborador.Listar();
+            ColaboradorBE defecto = new ColaboradorBE(); defecto.Id = 0; defecto.Nombre = "Todos los Colaboradores";
+            Colaboradores.Add(defecto);
+            Colaboradores = Colaboradores.OrderBy(x => x.Id).ToList();
+            ViewBag.Colaboradores = Colaboradores;
+
+            List<AsignacionEstadoBE> Estados = bllAsignacion.ListarEstados();
+            AsignacionEstadoBE estDef = new AsignacionEstadoBE(); estDef.Id = 0; estDef.Descripcion = "Todos lo Estados";
+            Estados.Add(estDef);
+            Estados = Estados.OrderBy(x => x.Id).ToList();
+            ViewBag.Estados = Estados;
+
+            List<ActivoBE> Activos = bllActivo.Listar();
+            ActivoBE ActDef = new ActivoBE(); ActDef.Id = 0; ActDef.Nombre = "Todos lo Dispositivos";
+            Activos.Add(ActDef);
+            Activos = Activos.OrderBy(x => x.Id).ToList();
+            ViewBag.Activos = Activos;
 
 
 
-    public class HeaderEventHandler1 : iText.Kernel.Events.IEventHandler // Para encabezado 
+            ViewBag.ErrorFechas = TempData["ErrorFechas"] as string;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ReporteAsignacionLicencias(string Colaborador, string Estado, string Dispositivo, string Desde, string Hasta)
+
+        {
+            UsuarioBE emisor = new UsuarioBE();
+            emisor.Id = Convert.ToInt32(Session["IdUsuario"]);
+            emisor = bllUsuario.ObtenerUno(emisor);
+
+            DateTime desde = Convert.ToDateTime(Desde);
+            DateTime hasta = Convert.ToDateTime(Hasta);
+
+            if (desde > hasta)
+            {
+                TempData["ErrorFechas"] = "Error";
+
+                return RedirectToAction("ReporteAsignacionActivos");
+
+            }
+
+            List<AsignacionLicenciaBE> Asignaciones = new List<AsignacionLicenciaBE>(bllAsignacionLic.Listar());
+
+            if (!Colaborador.Equals("0")) { Asignaciones = Asignaciones.Where(x => x.Colaborador.Id == Convert.ToInt32(Colaborador)).ToList(); }
+
+            if (!Estado.Equals("0")) { Asignaciones = Asignaciones.Where(x => x.Estado.Id == Convert.ToInt32(Estado)).ToList(); }
+
+            if (!Dispositivo.Equals("0")) { Asignaciones = Asignaciones.Where(x => x.Activo.Id == Convert.ToInt32(Dispositivo)).ToList(); }
+
+            Asignaciones = Asignaciones.Where(x => x.FechaInicio > desde && x.FechaInicio < hasta).ToList();
+
+            MemoryStream ms = new MemoryStream();
+            PdfWriter pw = new PdfWriter(ms);
+            PdfDocument pdfDocument = new PdfDocument(pw);
+            Document doc = new Document(pdfDocument, PageSize.A4);
+            doc.SetMargins(75, 35, 70, 35);
+
+            string pathLogo = Server.MapPath("~/Content/img/Logo.png");
+            Image img = new Image(iText.IO.Image.ImageDataFactory.Create(pathLogo));
+            pdfDocument.AddEventHandler(PdfDocumentEvent.START_PAGE, new HeaderEventHandler1(img, emisor)); // Carga el encabezado
+            pdfDocument.AddEventHandler(PdfDocumentEvent.END_PAGE, new FooterEventHandler1()); // Carga el pié de página
+
+            Table tabla = new Table(1).UseAllAvailableWidth();
+
+            Cell celda = new Cell().Add(new Paragraph("Reporte de Asignación de Licencias").SetFontSize(14))
+                .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                .SetBorder(Border.NO_BORDER);
+            tabla.AddCell(celda);
+
+            doc.Add(tabla);
+
+            Style estiloCelda = new Style()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY)
+                .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+
+            Table tabla2 = new Table(5).UseAllAvailableWidth();
+            Cell celda2 = new Cell(2, 1).Add(new Paragraph("Licencia"));
+            tabla2.AddHeaderCell(celda2.AddStyle(estiloCelda));
+            celda2 = new Cell(2, 1).Add(new Paragraph("Número de Contrato"));
+            tabla2.AddHeaderCell(celda2.AddStyle(estiloCelda));
+            celda2 = new Cell().Add(new Paragraph("Fecha de Asignación"));
+            tabla2.AddHeaderCell(celda2.AddStyle(estiloCelda));
+            celda2 = new Cell().Add(new Paragraph("Estado de la Asignación"));
+            tabla2.AddHeaderCell(celda2.AddStyle(estiloCelda));
+            //celda2 = new Cell().Add(new Paragraph("Tipo de Asignación"));
+            //tabla2.AddHeaderCell(celda2.AddStyle(estiloCelda));
+            celda2 = new Cell().Add(new Paragraph("Asignado A"));
+            tabla2.AddHeaderCell(celda2.AddStyle(estiloCelda));
+
+
+
+
+
+            foreach (AsignacionLicenciaBE item in Asignaciones)
+            {
+
+                celda2 = new Cell().Add(new Paragraph(item.Licencia.Descripcion));
+                tabla2.AddCell(celda2);
+                celda2 = new Cell().Add(new Paragraph(item.Licencia.NumeroContrato));
+                tabla2.AddCell(celda2);
+                celda2 = new Cell().Add(new Paragraph(item.FechaInicio.ToShortDateString()));
+                tabla2.AddCell(celda2);
+                celda2 = new Cell().Add(new Paragraph(item.Estado.Descripcion));
+                tabla2.AddCell(celda2);
+                //celda2 = new Cell().Add(new Paragraph(item.Licencia.Modalidad.Descripcion));
+                //tabla2.AddCell(celda2);
+
+                string Asignado = "";
+                if (item.Licencia.Modalidad.Id.Contains("Dispositivo")) { Asignado = item.Activo.Nombre; } else { Asignado = item.Colaborador.NombreCompleto; }
+
+                celda2 = new Cell().Add(new Paragraph(Asignado));
+                tabla2.AddCell(celda2);
+            }
+
+            doc.Add(tabla2);
+
+            doc.Close();
+
+            byte[] bytesStraam = ms.ToArray();
+            ms = new MemoryStream();
+            ms.Write(bytesStraam, 0, bytesStraam.Length);
+            ms.Position = 0;
+
+            return new FileStreamResult(ms, "application/pdf");
+        }
+
+        public class HeaderEventHandler1 : iText.Kernel.Events.IEventHandler // Para encabezado 
 
     {
         Image Img;

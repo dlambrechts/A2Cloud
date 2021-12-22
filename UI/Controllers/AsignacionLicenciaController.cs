@@ -7,7 +7,6 @@ using BE;
 using BLL;
 using X.PagedList;
 using GestorDeArchivo;
-using GestorDeArchivo;
 using OfficeOpenXml;
 using System.IO;
 using OfficeOpenXml.Style;

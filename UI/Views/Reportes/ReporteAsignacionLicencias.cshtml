@@ -1,0 +1,66 @@
+﻿
+@{
+    Dictionary<string, BE.IdiomaTraduccionBE> Traducciones = (Dictionary<string, BE.IdiomaTraduccionBE>)Session["Traducciones"];
+    ViewBag.Title = Traducciones["ReporteAsignacionLicencias"].Texto;
+}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">@Traducciones["ReporteAsignacionLicencias"].Texto</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a>@Html.ActionLink(@Traducciones["Volver"].Texto, "Index", "Home", null, new { @class = "btn btn-sm btn-outline-secondary", @type = "button" })</a>
+
+            </div>
+        </div>
+    </div>
+    @if (ViewBag.ErrorFechas != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>@Traducciones["Error"].Texto:</strong> Intervalo de fechas inválido
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+
+    <div class="container-fluid">
+        @using (Html.BeginForm())
+        {
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="inputState" class="form-label">@Traducciones["Colaborador"].Texto</label>
+                @Html.DropDownList("Colaborador", new SelectList(ViewBag.Colaboradores, "Id", "NombreCompleto"), new { @class = "form-select" })
+            </div>
+            <div class="col-md-6">
+                <label for="inputState" class="form-label">@Traducciones["Dispositivo"].Texto</label>
+                @Html.DropDownList("Dispositivo", new SelectList(ViewBag.Activos, "Id", "DescSerie"), new { @class = "form-select" })
+            </div>
+            <div class="col-md-6">
+                <label for="inputState" class="form-label">@Traducciones["Estado"].Texto</label>
+                @Html.DropDownList("Estado", new SelectList(ViewBag.Estados, "Id", "Descripcion"), new { @class = "form-select" })
+            </div>
+            <div class="col-md-3">
+                <label for="inputState" class="form-label">@Traducciones["DesdeFechaAsignacion"].Texto</label>
+                @Html.TextBox("Desde", "", new { type = "date", @autocomplete = "off", @required = "required", @class = "form-control datepicker" })
+            </div>
+            <div class="col-md-3">
+                <label for="inputState" class="form-label">@Traducciones["HastaFechaAsignacion"].Texto</label>
+                @Html.TextBox("Hasta", "", new { type = "date", @autocomplete = "off", @required = "required", @class = "form-control datepicker" })
+            </div>
+            <div class="col-md-3">
+                <label for="inputState" class="form-label">&nbsp</label>
+                <input type="submit" value="@Traducciones["GenerarReporte"].Texto" formtarget="_blank" class="form-control btn btn-primary" />
+            </div>
+        </div>
+
+        }
+    </div>
+</main>
+
+<script>
+
+        window.onload = function () {
+            document.getElementById('reportes-collapse').className = 'show';
+            document.getElementById('Rep3').className = 'btn-activo';
+        };
+</script>

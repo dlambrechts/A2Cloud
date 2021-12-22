@@ -15,7 +15,8 @@ namespace DAL
         private SqlConnection Conexion;
         private SqlTransaction Transaccion;
         private SqlCommand ComandoSQL;
-       private string CadenaConexion = "Data Source=.;Initial Catalog=a2cloud;User=sa;Password=Remiser0";
+        //private string CadenaConexion = "Data Source=.;Initial Catalog=a2cloud;User=sa;Password=Remiser0";
+        private string CadenaConexion = "Data Source=EQA-NB09\\SQLEXPRESS;Initial Catalog=A2Cloud;User ID=sa;Password=Remiser0";
 
 
 
