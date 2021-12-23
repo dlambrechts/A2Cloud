@@ -322,7 +322,7 @@ namespace UI.Controllers
             {
                 TempData["ErrorFechas"] = "Error";
 
-                return RedirectToAction("ReporteAsignacionActivos");
+                return RedirectToAction("ReporteAsignacionLicencias");
 
             }
 
@@ -447,19 +447,22 @@ namespace UI.Controllers
             Style styleText = new Style()
                 .SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetFontSize(10f);
 
-            Cell cell = new Cell().Add(Img.SetAutoScale(true)).SetBorder(new SolidBorder(ColorConstants.BLACK,1));
+            Cell cell = new Cell().Add(Img.SetAutoScale(true));
 
             tableEvent.AddCell(cell.AddStyle(styleCell).SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT));
 
             PdfFont bold = PdfFontFactory.CreateFont(StandardFonts.TIMES_BOLD);
             cell = new Cell()
 
-                .Add(new Paragraph("Emitido Por: "+ Emisor.Nombre +" "+Emisor.Apellido +" \n").SetFont(bold))
-                .Add(new Paragraph("Fecha de Emisión: " + DateTime.Now.ToShortDateString()))
+                    .Add(new Paragraph("A2Cloud").SetFont(bold))
+                .Add(new Paragraph("Emitido por: "+ Emisor.Nombre +" "+Emisor.Apellido +" \n").SetFont(bold))
+                .Add(new Paragraph("Fecha de Emisión: " + DateTime.Now.ToShortDateString()).SetFont(bold))
                 .AddStyle(styleText).AddStyle(styleCell)
-                .SetBorder(new SolidBorder(ColorConstants.BLACK,1));
+
                 ;
+               
                 
+
             tableEvent.AddCell(cell);
 
 
